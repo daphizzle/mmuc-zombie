@@ -1,0 +1,8 @@
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\Bin\Debug\Parse.dll
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\Bin\Debug\Parse.pdb
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\Bin\Debug\Newtonsoft.Json.dll
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\Bin\Debug\Newtonsoft.Json.pdb
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\Bin\Debug\Newtonsoft.Json.xml
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\obj\Debug\ResolveAssemblyReference.cache
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\obj\Debug\Parse.dll
+C:\ZombieBreakout\trunk\mmuc-zombie\packages\karlseguin-parse-dotnet-4943311\Parse\obj\Debug\Parse.pdb
