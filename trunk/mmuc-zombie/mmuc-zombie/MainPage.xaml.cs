@@ -41,5 +41,10 @@ namespace mmuc_zombie
         {
             NavigationService.Navigate(new Uri("/mapTest.xaml", UriKind.Relative));
         }
+
+        private void MenuButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/menu.xaml", UriKind.Relative));
+        }
     }
 }

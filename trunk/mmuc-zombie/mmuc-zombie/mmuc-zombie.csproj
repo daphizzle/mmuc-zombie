@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Maps, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Device" />
@@ -60,6 +61,7 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="TileSlider, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -70,6 +72,9 @@
     </Compile>
     <Compile Include="mapTest.xaml.cs">
       <DependentUpon>mapTest.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="menu.xaml.cs">
+      <DependentUpon>menu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -86,6 +91,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,6 +108,13 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="ext\img\menu_op2.png" />
+    <Resource Include="ext\img\menu_op3.png" />
+    <Resource Include="ext\img\menu_op4.png" />
+    <Resource Include="ext\img\menu_op5.png" />
+    <Resource Include="ext\img\menu_op6.png" />
+    <Resource Include="ext\img\menu_op1.png" />
+    <Content Include="ext\lib\TileSlider.dll" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +123,7 @@
       <Name>Parse</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
