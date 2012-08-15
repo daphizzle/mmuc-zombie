@@ -28,9 +28,10 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <HyperlinkButton Content="Map" Margin="0,-161,0,161" Click="HyperlinkButton_Click"/>
             <Button Content="ParseTest"
                     Click="Button_Click"
-                    />
+                    Height="100" Margin="12,321,-12,186" />
                     
         </Grid>
     </Grid>
