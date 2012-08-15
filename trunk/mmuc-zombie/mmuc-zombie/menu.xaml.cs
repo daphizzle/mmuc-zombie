@@ -19,5 +19,36 @@ namespace mmuc_zombie
         {
             InitializeComponent();
         }
+
+        private void profile_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/test.xaml", UriKind.Relative));
+        }
+
+        private void fame_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/test.xaml", UriKind.Relative));
+        }
+
+        private void myGames_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/myGames.xaml", UriKind.Relative));
+        }
+
+        private void newGame_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/newGame.xaml", UriKind.Relative));
+        }
+
+        private void officialGames_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void customGames_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/test.xaml", UriKind.Relative));
+        }
+
     }
 }

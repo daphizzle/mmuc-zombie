@@ -17,6 +17,8 @@ namespace mmuc_zombie
 {
     public partial class App : Application
     {
+        public static Microsoft.Phone.UserData.Contact con;
+
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
         /// </summary>

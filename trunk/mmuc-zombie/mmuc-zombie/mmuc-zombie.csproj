@@ -67,6 +67,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="app\model\GameTmp.cs" />
+    <Compile Include="components\myGameAvailable.xaml.cs">
+      <DependentUpon>myGameAvailable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -76,6 +80,15 @@
     <Compile Include="menu.xaml.cs">
       <DependentUpon>menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="myGames.xaml.cs">
+      <DependentUpon>myGames.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="newGame.xaml.cs">
+      <DependentUpon>newGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="test.xaml.cs">
+      <DependentUpon>test.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +96,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\myGameAvailable.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -92,6 +109,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="myGames.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="newGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,6 +143,9 @@
     <Resource Include="ext\img\menu_op5.png" />
     <Resource Include="ext\img\menu_op6.png" />
     <Resource Include="ext\img\menu_op1.png" />
+    <Resource Include="ext\img\background.jpg" />
+    <Resource Include="ext\img\background-panorama.jpg" />
+    <Resource Include="ext\img\edit.png" />
     <Content Include="ext\lib\TileSlider.dll" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
