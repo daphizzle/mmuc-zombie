@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="mmuc_zombie.PanoramaPage1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:ScottIsAFool_Controls="clr-namespace:ScottIsAFool.Controls;assembly=TileSlider"    
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False" xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps">
+
+    <!--LayoutRoot contains the root grid where all other page content is placed-->
+    <Grid x:Name="LayoutRoot">
+        <controls:Panorama Title="Zombie Outbreak" FontSize="20">
+
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="What's new">
+                <Grid>
+                    <my:Map Height="494" HorizontalAlignment="Left" Margin="4,4,0,0" Name="map1" VerticalAlignment="Top" Width="413" />
+                </Grid>
+            </controls:PanoramaItem>
+
+            <!--Panorama item two-->
+            <controls:PanoramaItem Header="Menu">
+
+                <ListBox FontSize="{StaticResource PhoneFontSizeLarge}">
+                    <Grid HorizontalAlignment="Stretch" Margin="0" ShowGridLines="False" UseLayoutRounding="True" VerticalAlignment="Stretch" AllowDrop="False" Background="Black" IsHitTestVisible="True">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="200"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- ROW #1 -->
+                        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="5">
+                            <!--<TextBlock Text="My Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Top" Text="My Games" LongText="Look into your games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op1.png" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="5">
+                            <!--<TextBlock Text="New Game" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Bottom" Text="New Game" LongText="Let's make a zombie war!" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op2.png" />
+                        </StackPanel>
+
+                        <!-- ROW #2 -->
+                        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Margin="5">
+                            <!--<TextBlock Text="My Profile" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Left" Text="My Profile" LongText="Keep your preferences saved" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op3.png" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Margin="5">
+                            <!--<TextBlock Text="Hall of Fame" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Right" Text="Hall of Fame" LongText="Get in touch with the best players" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op4.png" />
+                        </StackPanel>
+
+                        <!-- ROW #3 -->
+                        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0" Margin="5">
+                            <!--<TextBlock Text="Official Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Bottom" Text="Official Games" LongText="Take a look into the sponsored games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op5.png" />
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="5">
+                            <!--<TextBlock Text="Custom Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
+                            <ScottIsAFool_Controls:TileSlider TextSlidesFrom="Left" Text="Custom Games" LongText="Look into the games created by other users" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op6.png" />
+                        </StackPanel>
+                    </Grid>
+                </ListBox>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+        
+
+    <!--Panorama-based applications should not show an ApplicationBar-->
+
+</phone:PhoneApplicationPage>
