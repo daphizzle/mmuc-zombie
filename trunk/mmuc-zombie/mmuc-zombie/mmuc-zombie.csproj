@@ -82,6 +82,19 @@
     <Compile Include="menu.xaml.cs">
       <DependentUpon>menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="models\ImmunityMode.cs" />
+    <Compile Include="models\Location.cs" />
+    <Compile Include="models\ModesPerGame.cs" />
+    <Compile Include="models\QuarantineMode.cs" />
+    <Compile Include="models\Queries.cs" />
+    <Compile Include="models\Friend.cs" />
+    <Compile Include="models\Game.cs" />
+    <Compile Include="models\MyParseObject.cs" />
+    <Compile Include="models\RolesPerGame.cs" />
+    <Compile Include="models\Survivor.cs" />
+    <Compile Include="models\User.cs" />
+    <Compile Include="models\Zombie.cs" />
+    <Compile Include="models\ZoneInfection.cs" />
     <Compile Include="myGames.xaml.cs">
       <DependentUpon>myGames.xaml</DependentUpon>
     </Compile>
