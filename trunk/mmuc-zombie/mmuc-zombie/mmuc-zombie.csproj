@@ -25,6 +25,8 @@
     <SilverlightAppEntry>mmuc_zombie.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -83,6 +85,9 @@
     <Compile Include="myGames.xaml.cs">
       <DependentUpon>myGames.xaml</DependentUpon>
     </Compile>
+    <Compile Include="myProfile.xaml.cs">
+      <DependentUpon>myProfile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="newGame.xaml.cs">
       <DependentUpon>newGame.xaml</DependentUpon>
     </Compile>
@@ -116,6 +121,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="myProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="newGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,12 +135,31 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <BlendEmbeddedFont Include="ext\fonts\EDO.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+    <BlendEmbeddedFont Include="ext\fonts\LINDS.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+      <Characters>
+      </Characters>
+      <Uppercase>True</Uppercase>
+      <Lowercase>True</Lowercase>
+      <Numbers>True</Numbers>
+      <Punctuation>True</Punctuation>
+    </BlendEmbeddedFont>
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="background-title.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Background.png">
@@ -146,6 +174,9 @@
     <Resource Include="ext\img\background.jpg" />
     <Resource Include="ext\img\background-panorama.jpg" />
     <Resource Include="ext\img\edit.png" />
+    <Resource Include="ext\img\_cancel.png" />
+    <Resource Include="ext\img\_save.png" />
+    <Resource Include="ext\img\_edit.png" />
     <Content Include="ext\lib\TileSlider.dll" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
@@ -166,4 +197,5 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\WindowsPhone\v7.1\Microsoft.Expression.Blend.WindowsPhone.targets" />
 </Project>

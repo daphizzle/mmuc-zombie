@@ -22,7 +22,7 @@ namespace mmuc_zombie
 
         private void profile_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/test.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/myProfile.xaml", UriKind.Relative));
         }
 
         private void fame_Click(object sender, RoutedEventArgs e)

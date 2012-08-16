@@ -16,30 +16,49 @@ using mmuc_zombie.app.model;
 
 namespace mmuc_zombie
 {
-    public partial class Page1 : PhoneApplicationPage
+    public partial class myGames : PhoneApplicationPage
     {
-        public Page1()
+        public myGames()
         {
             InitializeComponent();
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //SearchContacts();
+            if (!loadGames())
+            {
+                noResults.Visibility = System.Windows.Visibility.Visible;
+                gameList.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                noResults.Visibility = System.Windows.Visibility.Collapsed;
+                gameList.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
-        //private void SearchContacts()
-        //{
-        //    List<GameTmp> games = new List<GameTmp>(3);
-        //    games.Add(new GameTmp("Zombie 1", new DateTime(2012, 08, 15), new DateTime(2012, 08, 15)));
-        //    ContactResultsData.DataContext = games;
-        //}
+        private bool loadGames()
+        {
+            /* TEST DATA */
+            List<GameTmp> games = new List<GameTmp>(3);
+            games.Add(new GameTmp("Zombie Informatiks", DateTime.Today, DateTime.Today));
+            games.Add(new GameTmp("Zombie DFKI", DateTime.Today, DateTime.Today));
+            games.Add(new GameTmp("Zombie VC", DateTime.Today, DateTime.Today));
+            /* TEST DATA */
 
-        //private void ContactResultsData_Tap(object sender, GestureEventArgs e)
-        //{
-        //    App.con = ((sender as ListBox).SelectedValue as Contact);
+            mmuc_zombie.components.myGameAvailable tmpUI;            
 
-        //    NavigationService.Navigate(new Uri("/ContactDetails.xaml", UriKind.Relative));
-        //}
+            foreach (GameTmp tmp in games)
+            {
+                tmpUI = new mmuc_zombie.components.myGameAvailable();
+                tmpUI.gameName.Text = tmp.Name;
+                tmpUI.startTime.Text = tmp.Start.ToShortDateString();
+                tmpUI.endTime.Text = tmp.End.ToShortDateString();
+                tmpUI.Margin = new Thickness(0, 5, 0, 5);              
+                gameStack.Children.Add(tmpUI);
+            }
+
+            return gameStack.Children.Count > 0;
+        }
     }
 }
