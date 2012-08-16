@@ -13,18 +13,15 @@ using Parse;
 
 public class Game : MyParseObject
 {
-    public Boolean private_mode{get;set;}
-    public int min_participants{get;set;}
-    public int max_participants{ get; set; }
+     
+    public int minPlayers { get; set; }
+    public Boolean privateGame {get;set;}
+    public int maxPlayers { get; set; }
+    public String name { get; set; }
     public int radius { get; set; }
-    public int zombie_quota { get; set; }
-    public DateTime start { get; set; }
-    public DateTime end { get; set; }
-    public string game { get; set; }
-
-    
-
-
+    public int zombiesCount { get; set; }
+    public DateTime? startTime{get;set;}
+    public string locationId { get; set; }
 
 
 }
