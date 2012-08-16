@@ -16,26 +16,28 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="261"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,17,0,28" HorizontalAlignment="Right" Width="468">
+            <TextBlock x:Name="ApplicationTitle" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo"/>
+            <TextBlock x:Name="PageTitle" Text="Welcome" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            <Image Height="254" Source="/background-title.png" Stretch="UniformToFill"/>
         </StackPanel>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0" UseLayoutRounding="True" HorizontalAlignment="Right" Width="456">
+        	<HyperlinkButton Content="Map" Margin="8,8,4,0" Click="HyperlinkButton_Click" Background="#FF939393" Height="50" VerticalAlignment="Top" d:LayoutOverrides="Height" />
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <HyperlinkButton Content="Map" Margin="12,196,0,368" Click="HyperlinkButton_Click" Background="#FF939393" />
-
-            <HyperlinkButton Content="Menu" Margin="12,277,0,292" Click="MenuButton_Click" Background="DimGray"></HyperlinkButton>
-            <Button Content="ParseTest"
-                    Click="Button_Click"
-                    Height="100" Margin="24,321,-12,186" />
+        	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50"/>
+            
+        	<Button Content="ParseTest"
+        		Click="Button_Click"
+        		Height="100" Margin="8,133,4,120" />
                     
         </Grid>
+
+        <!--ContentPanel - place additional content here-->
     </Grid>
  
     <!--Sample code showing usage of ApplicationBar-->
