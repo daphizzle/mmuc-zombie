@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using Parse;
 
 
-public class Game : ParseObject
+public class Game : MyParseObject
 {
     public Boolean private_mode{get;set;}
     public int min_participants{get;set;}
@@ -20,7 +20,7 @@ public class Game : ParseObject
     public int zombie_quota { get; set; }
     public DateTime start { get; set; }
     public DateTime end { get; set; }
-    
+    public string game { get; set; }
 
     
 
