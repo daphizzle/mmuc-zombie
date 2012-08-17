@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace mmuc_zombie
 {
-    public partial class newGame : PhoneApplicationPage
+    public partial class NewGame : PhoneApplicationPage
     {
-        public newGame()
+        public NewGame()
         {
             InitializeComponent();
         }

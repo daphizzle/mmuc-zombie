@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace mmuc_zombie
 {
-    public partial class PanoramaPage1 : PhoneApplicationPage
+    public partial class Menu : PhoneApplicationPage
     {
-        public PanoramaPage1()
+        public Menu()
         {
             InitializeComponent();
         }
