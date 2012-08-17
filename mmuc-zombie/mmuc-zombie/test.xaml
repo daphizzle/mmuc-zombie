@@ -16,17 +16,48 @@
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
-        <controls:Panorama Title="my application">
+        <controls:Panorama >
+        	
+			<controls:Panorama.Resources>
+        		<DataTemplate x:Key="DataTemplateTitle">
+        			<TextBlock x:Name="title" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" Margin="20,80,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="Auto"/>
+        		</DataTemplate>
+        	</controls:Panorama.Resources>
+        	<controls:Panorama.TitleTemplate>
+        		<StaticResource ResourceKey="DataTemplateTitle"/>
+        	</controls:Panorama.TitleTemplate>	
+			
             <controls:Panorama.Background>
                 <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background-panorama.jpg" Stretch="None" />
             </controls:Panorama.Background>
             <!--Panorama item one-->
-            <controls:PanoramaItem Header="item1">
+            <controls:PanoramaItem>
+            	
+				<controls:PanoramaItem.Resources>
+            		<DataTemplate x:Key="DataTemplateTitle">
+            			<TextBlock x:Name="whatsnew" FontSize="54" Text="Item 1" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		</DataTemplate>
+            	</controls:PanoramaItem.Resources>
+            	<controls:PanoramaItem.HeaderTemplate>
+            		<StaticResource ResourceKey="DataTemplateTitle"/>
+					</controls:PanoramaItem.HeaderTemplate>
+					
                 <Grid/>
             </controls:PanoramaItem>
 
             <!--Panorama item two-->
-            <controls:PanoramaItem Header="item2">
+            <controls:PanoramaItem>
+            	
+				<controls:PanoramaItem.Resources>
+            		<DataTemplate x:Key="DataTemplateTitle">
+            			<TextBlock x:Name="item2" FontSize="54" Text="Item 2" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		</DataTemplate>
+            	</controls:PanoramaItem.Resources>
+            	<controls:PanoramaItem.HeaderTemplate>
+            		<StaticResource ResourceKey="DataTemplateTitle"/>
+					</controls:PanoramaItem.HeaderTemplate>
+					
+					
                 <Grid/>
             </controls:PanoramaItem>
         </controls:Panorama>

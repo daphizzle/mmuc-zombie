@@ -18,28 +18,53 @@
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
         
-        <controls:Panorama Title="Zombie Outbreak" FontSize="20">
-    
+        <controls:Panorama Title="Zombie Outbreak">
+        	<controls:Panorama.Resources>
+        		<DataTemplate x:Key="DataTemplateTitle">
+        			<TextBlock x:Name="title" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" Margin="20,125,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="Auto"/>
+        		</DataTemplate>
+        	</controls:Panorama.Resources>
+        	<controls:Panorama.TitleTemplate>
+        		<StaticResource ResourceKey="DataTemplateTitle"/>
+        	</controls:Panorama.TitleTemplate>		
+		            
         <controls:Panorama.Background>
             <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background-panorama.jpg" Stretch="None" />
         </controls:Panorama.Background>
         
             <!--Panorama item one-->
             <controls:PanoramaItem Header="What's new">
+            	<controls:PanoramaItem.Resources>
+            		<DataTemplate x:Key="DataTemplateTitle">
+            			<TextBlock x:Name="whatsnew" FontSize="54" Text="What's new" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		</DataTemplate>
+            	</controls:PanoramaItem.Resources>
+            	<controls:PanoramaItem.HeaderTemplate>
+            		<StaticResource ResourceKey="DataTemplateTitle"/>
+            	</controls:PanoramaItem.HeaderTemplate>
+				
                 <Grid>
-                    <my:Map Height="494" HorizontalAlignment="Left" Margin="4,4,0,0" Name="map1" VerticalAlignment="Top" Width="413" />
+                    <my:Map HorizontalAlignment="Center" Margin="4,4,0,-17" Name="map1" Width="413" />
                 </Grid>
             </controls:PanoramaItem>
 
             <!--Panorama item two-->
-            <controls:PanoramaItem Header="Menu">
+            <controls:PanoramaItem Header="Menu" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey">
+            	<controls:PanoramaItem.Resources>
+            		<DataTemplate x:Key="DataTemplateMenu">
+            			<TextBlock x:Name="menu" FontSize="54" Text="Menu" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		</DataTemplate>
+            	</controls:PanoramaItem.Resources>
+            	<controls:PanoramaItem.HeaderTemplate>
+            		<StaticResource ResourceKey="DataTemplateMenu"/>
+            	</controls:PanoramaItem.HeaderTemplate>
 
-                <ListBox FontSize="{StaticResource PhoneFontSizeLarge}">
-                    <Grid HorizontalAlignment="Stretch" Margin="0" ShowGridLines="False" UseLayoutRounding="True" VerticalAlignment="Stretch" AllowDrop="False" Background="Transparent" IsHitTestVisible="True">
+                <ListBox x:Name="listBox" FontSize="{StaticResource PhoneFontSizeLarge}">
+                    <Grid HorizontalAlignment="Stretch" Margin="0" ShowGridLines="False" UseLayoutRounding="True" VerticalAlignment="Stretch" AllowDrop="False" Background="Transparent" IsHitTestVisible="True" Height="710" Width="398">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="200"/>
-                            <RowDefinition Height="200"/>
-                            <RowDefinition Height="200"/>
+                            <RowDefinition Height="182"/>
+                            <RowDefinition Height="180"/>
+                            <RowDefinition Height="238"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="200"/>
@@ -49,31 +74,31 @@
                         <!-- ROW #1 -->
                         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="5">
                             <!--<TextBlock Text="My Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="myGames" TextSlidesFrom="Top" Text="My Games" LongText="Look into your games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op1.png" Click="myGames_Click"/>
+                            <ScottIsAFool_Controls:TileSlider Name="myGames" TextSlidesFrom="Top" Text="My Games" LongText="Look into your games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op1.png" Click="myGames_Click"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="5">
                             <!--<TextBlock Text="New Game" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="newGame" TextSlidesFrom="Bottom" Text="New Game" LongText="Let's make a zombie war!" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op2.png" Click="newGame_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="newGame" TextSlidesFrom="Bottom" Text="New Game" LongText="Let's make a zombie war!" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op2.png" Click="newGame_Click" />
                         </StackPanel>
 
                         <!-- ROW #2 -->
                         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0" Margin="5">
                             <!--<TextBlock Text="My Profile" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="profile" TextSlidesFrom="Left" Text="My Profile" LongText="Keep your preferences saved" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op3.png" Click="profile_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="profile" TextSlidesFrom="Left" Text="My Profile" LongText="Keep your preferences saved" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op3.png" Click="profile_Click" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Margin="5">
                             <!--<TextBlock Text="Hall of Fame" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="fame"  TextSlidesFrom="Right" Text="Hall of Fame" LongText="Get in touch with the best players" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op4.png" Click="fame_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="fame"  TextSlidesFrom="Right" Text="Hall of Fame" LongText="Get in touch with the best players" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op4.png" Click="fame_Click" />
                         </StackPanel>
 
                         <!-- ROW #3 -->
                         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0" Margin="5">
                             <!--<TextBlock Text="Official Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="officialGames" TextSlidesFrom="Bottom" Text="Official Games" LongText="Take a look into the sponsored games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op5.png" Click="officialGames_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="officialGames" TextSlidesFrom="Bottom" Text="Official Games" LongText="Take a look into the sponsored games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op5.png" Click="officialGames_Click" />
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="1" Margin="5">
                             <!--<TextBlock Text="Custom Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="customGames"  TextSlidesFrom="Left" Text="Custom Games" LongText="Look into the games created by other users" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Black" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op6.png" Click="customGames_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="customGames"  TextSlidesFrom="Left" Text="Custom Games" LongText="Look into the games created by other users" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op6.png" Click="customGames_Click" />
                         </StackPanel>
                     </Grid>
                 </ListBox>

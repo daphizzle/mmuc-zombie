@@ -6,18 +6,19 @@
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}" Loaded="UserControl_Loaded" d:DesignHeight="146" d:DesignWidth="357">
+    Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="187" d:DesignWidth="357">
     
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
-        <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,10,0,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" Width="309" TextTrimming="None" FontSize="22" />
-        <Image Height="32" HorizontalAlignment="Right" Margin="0,10,12,0" Name="edit" Stretch="Fill" VerticalAlignment="Top" Width="30" Source="/mmuc-zombie;component/ext/img/_edit.png" FlowDirection="LeftToRight" />
-        <Button Content="Cancel" Height="72" HorizontalAlignment="Left" Margin="0,75,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
-        <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,74,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
+        <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,10,0,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" Width="309" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+        <Image Height="32" HorizontalAlignment="Right" Margin="0,10,12,0" Name="edit" Stretch="Fill" VerticalAlignment="Top" Width="30" Source="/mmuc-zombie;component/ext/img/edit.png" FlowDirection="LeftToRight" />
+        <Button Content="Cancel" Height="72" HorizontalAlignment="Left" Margin="0,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
+        <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
 
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,42,0,0" Name="startTime" Text="start time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />
         <TextBlock FontSize="16" HorizontalAlignment="Left" Margin="13,42,0,86" Name="textBlock4" Text="Start:" FontWeight="Bold" />
         
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,59,0,0" Name="endTime" Text="end time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />        
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="13,59,0,0" Name="textBlock5" Text="End:" VerticalAlignment="Top" FontWeight="Bold" Width="39" />
+        <TextBlock FontSize="15" Height="35" HorizontalAlignment="Left" Margin="13,83,0,0" Name="textBlock1" Text="Description..." TextTrimming="None" VerticalAlignment="Top" Width="332" />
     </Grid>
 </UserControl>

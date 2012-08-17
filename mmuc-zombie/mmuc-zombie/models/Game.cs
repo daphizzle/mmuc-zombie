@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 using Parse;
 
 
-public class Game : MyParseObject
+public class Game //: MyParseObject
 {
      
     public int minPlayers { get; set; }

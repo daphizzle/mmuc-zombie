@@ -1,0 +1,52 @@
+﻿<phone:PhoneApplicationPage 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+	x:Class="mmuc_zombie.TemplatePivot"
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	shell:SystemTray.IsVisible="True">
+
+	<!--LayoutRoot is the root grid where all page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="Transparent">
+		<!--Pivot Control-->
+		<controls:Pivot>
+			
+			<!-- TITLE -->
+			<controls:Pivot.Resources>
+        		<DataTemplate x:Key="Title">
+        			<TextBlock x:Name="title" Text="Zombie Outbreak" Margin="0,0,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="180" HorizontalAlignment="Left"/>
+        		</DataTemplate>
+        	</controls:Pivot.Resources>
+        	<controls:Pivot.TitleTemplate>
+        		<StaticResource ResourceKey="Title"/>
+        	</controls:Pivot.TitleTemplate>
+            <controls:Pivot.Background>
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.jpg" Stretch="None" />
+            </controls:Pivot.Background>
+			
+			<!--Pivot item one-->
+			<controls:PivotItem>
+				<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="item1" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				<Grid/>
+			</controls:PivotItem>
+
+ 			<!--Pivot item two-->
+			<controls:PivotItem>
+				<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="item2" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				<Grid/>
+			</controls:PivotItem>
+		</controls:Pivot>
+	</Grid>
+</phone:PhoneApplicationPage>
