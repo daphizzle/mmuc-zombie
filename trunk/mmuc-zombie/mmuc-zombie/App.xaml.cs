@@ -12,12 +12,18 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Parse;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace mmuc_zombie
 {
     public partial class App : Application
     {
         public static Microsoft.Phone.UserData.Contact con;
+
+        //IsolatedtStorage for file saving
+        private IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -65,12 +71,31 @@ namespace mmuc_zombie
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
+            if (!store.FileExists("user.txt"))
+            {
+                using (var file = store.CreateFile("user.txt"))
+                {
+                    new User().listener = new OnStartupListener();
+                }
+            }
+            else
+            {
+                using (var reader = new StreamReader(store.OpenFile("user.txt",FileMode.Open)))
+                {
+                    string userID = reader.ReadLine();
+                }
+            }
+
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+
+            //check if needed here
+            //ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
         }
 
         // Code to execute when the application is deactivated (sent to background)
