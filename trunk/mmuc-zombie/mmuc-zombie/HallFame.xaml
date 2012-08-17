@@ -39,8 +39,11 @@
         </DataTemplate>
         
         <!-- item template -->
-        <DataTemplate x:Key="CustomItemTemplate">
-            <TextBlock Text="{Binding NickName}" />
+        <DataTemplate x:Key="CustomItemTemplate" >
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Avatar}" Width="80" Height="80" />
+                <TextBlock Text="{Binding NickName}" />
+            </StackPanel>
         </DataTemplate>
         
         <!-- non-expandable header template -->
