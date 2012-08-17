@@ -10,7 +10,7 @@
     
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
         <TextBlock Height="30" Margin="12,10,12,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Button Height="76" HorizontalAlignment="Right" Margin="0,42,0,0" Name="join" VerticalAlignment="Top" Width="93" BorderThickness="3" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+        <Button Height="76" HorizontalAlignment="Right" Margin="0,42,0,0" Name="join" VerticalAlignment="Top" Width="105" BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
             <Button.Background>
                 <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/_next.png" Stretch="None" />
             </Button.Background>

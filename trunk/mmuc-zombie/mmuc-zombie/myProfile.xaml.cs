@@ -13,9 +13,9 @@ using Microsoft.Phone.Controls;
 
 namespace mmuc_zombie
 {
-    public partial class myProfile : PhoneApplicationPage
+    public partial class MyProfile : PhoneApplicationPage
     {
-        public myProfile()
+        public MyProfile()
         {
             InitializeComponent();
         }

@@ -16,9 +16,9 @@ using Parse;
 
 namespace mmuc_zombie
 {
-    public partial class myGames : PhoneApplicationPage
+    public partial class MyGames : PhoneApplicationPage
     {
-        public myGames()
+        public MyGames()
         {
             InitializeComponent();
         }

@@ -50,9 +50,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Controls, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Controls.Maps, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="System.Device" />
     <Reference Include="System.Runtime.Serialization" />
@@ -70,8 +72,19 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="app\model\GameTmp.cs" />
+    <Compile Include="app\model\HallOfFame.cs" />
+    <Compile Include="app\model\HistoryTmp.cs" />
+    <Compile Include="app\model\PlayerTmp.cs" />
+    <Compile Include="app\model\UserTmp.cs" />
+    <Compile Include="app\parse\Parse.cs" />
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\officialGame.xaml.cs">
+      <DependentUpon>officialGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HallFame.xaml.cs">
+      <DependentUpon>HallFame.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -79,8 +92,8 @@
     <Compile Include="mapTest.xaml.cs">
       <DependentUpon>mapTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="menu.xaml.cs">
-      <DependentUpon>menu.xaml</DependentUpon>
+    <Compile Include="Menu.xaml.cs">
+      <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
     <Compile Include="models\ImmunityMode.cs" />
     <Compile Include="models\Location.cs" />
@@ -95,14 +108,17 @@
     <Compile Include="models\User.cs" />
     <Compile Include="models\Zombie.cs" />
     <Compile Include="models\ZoneInfection.cs" />
-    <Compile Include="myGames.xaml.cs">
-      <DependentUpon>myGames.xaml</DependentUpon>
+    <Compile Include="MyGames.xaml.cs">
+      <DependentUpon>MyGames.xaml</DependentUpon>
     </Compile>
-    <Compile Include="myProfile.xaml.cs">
-      <DependentUpon>myProfile.xaml</DependentUpon>
+    <Compile Include="MyProfile.xaml.cs">
+      <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="newGame.xaml.cs">
-      <DependentUpon>newGame.xaml</DependentUpon>
+    <Compile Include="NewGame.xaml.cs">
+      <DependentUpon>NewGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OfficialGames.xaml.cs">
+      <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
@@ -118,6 +134,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="components\officialGame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HallFame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,21 +150,25 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="menu.xaml">
+    <Page Include="Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="myGames.xaml">
+    <Page Include="MyGames.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="myProfile.xaml">
+    <Page Include="MyProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="newGame.xaml">
+    <Page Include="NewGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OfficialGames.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="test.xaml">
       <SubType>Designer</SubType>
@@ -187,9 +215,13 @@
     <Resource Include="ext\img\background.jpg" />
     <Resource Include="ext\img\background-panorama.jpg" />
     <Resource Include="ext\img\edit.png" />
-    <Resource Include="ext\img\_cancel.png" />
-    <Resource Include="ext\img\_save.png" />
+    <Resource Include="ext\img\avatar.png" />
+    <Resource Include="ext\img\background.png" />
     <Resource Include="ext\img\_edit.png" />
+    <Resource Include="ext\img\_back.png" />
+    <Content Include="ext\img\_cancel.png" />
+    <Resource Include="ext\img\_next.png" />
+    <Content Include="ext\img\_save.png" />
     <Content Include="ext\lib\TileSlider.dll" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
