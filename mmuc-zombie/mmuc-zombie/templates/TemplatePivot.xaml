@@ -6,7 +6,7 @@
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="mmuc_zombie.TemplatePivot"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -29,10 +29,9 @@
         		<StaticResource ResourceKey="Title"/>
         	</controls:Pivot.TitleTemplate>
             <controls:Pivot.Background>
-                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.jpg" Stretch="None" />
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.png" />
             </controls:Pivot.Background>
-			
-			<!--Pivot item one-->
+            <!--Pivot item one-->
 			<controls:PivotItem>
 				<controls:PivotItem.Header>
             		<TextBlock FontSize="54" Text="item1" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>

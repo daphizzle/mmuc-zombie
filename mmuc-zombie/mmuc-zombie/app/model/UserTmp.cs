@@ -8,10 +8,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Parse;
 
-    public class Friend //: MyParseObject
+namespace mmuc_zombie.app.model
+{
+    public class UserTmp
     {
-        public string user { get; set;  }
-        public string friend { get; set; }
+        public String UserName { get; set; }
+        public String Password { get; set; }
+        public String NickName { get; set; }
+        public String Avatar { get; set; }
     }
+}

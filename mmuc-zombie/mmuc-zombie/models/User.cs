@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Parse;
 
-public class User :  MyParseObject
+public class User //:  MyParseObject
 {
 
     

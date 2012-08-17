@@ -8,11 +8,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace mmuc_zombie.app.model
 {
-    public class GameTmp
+    public class GameTmp 
     {
+        
+
         public GameTmp()
         {
             Name = null;
@@ -45,3 +48,4 @@ namespace mmuc_zombie.app.model
         public User Creator { get; set; }
     }
 }
+
