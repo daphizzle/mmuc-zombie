@@ -5,7 +5,7 @@
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
 	x:Class="mmuc_zombie.TemplatePage"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -14,7 +14,7 @@
 	shell:SystemTray.IsVisible="True">
 
 	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot">
+	<Grid x:Name="LayoutRoot" DataContext="{Binding}">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="*"/>
@@ -30,8 +30,8 @@
 		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0"/>
 		
 		<!-- Background -->
-		<Grid.Background>
-            <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.jpg" />
+        <Grid.Background>
+            <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.png" />
         </Grid.Background>
-	</Grid>
+    </Grid>
 </phone:PhoneApplicationPage>

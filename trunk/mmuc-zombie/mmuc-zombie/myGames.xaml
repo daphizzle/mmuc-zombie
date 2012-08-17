@@ -58,7 +58,7 @@
 
         </Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.jpg" />
+            <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.png" Stretch="Fill" />
         </Grid.Background>
     </Grid>
 

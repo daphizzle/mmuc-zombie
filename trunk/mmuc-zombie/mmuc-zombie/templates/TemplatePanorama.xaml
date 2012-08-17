@@ -29,11 +29,10 @@
         	</controls:Panorama.TitleTemplate>	
 
 			<!-- Bakcground -->
-			<controls:Panorama.Background>
-            	<ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background-panorama.jpg" Stretch="None" />
-        	</controls:Panorama.Background>
-		
-			<!--Panorama item one-->
+            <controls:Panorama.Background>
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background-panorama.png" Stretch="None" />
+            </controls:Panorama.Background>
+            <!--Panorama item one-->
 			<controls:PanoramaItem>
 				<controls:PanoramaItem.Resources>
             		<DataTemplate x:Key="PivotTitle">
