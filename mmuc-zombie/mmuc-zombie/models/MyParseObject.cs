@@ -15,23 +15,33 @@ using System.Diagnostics;
 
 
 public class MyParseObject :ParseObject{
-      public void create(){
-          String s = this.GetType().Name;
-          var parse = new Driver();
-          parse.Objects.Save(this, r =>
-          {
-              if (r.Success)
-              {
-                  this.Id = r.Data.Id;
-                  var createdAt = r.Data.CreatedAt;
-                  Debug.WriteLine(s+" " + this.Id + " stored");
-              }
-              else
-              {
-                  string msg = r.Error.Message;
-                  Debug.WriteLine(s+" " + this.Id + " Error :" + msg);
-              }
-          });
+
+    static public MyListener listener{get;set;}
+
+
+    public void create(){
+        String s = this.GetType().Name;
+        var parse = new Driver();
+        parse.Objects.Save(this, r =>
+        {
+            if (r.Success)
+            {
+                this.Id = r.Data.Id;
+                var createdAt = r.Data.CreatedAt;
+                Debug.WriteLine(s+" " + this.Id + " stored");
+                if (listener != null)
+                {
+                    List<MyParseObject> list =new List<MyParseObject>();
+                    list.Add(this);
+                    listener.onDataChange(list);
+                }
+            }
+            else
+            {
+                string msg = r.Error.Message;
+                Debug.WriteLine(s+" " + this.Id + " Error :" + msg);
+            }
+        });
    
     }
 

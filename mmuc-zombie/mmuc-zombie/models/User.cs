@@ -10,15 +10,32 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Parse;
 
-public class User //:  MyParseObject
+public class User :  MyParseObject
 {
 
-    
+
+
     public string UserName{get;set;}
     public string Password{get;set;}
     public string facebook { get; set; }
     public string email { get; set; }
     public string locationId { get; set; }
+
+    public static void loginWithParse(string userId)
+    {
+        var driver = new Driver();
+        driver.Objects.Get<User>(userId, r =>
+        {
+            if (r.Success)
+            {
+                var user = r.Data;
+                if (listener != null)
+                {
+                }
+            }
+        });
+    }
+
 
         
  

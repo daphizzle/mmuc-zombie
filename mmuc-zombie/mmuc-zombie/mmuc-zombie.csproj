@@ -80,6 +80,7 @@
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MyListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
@@ -120,6 +121,7 @@
     <Compile Include="OfficialGames.xaml.cs">
       <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
+    <Compile Include="OnStartupListener.cs" />
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>

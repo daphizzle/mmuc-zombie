@@ -30,7 +30,6 @@ namespace mmuc_zombie
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
         }
             
 
