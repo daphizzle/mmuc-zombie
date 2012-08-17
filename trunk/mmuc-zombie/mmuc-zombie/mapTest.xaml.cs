@@ -17,6 +17,10 @@ namespace mmuc_zombie
 {
     public partial class mapTest : PhoneApplicationPage
     {
+        bool initializeZoom = true;
+        double zoomFactor;
+        double areaHeight;
+        double areaWidth;
         GeoCoordinateWatcher watcher;
         public mapTest()
         {
@@ -38,6 +42,7 @@ namespace mmuc_zombie
             // Start data acquisition
             watcher.Start();
 
+
             //hide button
             btnStart.Visibility = Visibility.Collapsed;
             button1.Visibility = Visibility.Visible;
@@ -58,12 +63,16 @@ namespace mmuc_zombie
 
 
             // Update the map to show the current location
-            mapMain.SetView(new LocationRect(e.Position.Location, 1.0, 1.0));
+            mapMain.SetView(new LocationRect(e.Position.Location, 0.5, 0.5));
+            mapMain.ZoomLevel = 13;
 
-            //update pushpin location and show
+            //update pushpin and area location and show
             MapLayer.SetPosition(ppLocation, e.Position.Location);
+            MapLayer.SetPositionOrigin(ppLocation, PositionOrigin.Center);
+            MapLayer.SetPosition(area, e.Position.Location);
+            MapLayer.SetPositionOrigin(area, PositionOrigin.Center);
             ppLocation.Visibility = System.Windows.Visibility.Visible;
-
+            area.Visibility = System.Windows.Visibility.Visible;
 
         }
 
@@ -104,12 +113,53 @@ namespace mmuc_zombie
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            mapMain.ZoomLevel++;
+            //lazy initialization of initial zoomlevel and areasize
+            if (initializeZoom)
+            {
+                zoomFactor = mapMain.ZoomLevel;
+                initializeZoom = false;
+                areaHeight = area.Height;
+                areaWidth = area.Width;
+            }
+            // decrease zoom level
+            double zoomlevel = ++mapMain.ZoomLevel;
+            // adapt size of area
+            if (zoomlevel >= zoomFactor)
+            {
+                area.Height = areaHeight * (1+zoomlevel - zoomFactor);
+                area.Width = areaWidth * (1+zoomlevel - zoomFactor);
+            }
+            else
+            {
+                area.Height = areaHeight * (-1 / (zoomlevel - zoomFactor-1));
+                area.Width = areaWidth * (-1 / (zoomlevel - zoomFactor-1));
+            }
+            tbStatus.Text = "multyplied by (H,W): (" + (area.Height / areaHeight) + "," + (area.Width / areaWidth) + ")";
         }
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
-            mapMain.ZoomLevel--;
+            //lazy initialization of initial zoomlevel and areasize
+            if (initializeZoom)
+            {
+                zoomFactor = mapMain.ZoomLevel;
+                initializeZoom = false;
+                areaHeight = area.Height;
+                areaWidth = area.Width;
+            }
+            // decrease zoom level
+            double zoomlevel = --mapMain.ZoomLevel;
+            // adapt size of area            
+            if (zoomlevel >= zoomFactor)
+            {
+                area.Height = areaHeight * (1+zoomlevel - zoomFactor);
+                area.Width = areaWidth * (1+zoomlevel - zoomFactor);
+            }else
+            {
+                area.Height = areaHeight * (-1 / (zoomlevel - zoomFactor-1));
+                area.Width = areaWidth * (-1 / (zoomlevel - zoomFactor-1));
+            }
+            tbStatus.Text = "multyplied by (H,W): (" + (area.Height / areaHeight) + "," + (area.Width / areaWidth) + ")";
         }
 
 
@@ -117,9 +167,11 @@ namespace mmuc_zombie
         {
             mapMain.SetView(new LocationRect(new GeoCoordinate(0,0,0), 10.0, 10.0));
 
-            //update pushpin location and show
+            //update pushpin and area location and hide
             MapLayer.SetPosition(ppLocation, new GeoCoordinate(0, 0, 0));
+            MapLayer.SetPosition(area, new GeoCoordinate(0, 0, 0));
             ppLocation.Visibility = System.Windows.Visibility.Collapsed;
+            area.Visibility = System.Windows.Visibility.Collapsed;
         }
 
 

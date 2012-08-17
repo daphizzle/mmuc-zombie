@@ -13,7 +13,7 @@
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True" 
     xmlns:my="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps">
-
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -28,10 +28,11 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <my:Map Name="mapMain" Height="462" CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" 
-                    HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="444" >
+            <my:Map x:Name="mapMain" Height="462" CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" 
+                    HorizontalAlignment="Left" Margin="6,6,0,0" VerticalAlignment="Top" Width="444">
                 <my:MapLayer Name="lMain">
                     <Ellipse Fill="Red" Width="20" Height="20" Name="ppLocation" Visibility="Collapsed" />
+                    <Ellipse Fill="Red" Opacity="0.5" Width="100" Height="100" Name="area" Visibility="Collapsed" />
                 </my:MapLayer>
             </my:Map>
             <Border Background="Black" Height="40" Opacity="0.7" VerticalAlignment="Top">
