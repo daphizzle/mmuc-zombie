@@ -16,9 +16,9 @@ using Parse;
 
 namespace mmuc_zombie
 {
-    public partial class myGames : PhoneApplicationPage
+    public partial class officialGames : PhoneApplicationPage
     {
-        public myGames()
+        public officialGames()
         {
             InitializeComponent();
         }
@@ -41,23 +41,24 @@ namespace mmuc_zombie
         {
             /* TEST DATA */
             List<GameTmp> games = new List<GameTmp>(3);
-            games.Add(new GameTmp("Zombie Informatiks", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("Zombie DFKI", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("Zombie VC", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("WP7 :)", new DateTime(2012, 09, 17), new DateTime(2012, 09, 17)));
+            games.Add(new GameTmp("Zombie Informatiks", DateTime.Today, DateTime.Today, "Join us!", null));
+            games.Add(new GameTmp("Zombie DFKI", DateTime.Today, DateTime.Today, "Join us!", null));
+            games.Add(new GameTmp("Zombie VC", DateTime.Today, DateTime.Today, "Join us!", null));
+            games.Add(new GameTmp("WP7 :)", new DateTime(2012, 09, 17), new DateTime(2012, 09, 17), "Join us!", null));
             /* TEST DATA */
 
-            mmuc_zombie.components.myGameAvailable tmpUI;
+            mmuc_zombie.components.officialGame tmpUI;
             //var _parse = new Driver();
 
             foreach (GameTmp tmp in games)
             {                
                 //_parse.Objects.Save(tmp);
                 
-                tmpUI = new mmuc_zombie.components.myGameAvailable();
+                tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameName.Text = tmp.Name;
                 tmpUI.startTime.Text = tmp.Start.ToShortDateString();
                 tmpUI.endTime.Text = tmp.End.ToShortDateString();
+                tmpUI.description.Text = tmp.Description.Equals("") ? "No description." : tmp.Description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);              
                 gameStack.Children.Add(tmpUI);
             }

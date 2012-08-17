@@ -17,29 +17,55 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
         <!--Pivot Control-->
-        <controls:Pivot Title="Zombie Outbreak">
+        <controls:Pivot>
+        	
+			<controls:Pivot.Resources>
+        		<DataTemplate x:Key="DataTemplateTitle">
+        			<TextBlock x:Name="title" Text="Zombie Outbreak" Margin="0,0,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="180" HorizontalAlignment="Left"/>
+        		</DataTemplate>
+        	</controls:Pivot.Resources>
+        	<controls:Pivot.TitleTemplate>
+        		<StaticResource ResourceKey="DataTemplateTitle"/>
+        	</controls:Pivot.TitleTemplate>
             
             <!--Pivot item one-->
-            <controls:PivotItem Header="Personal">
+            <controls:PivotItem>
+            	
+				<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="personal" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				
                 <Grid>
                     <TextBox  Height="72" Margin="0,254,7,209" Name="nickname" Text="nickname" Width="436" TextAlignment="Center" Foreground="#FFC16614" Canvas.Left="1" Canvas.Top="3" HorizontalAlignment="Right" />
                     <TextBlock Height="19" Margin="29,316,20,200" Name="textBlock1" Text="How other users will recognize you" Width="407" TextAlignment="Center" FontSize="15" Foreground="#FF969696" Canvas.Left="53" Canvas.Top="221" />
-                    <Image Height="216" Margin="110,29,118,290" Name="avatar" Stretch="Fill" Canvas.Left="21" Canvas.Top="129" />
+                    <Image Height="216" Margin="110,29,118,290" Name="avatar" Stretch="Fill" Canvas.Left="21" Canvas.Top="129" Source="/mmuc-zombie;component/ext/img/avatar.png" />
                 </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem Header="Friends">
+            <controls:PivotItem >
+            	
+				<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item three-->
-            <controls:PivotItem Header="History">
+            <controls:PivotItem >
+            	<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="history" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item three-->
-            <controls:PivotItem Header="Achievements">
+            <controls:PivotItem >
+            	<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="achievements" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
                 <Grid/>
             </controls:PivotItem>
             
@@ -52,8 +78,8 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="/ext/img/_save.png" Text="Save" Click="appbar_save_Click" />
-            <shell:ApplicationBarIconButton x:Name="appbar_cancel" IconUri="/ext/img/_cancel.png" Text="Cancel" Click="appbar_cancel_Click" />
+            <shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="ext/img/_save.png" Text="Save" Click="appbar_save_Click" />
+            <shell:ApplicationBarIconButton x:Name="appbar_cancel" IconUri="ext/img/_cancel.png" Text="Cancel" Click="appbar_cancel_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     

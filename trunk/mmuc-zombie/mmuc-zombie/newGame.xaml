@@ -18,32 +18,60 @@
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
         <controls:Pivot Title="Zombie Outbreak">
+        	<controls:Pivot.Resources>
+        		<DataTemplate x:Key="DataTemplateTitle">
+        			<TextBlock x:Name="title" Text="Zombie Outbreak" Margin="0,0,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="180" HorizontalAlignment="Left"/>
+        		</DataTemplate>
+        	</controls:Pivot.Resources>
+        	<controls:Pivot.TitleTemplate>
+        		<StaticResource ResourceKey="DataTemplateTitle"/>
+        	</controls:Pivot.TitleTemplate>
             <controls:Pivot.Background>
                 <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background.jpg" Stretch="None" />
             </controls:Pivot.Background>
             
             <!--Pivot item one-->
-            <controls:PivotItem Header="new game">
+            <controls:PivotItem>
+            	
+            	<controls:PivotItem.Header>
+            		<TextBlock FontSize="54" Text="new game" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            	</controls:PivotItem.Header>
+				
+				
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem Header="area">
+            <controls:PivotItem>
+            	
+            	<controls:PivotItem.Header>
+            		<TextBlock Text="area" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
+            	</controls:PivotItem.Header>
+				
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item 3-->
-            <controls:PivotItem Header="invite people">
+            <controls:PivotItem>
+            	<controls:PivotItem.Header>
+            		<TextBlock Text="invite people" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
+            	</controls:PivotItem.Header>
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item 4-->
-            <controls:PivotItem Header="quarentine">
+            <controls:PivotItem >
+            	<controls:PivotItem.Header>
+            		<TextBlock Text="quarentine" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
+            	</controls:PivotItem.Header>
                 <Grid/>
             </controls:PivotItem>
 
             <!--Pivot item 5-->
-            <controls:PivotItem Header="inmunity">
+            <controls:PivotItem >
+            	<controls:PivotItem.Header>
+            		<TextBlock Text="inmunity" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
+            	</controls:PivotItem.Header>
                 <Grid/>
             </controls:PivotItem>
 

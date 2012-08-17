@@ -18,6 +18,8 @@ namespace mmuc_zombie.app.model
             Name = null;
             Start = new DateTime();
             End = new DateTime();
+            Description = null;
+            Creator = null;
         }
 
         public GameTmp(String name, DateTime start, DateTime end)
@@ -27,9 +29,19 @@ namespace mmuc_zombie.app.model
             End = end;
         }
 
+        public GameTmp(String name, DateTime start, DateTime end, String description, User creator)
+        {
+            Name = name;
+            Start = start;
+            End = end;
+            Description = description;
+            Creator = creator;
+        }
+
         public String Name { get; set; }
         public DateTime Start { get; set; }
-        public DateTime End { get; set; } 
-
+        public DateTime End { get; set; }
+        public String Description { get; set; }
+        public User Creator { get; set; }
     }
 }

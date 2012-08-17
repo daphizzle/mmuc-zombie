@@ -42,7 +42,7 @@ namespace mmuc_zombie
 
         private void officialGames_Click(object sender, RoutedEventArgs e)
         {
-
+            NavigationService.Navigate(new Uri("/officialGames.xaml", UriKind.Relative));
         }
 
         private void customGames_Click(object sender, RoutedEventArgs e)

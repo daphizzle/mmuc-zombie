@@ -27,9 +27,9 @@
             <Image Height="254" Source="/background-title.png" Stretch="UniformToFill"/>
         </StackPanel>
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0" UseLayoutRounding="True" HorizontalAlignment="Right" Width="456">
-        	<HyperlinkButton Content="Map" Margin="8,8,4,0" Click="HyperlinkButton_Click" Background="#FF939393" Height="50" VerticalAlignment="Top" d:LayoutOverrides="Height" />
+        	<HyperlinkButton Content="Map" Margin="8,8,4,0" Click="HyperlinkButton_Click" Background="#FF939393" Height="50" VerticalAlignment="Top" d:LayoutOverrides="Height" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
 
-        	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50"/>
+        	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             
         	<Button Content="ParseTest"
         		Click="Button_Click"
