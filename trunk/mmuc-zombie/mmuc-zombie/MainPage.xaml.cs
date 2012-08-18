@@ -33,7 +33,14 @@ namespace mmuc_zombie
             User user = (User)service.State["user"];
             if (user.locationId != null)
             {
-                Location.updateLocation(user.locationId, new GeoCoordinate(5,4));
+                Location loc = new Location(4,5);
+                loc.Id = user.locationId;
+                loc.update();
+            }
+            else
+            {
+                Location loc = new Location(2, 3);
+                loc.create(new LocationListener(user));
             }
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)

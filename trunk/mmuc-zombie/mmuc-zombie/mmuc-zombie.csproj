@@ -84,6 +84,8 @@
     <Compile Include="listener\Listener.cs" />
     <Compile Include="listener\LoginListener.cs" />
     <Compile Include="listener\MyListener.cs" />
+    <Compile Include="listener\StartupListener.cs" />
+    <Compile Include="listener\LocationListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
@@ -124,7 +126,7 @@
     <Compile Include="OfficialGames.xaml.cs">
       <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
-    <Compile Include="listener\StartupListener.cs" />
+    <Compile Include="PositionRetriever.cs" />
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>

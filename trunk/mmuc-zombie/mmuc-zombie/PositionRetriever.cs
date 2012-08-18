@@ -42,7 +42,9 @@ namespace mmuc_zombie
             User user = (User)service.State["user"];
             if (user.locationId != null)
             {
-                Location.updateLocation(user.locationId, e.Position.Location);
+                Location loc = new Location(e.Position.Location.Latitude,e.Position.Location.Longitude);
+                loc.Id = user.locationId;
+                loc.update();
             }
             else
             {
