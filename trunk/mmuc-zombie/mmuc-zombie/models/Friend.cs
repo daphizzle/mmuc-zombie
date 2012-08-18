@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Parse;
 
-    public class Friend //: MyParseObject
+    public class Friend : MyParseObject
     {
         public string user { get; set;  }
         public string friend { get; set; }
