@@ -27,7 +27,7 @@ public class User :  MyParseObject
       
    
 
-    private static void getUser(string userId, MyListener listener)
+    public static void find(string userId, MyListener listener)
     {
         var driver = new Driver();
         driver.Objects.Get<User>(userId, r =>
@@ -45,7 +45,13 @@ public class User :  MyParseObject
 
     }
 
-
+    public static void find(List<string> userIds, MyListener listener)
+    {
+        foreach (string userId in userIds)
+ 
+        {
+        }
+    }
         
  
     
