@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 
 
-    interface MyListener
+    public interface MyListener
     {
-        public void onDataChange(List<MyParseObject> o)
-        {
-        }
+        void onDataChange(List<MyParseObject> o);
     }

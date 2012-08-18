@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using Parse;
 using System.IO.IsolatedStorage;
 using System.IO;
+using System.Diagnostics;
 
 namespace mmuc_zombie
 {
@@ -24,6 +25,8 @@ namespace mmuc_zombie
 
         //IsolatedtStorage for file saving
         private IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
+
+        private PhoneApplicationService service = PhoneApplicationService.Current;
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -71,31 +74,38 @@ namespace mmuc_zombie
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
-            if (!store.FileExists("user.txt"))
-            {
-                using (var file = store.CreateFile("user.txt"))
-                {
-                    new User().listener = new OnStartupListener();
-                }
-            }
-            else
-            {
-                using (var reader = new StreamReader(store.OpenFile("user.txt",FileMode.Open)))
-                {
-                    string userID = reader.ReadLine();
-                }
-            }
-
+            Application_Launched_Activated(sender);
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            Application_Launched_Activated(sender);   
+        }
 
-            //check if needed here
-            //ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
+        //user retrieval
+        private void Application_Launched_Activated(object sender)
+        {
+            ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
+            if (!store.FileExists("userId.txt"))
+            {
+                using (var file = store.CreateFile("userId.txt"))
+                {
+                    User user = new User();
+                    user.UserName = "Paetrda";
+                    user.create();
+                }
+            }
+            else
+            {
+                using (var reader = new StreamReader(store.OpenFile("userId.txt",FileMode.Open)))
+                {
+                    string userId = reader.ReadToEnd();
+                    Debug.WriteLine("Reading userId" + userId);
+                    User.loginWithParse(userId);
+                }
+            }
         }
 
         // Code to execute when the application is deactivated (sent to background)

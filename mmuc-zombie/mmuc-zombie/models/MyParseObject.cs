@@ -16,8 +16,6 @@ using System.Diagnostics;
 
 public class MyParseObject :ParseObject{
 
-    static public MyListener listener{get;set;}
-
 
     public void create(){
         String s = this.GetType().Name;
@@ -28,13 +26,11 @@ public class MyParseObject :ParseObject{
             {
                 this.Id = r.Data.Id;
                 var createdAt = r.Data.CreatedAt;
-                Debug.WriteLine(s+" " + this.Id + " stored");
-                if (listener != null)
-                {
-                    List<MyParseObject> list =new List<MyParseObject>();
-                    list.Add(this);
-                    listener.onDataChange(list);
-                }
+                Debug.WriteLine(s+" " + this.Id + " stored");              
+                List<MyParseObject> list =new List<MyParseObject>();
+                list.Add(this);
+                Listener.onStartupListener.onDataChange(list);
+            
             }
             else
             {

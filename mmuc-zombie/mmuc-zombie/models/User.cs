@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Parse;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 public class User :  MyParseObject
 {
@@ -29,9 +31,11 @@ public class User :  MyParseObject
             if (r.Success)
             {
                 var user = r.Data;
-                if (listener != null)
-                {
-                }
+                Debug.WriteLine("Logged in as user" + user.UserName);               
+                List<MyParseObject> list = new List<MyParseObject>();
+                list.Add(user);
+                Listener.loginListener.onDataChange(list);
+                
             }
         });
     }
