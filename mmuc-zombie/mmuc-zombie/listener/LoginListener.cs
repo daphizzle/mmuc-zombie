@@ -25,6 +25,7 @@ namespace mmuc_zombie
             //there is only one MyParseObject
             service.State["user"] = (User)list[0];
         }
+       
 
     }
 }

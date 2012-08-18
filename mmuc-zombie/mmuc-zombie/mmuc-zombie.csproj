@@ -81,9 +81,9 @@
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Listener.cs" />
-    <Compile Include="LoginListener.cs" />
-    <Compile Include="MyListener.cs" />
+    <Compile Include="listener\Listener.cs" />
+    <Compile Include="listener\LoginListener.cs" />
+    <Compile Include="listener\MyListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
@@ -124,7 +124,7 @@
     <Compile Include="OfficialGames.xaml.cs">
       <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OnStartupListener.cs" />
+    <Compile Include="listener\StartupListener.cs" />
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>

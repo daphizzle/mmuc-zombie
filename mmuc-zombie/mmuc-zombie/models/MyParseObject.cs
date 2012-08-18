@@ -16,7 +16,9 @@ using System.Diagnostics;
 
 public class MyParseObject :ParseObject{
 
-
+    public void create(){
+        create(null);
+    }
     public void create(MyListener listener){
         String s = this.GetType().Name;
         var parse = new Driver();
@@ -42,7 +44,9 @@ public class MyParseObject :ParseObject{
         });
    
     }
-
+    public void update()  {
+        update(null);
+    }
     public Boolean update(MyListener listener)
     {
         String s = this.GetType().Name;
@@ -52,6 +56,8 @@ public class MyParseObject :ParseObject{
             if (r.Success)
             {
                 Debug.WriteLine(s+" " + this.Id + " saved");
+                List<MyParseObject> list = new List<MyParseObject>();
+                list.Add(this);
                 if (listener != null)
                 {
                     listener.onDataChange(list);
@@ -82,7 +88,7 @@ public class MyParseObject :ParseObject{
                 success = true;
                 if (listener != null)
                 {
-                    listener.onDataChange();
+                    listener.onDataChange(null);
                 }
             }
             else

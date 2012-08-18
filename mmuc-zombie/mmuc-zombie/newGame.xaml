@@ -38,7 +38,10 @@
             	</controls:PivotItem.Header>
 				
 				
-                <Grid/>
+                <Grid>
+                    <Button Content="Create Game" Height="72" HorizontalAlignment="Left" Margin="69,500,0,0" Name="button1" VerticalAlignment="Top" Width="203" Click="button1_Click" />
+                    <TextBox Height="72" HorizontalAlignment="Left" Margin="-2,29,0,0" Name="textBox1" Text="" VerticalAlignment="Top" Width="460" />
+                </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->
