@@ -37,7 +37,6 @@ using System.Device.Location;
                   location.Latitude = gc.Latitude;
                   location.Longitude = gc.Longitude;
                   location.update();
-                  Debug.WriteLine("Updated Location: (" + location.Longitude + "," + location.Latitude + ")->(" + gc.Longitude + "," + gc.Latitude + ")");    
               }
           });
 
