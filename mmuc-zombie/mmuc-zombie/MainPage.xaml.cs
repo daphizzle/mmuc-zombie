@@ -12,12 +12,16 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Parse;
 using System.Diagnostics;
+using Microsoft.Phone.Shell;
+using System.Device.Location;
 
 namespace mmuc_zombie
 {
     public partial class MainPage : PhoneApplicationPage
     {
-      
+
+        PhoneApplicationService service = PhoneApplicationService.Current;
+
         // Constructor
         public MainPage()
         {
@@ -26,7 +30,11 @@ namespace mmuc_zombie
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-         
+            User user = (User)service.State["user"];
+            if (user.locationId != null)
+            {
+                Location.updateLocation(user.locationId, new GeoCoordinate(5,4));
+            }
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
