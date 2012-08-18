@@ -143,7 +143,7 @@ namespace Parse
 
       public void Get<T>(string id, Action<Response<T>> callback)
       {
-         var url = string.Concat(UrlFor<T>(), "/", id);
+          var url = string.Concat(UrlFor<T>(), "/", id);
          Communicator.SendQueryPayload(Communicator.Get, url, GotInstanceCallback(callback));
       }
 
@@ -203,7 +203,8 @@ namespace Parse
       }
       private string UrlFor(object o)
       {
-         return UrlFor(o.GetType());
+          string help =UrlFor(o.GetType());
+          return help;
       }
       protected virtual string UrlFor(Type t)
       {

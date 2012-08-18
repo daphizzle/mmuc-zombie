@@ -107,7 +107,7 @@
     <Compile Include="models\QuarantineMode.cs" />
     <Compile Include="models\Queries.cs" />
     <Compile Include="models\Friend.cs" />
-    <Compile Include="models\Game.cs" />
+    <Compile Include="models\Gamnow.cs" />
     <Compile Include="models\MyParseObject.cs" />
     <Compile Include="models\RolesPerGame.cs" />
     <Compile Include="models\Survivor.cs" />
@@ -230,9 +230,13 @@
     <Resource Include="ext\img\background.png" />
     <Resource Include="ext\img\_edit.png" />
     <Resource Include="ext\img\_back.png" />
-    <Content Include="ext\img\_cancel.png" />
+    <Content Include="ext\img\_cancel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Resource Include="ext\img\_next.png" />
-    <Content Include="ext\img\_save.png" />
+    <Content Include="ext\img\_save.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ext\lib\TileSlider.dll" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
