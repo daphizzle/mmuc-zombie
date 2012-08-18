@@ -22,6 +22,7 @@ public class Game //: MyParseObject
     public int zombiesCount { get; set; }
     public DateTime? startTime{get;set;}
     public string locationId { get; set; }
+    public string ownerId { get; set; }
 
 
 }

@@ -23,7 +23,11 @@ public class User :  MyParseObject
     public string email { get; set; }
     public string locationId { get; set; }
 
-    public static void loginWithParse(string userId)
+   
+      
+   
+
+    private static void getUser(string userId, MyListener listener)
     {
         var driver = new Driver();
         driver.Objects.Get<User>(userId, r =>
@@ -31,13 +35,14 @@ public class User :  MyParseObject
             if (r.Success)
             {
                 var user = r.Data;
-                Debug.WriteLine("Logged in as user" + user.UserName);               
+                Debug.WriteLine("Logged in as user" + user.UserName);
                 List<MyParseObject> list = new List<MyParseObject>();
                 list.Add(user);
-                Listener.loginListener.onDataChange(list);
-                
+                listener.onDataChange(list);
+
             }
         });
+
     }
 
 
