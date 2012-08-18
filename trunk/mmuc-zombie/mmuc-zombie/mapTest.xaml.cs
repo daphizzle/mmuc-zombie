@@ -59,7 +59,7 @@ namespace mmuc_zombie
         void MyPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             //set fake position for testing purpose
-            e.Position.Location = new GeoCoordinate(49.233, 7);
+            //e.Position.Location = new GeoCoordinate(49.233, 7);
 
 
             // Update the map to show the current location

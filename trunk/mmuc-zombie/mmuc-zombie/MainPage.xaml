@@ -31,7 +31,7 @@
 
         	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             
-        	<Button Content="ParseTest"
+        	<Button Content="LocationTest"
         		Click="Button_Click"
         		Height="100" Margin="8,133,4,120" />
                     
