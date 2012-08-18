@@ -17,7 +17,7 @@ using System.Diagnostics;
 public class MyParseObject :ParseObject{
 
 
-    public void create(){
+    public void create(MyListener listener){
         String s = this.GetType().Name;
         var parse = new Driver();
         parse.Objects.Save(this, r =>
@@ -29,8 +29,10 @@ public class MyParseObject :ParseObject{
                 Debug.WriteLine(s+" " + this.Id + " stored");              
                 List<MyParseObject> list =new List<MyParseObject>();
                 list.Add(this);
-                Listener.onStartupListener.onDataChange(list);
-            
+                if (listener != null)
+                {
+                    listener.onDataChange(list);
+                }
             }
             else
             {
@@ -41,7 +43,7 @@ public class MyParseObject :ParseObject{
    
     }
 
-    public Boolean update()
+    public Boolean update(MyListener listener)
     {
         String s = this.GetType().Name;
         var parse= new Driver();
@@ -50,6 +52,10 @@ public class MyParseObject :ParseObject{
             if (r.Success)
             {
                 Debug.WriteLine(s+" " + this.Id + " saved");
+                if (listener != null)
+                {
+                    listener.onDataChange(list);
+                }
             }
             else
             {
@@ -63,7 +69,7 @@ public class MyParseObject :ParseObject{
                 
 
     }
-    public Boolean destroy<T>() where T:MyParseObject
+    public Boolean destroy<T>(MyListener listener) where T:MyParseObject
     {
         ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT", "j2si7yNE2Fg8ORdEp3lG3f7zXY2bv2Gb8zpDR57p");
         Boolean success = false;
@@ -74,6 +80,10 @@ public class MyParseObject :ParseObject{
             if (r.Success)
             {
                 success = true;
+                if (listener != null)
+                {
+                    listener.onDataChange();
+                }
             }
             else
             {
