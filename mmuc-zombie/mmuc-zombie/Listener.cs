@@ -12,6 +12,6 @@ using mmuc_zombie;
 
     public class Listener
     {
-        public static OnStartupListener onStartupListener = new OnStartupListener();
+        public static StartupListener onStartupListener = new StartupListener();
         public static LoginListener loginListener = new LoginListener();
     }
