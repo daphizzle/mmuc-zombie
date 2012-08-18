@@ -94,7 +94,7 @@ namespace mmuc_zombie
                 {
                     User user = new User();
                     user.UserName = "Paetrda";
-                    user.create();
+                    user.create(new StartupListener());
                 }
             }
             else
@@ -103,7 +103,7 @@ namespace mmuc_zombie
                 {
                     string userId = reader.ReadToEnd();
                     Debug.WriteLine("Reading userId" + userId);
-                    User.loginWithParse(userId);
+                    User.find(userId,new LoginListener());
                 }
             }
         }
