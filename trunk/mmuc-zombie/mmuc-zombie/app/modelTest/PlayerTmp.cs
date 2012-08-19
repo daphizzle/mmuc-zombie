@@ -20,7 +20,8 @@ namespace mmuc_zombie.app.model
         public PlayerTmp(String nickname)
         {
             this.NickName = nickname;
-            this.Avatar = "ext/img/avatar.png";
+            //this.Avatar = "ext/img/avatar.png";
+            this.Avatar = "/mmuc-zombie;component/ext/img/avatar.png";            
         }
 
         public IList<HistoryTmp> History
