@@ -27,14 +27,14 @@
             <Image Height="254" Source="/background-title.png" Stretch="UniformToFill"/>
         </StackPanel>
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="0,0,12,0" UseLayoutRounding="True" HorizontalAlignment="Right" Width="456">
-        	<HyperlinkButton Content="Map" Margin="8,8,4,0" Click="HyperlinkButton_Click" Background="#FF939393" Height="50" VerticalAlignment="Top" d:LayoutOverrides="Height" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
+        	<HyperlinkButton Content="Map" Margin="8,8,4,0" Click="HyperlinkButton_Click" Background="#FF939393" Height="50" VerticalAlignment="Top" d:LayoutOverrides="Height" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" Name="mapLink" />
 
-        	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+        	<HyperlinkButton Content="Menu" Margin="8,73,4,230" Click="MenuButton_Click" Background="DimGray" Height="50" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" Name="menuLink" />
             
         	<Button Content="LocationTest"
         		Click="Button_Click"
-        		Height="100" Margin="8,133,4,120" />
-                    
+        		Height="100" Margin="8,247,4,6" />
+            <HyperlinkButton Background="DimGray" Content="Facebook Connect" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" Height="50" Margin="6,143,6,160" Name="facebookLink" Click="facebookLink_Click" />
         </Grid>
 
         <!--ContentPanel - place additional content here-->

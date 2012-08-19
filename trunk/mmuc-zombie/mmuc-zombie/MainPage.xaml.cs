@@ -57,5 +57,10 @@ namespace mmuc_zombie
         {
             NavigationService.Navigate(new Uri("/menu.xaml", UriKind.Relative));
         }
+
+        private void facebookLink_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/pages/FacebookConnect.xaml", UriKind.Relative));
+        }
     }
 }
