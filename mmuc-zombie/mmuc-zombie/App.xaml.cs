@@ -21,7 +21,15 @@ namespace mmuc_zombie
 {
     public partial class App : Application
     {
-        public static Microsoft.Phone.UserData.Contact con;
+        public static Microsoft.Phone.UserData.Contact con;        
+        private static string m_strAccessToken; // FB
+
+        public static string AccessToken //FB
+        {
+            get { return m_strAccessToken; }
+            set { m_strAccessToken = value; }
+        }
+
 
         //IsolatedtStorage for file saving
         private IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
@@ -175,5 +183,6 @@ namespace mmuc_zombie
         }
 
         #endregion
+                
     }
 }

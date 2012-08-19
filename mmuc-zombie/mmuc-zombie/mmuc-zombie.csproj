@@ -73,6 +73,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\model\GameTmp.cs" />
     <Compile Include="app\model\HallOfFame.cs" />
     <Compile Include="app\model\HistoryTmp.cs" />
@@ -101,13 +102,14 @@
     <Compile Include="Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="models\Game.cs" />
+    <Compile Include="models\Games.cs" />
     <Compile Include="models\ImmunityMode.cs" />
     <Compile Include="models\Location.cs" />
     <Compile Include="models\ModesPerGame.cs" />
     <Compile Include="models\QuarantineMode.cs" />
     <Compile Include="models\Queries.cs" />
     <Compile Include="models\Friend.cs" />
-    <Compile Include="models\Gamnow.cs" />
     <Compile Include="models\MyParseObject.cs" />
     <Compile Include="models\RolesPerGame.cs" />
     <Compile Include="models\Survivor.cs" />
@@ -126,7 +128,22 @@
     <Compile Include="OfficialGames.xaml.cs">
       <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
+    <Compile Include="pages\FacebookConnect.xaml.cs">
+      <DependentUpon>FacebookConnect.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\FacebookLogin.xaml.cs">
+      <DependentUpon>FacebookLogin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PositionRetriever.cs" />
+    <Compile Include="templates\TemplatePage.xaml.cs">
+      <DependentUpon>TemplatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="templates\TemplatePanorama.xaml.cs">
+      <DependentUpon>TemplatePanorama.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="templates\TemplatePivot.xaml.cs">
+      <DependentUpon>TemplatePivot.xaml</DependentUpon>
+    </Compile>
     <Compile Include="test.xaml.cs">
       <DependentUpon>test.xaml</DependentUpon>
     </Compile>
@@ -174,6 +191,26 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="OfficialGames.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\FacebookConnect.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\FacebookLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="templates\TemplatePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="templates\TemplatePanorama.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="templates\TemplatePivot.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
