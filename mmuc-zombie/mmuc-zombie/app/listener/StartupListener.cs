@@ -13,6 +13,7 @@ using System.IO;
 using System.Collections.Generic;
 using Microsoft.Phone.Shell;
 using System.Diagnostics;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie
 {
