@@ -50,12 +50,12 @@ namespace mmuc_zombie
 
         private void HyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/mapTest.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/MapTest.xaml", UriKind.Relative));
         }
 
         private void MenuButton_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/menu.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
         }
 
         private void facebookLink_Click(object sender, RoutedEventArgs e)
