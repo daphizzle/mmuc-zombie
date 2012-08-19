@@ -75,11 +75,11 @@
     </Compile>
     <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
-    <Compile Include="app\model\GameTmp.cs" />
-    <Compile Include="app\model\HallOfFame.cs" />
-    <Compile Include="app\model\HistoryTmp.cs" />
-    <Compile Include="app\model\PlayerTmp.cs" />
-    <Compile Include="app\model\UserTmp.cs" />
+    <Compile Include="app\modelTest\GameTmp.cs" />
+    <Compile Include="app\modelTest\HallOfFame.cs" />
+    <Compile Include="app\modelTest\HistoryTmp.cs" />
+    <Compile Include="app\modelTest\PlayerTmp.cs" />
+    <Compile Include="app\modelTest\UserTmp.cs" />
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
@@ -103,20 +103,20 @@
     <Compile Include="pages\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="app\models\Game.cs" />
-    <Compile Include="app\models\Games.cs" />
-    <Compile Include="app\models\ImmunityMode.cs" />
-    <Compile Include="app\models\Location.cs" />
-    <Compile Include="app\models\ModesPerGame.cs" />
-    <Compile Include="app\models\QuarantineMode.cs" />
-    <Compile Include="app\models\Queries.cs" />
-    <Compile Include="app\models\Friend.cs" />
-    <Compile Include="app\models\MyParseObject.cs" />
-    <Compile Include="app\models\RolesPerGame.cs" />
-    <Compile Include="app\models\Survivor.cs" />
-    <Compile Include="app\models\User.cs" />
-    <Compile Include="app\models\Zombie.cs" />
-    <Compile Include="app\models\ZoneInfection.cs" />
+    <Compile Include="app\model\Game.cs" />
+    <Compile Include="app\model\Games.cs" />
+    <Compile Include="app\model\ImmunityMode.cs" />
+    <Compile Include="app\model\Location.cs" />
+    <Compile Include="app\model\ModesPerGame.cs" />
+    <Compile Include="app\model\QuarantineMode.cs" />
+    <Compile Include="app\model\Queries.cs" />
+    <Compile Include="app\model\Friend.cs" />
+    <Compile Include="app\model\MyParseObject.cs" />
+    <Compile Include="app\model\RolesPerGame.cs" />
+    <Compile Include="app\model\Survivor.cs" />
+    <Compile Include="app\model\User.cs" />
+    <Compile Include="app\model\Zombie.cs" />
+    <Compile Include="app\model\ZoneInfection.cs" />
     <Compile Include="pages\MyGames.xaml.cs">
       <DependentUpon>MyGames.xaml</DependentUpon>
     </Compile>
@@ -263,7 +263,9 @@
     <Resource Include="ext\img\background.jpg" />
     <Resource Include="ext\img\background-panorama.jpg" />
     <Resource Include="ext\img\edit.png" />
-    <Resource Include="ext\img\avatar.png" />
+    <Resource Include="ext\img\avatar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="ext\img\background.png" />
     <Resource Include="ext\img\_edit.png" />
     <Resource Include="ext\img\_back.png" />
