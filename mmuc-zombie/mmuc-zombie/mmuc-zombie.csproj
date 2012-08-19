@@ -82,50 +82,50 @@
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="listener\Listener.cs" />
-    <Compile Include="listener\LoginListener.cs" />
-    <Compile Include="listener\MyListener.cs" />
-    <Compile Include="listener\StartupListener.cs" />
-    <Compile Include="listener\LocationListener.cs" />
+    <Compile Include="app\listener\Listener.cs" />
+    <Compile Include="app\listener\LoginListener.cs" />
+    <Compile Include="app\listener\MyListener.cs" />
+    <Compile Include="app\listener\StartupListener.cs" />
+    <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HallFame.xaml.cs">
+    <Compile Include="pages\HallFame.xaml.cs">
       <DependentUpon>HallFame.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="mapTest.xaml.cs">
-      <DependentUpon>mapTest.xaml</DependentUpon>
+    <Compile Include="pages\MapTest.xaml.cs">
+      <DependentUpon>MapTest.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Menu.xaml.cs">
+    <Compile Include="pages\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="models\Game.cs" />
-    <Compile Include="models\Games.cs" />
-    <Compile Include="models\ImmunityMode.cs" />
-    <Compile Include="models\Location.cs" />
-    <Compile Include="models\ModesPerGame.cs" />
-    <Compile Include="models\QuarantineMode.cs" />
-    <Compile Include="models\Queries.cs" />
-    <Compile Include="models\Friend.cs" />
-    <Compile Include="models\MyParseObject.cs" />
-    <Compile Include="models\RolesPerGame.cs" />
-    <Compile Include="models\Survivor.cs" />
-    <Compile Include="models\User.cs" />
-    <Compile Include="models\Zombie.cs" />
-    <Compile Include="models\ZoneInfection.cs" />
-    <Compile Include="MyGames.xaml.cs">
+    <Compile Include="app\models\Game.cs" />
+    <Compile Include="app\models\Games.cs" />
+    <Compile Include="app\models\ImmunityMode.cs" />
+    <Compile Include="app\models\Location.cs" />
+    <Compile Include="app\models\ModesPerGame.cs" />
+    <Compile Include="app\models\QuarantineMode.cs" />
+    <Compile Include="app\models\Queries.cs" />
+    <Compile Include="app\models\Friend.cs" />
+    <Compile Include="app\models\MyParseObject.cs" />
+    <Compile Include="app\models\RolesPerGame.cs" />
+    <Compile Include="app\models\Survivor.cs" />
+    <Compile Include="app\models\User.cs" />
+    <Compile Include="app\models\Zombie.cs" />
+    <Compile Include="app\models\ZoneInfection.cs" />
+    <Compile Include="pages\MyGames.xaml.cs">
       <DependentUpon>MyGames.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MyProfile.xaml.cs">
+    <Compile Include="pages\MyProfile.xaml.cs">
       <DependentUpon>MyProfile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewGame.xaml.cs">
+    <Compile Include="pages\NewGame.xaml.cs">
       <DependentUpon>NewGame.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OfficialGames.xaml.cs">
+    <Compile Include="pages\OfficialGames.xaml.cs">
       <DependentUpon>OfficialGames.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\FacebookConnect.xaml.cs">
@@ -134,7 +134,7 @@
     <Compile Include="pages\FacebookLogin.xaml.cs">
       <DependentUpon>FacebookLogin.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PositionRetriever.cs" />
+    <Compile Include="app\helper\PositionRetriever.cs" />
     <Compile Include="templates\TemplatePage.xaml.cs">
       <DependentUpon>TemplatePage.xaml</DependentUpon>
     </Compile>
@@ -144,8 +144,8 @@
     <Compile Include="templates\TemplatePivot.xaml.cs">
       <DependentUpon>TemplatePivot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="test.xaml.cs">
-      <DependentUpon>test.xaml</DependentUpon>
+    <Compile Include="pages\Test.xaml.cs">
+      <DependentUpon>Test.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -162,7 +162,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="HallFame.xaml">
+    <Page Include="pages\HallFame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,27 +170,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="mapTest.xaml">
+    <Page Include="pages\MapTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Menu.xaml">
+    <Page Include="pages\Menu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyGames.xaml">
+    <Page Include="pages\MyGames.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MyProfile.xaml">
+    <Page Include="pages\MyProfile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NewGame.xaml">
+    <Page Include="pages\NewGame.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OfficialGames.xaml">
+    <Page Include="pages\OfficialGames.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -214,7 +214,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="test.xaml">
+    <Page Include="pages\Test.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
