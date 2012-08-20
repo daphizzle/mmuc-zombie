@@ -24,9 +24,10 @@ public class Games : MyParseObject
     public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    //public DateTime startTime{get;set;}
-    //public DateTime endTime { get; set; }
+    public DateTime? startTime{get;set;}
+    public DateTime? endTime { get; set; }
     public string locationId { get; set; }
+    public string description { get; set; }
     public string ownerId { get; set; }
 
 

@@ -74,11 +74,13 @@ namespace mmuc_zombie.pages
         private void saveButtonClick(object sender, EventArgs e)
         {
             if (newPolygon != null)
-            {
+            {   int i=0;
                 List<MyLocation> locs = new List<MyLocation>();
                 foreach (GeoCoordinate p in newPolygon.Locations)
                 {
-                    locs.Add(new MyLocation(p.Latitude, p.Longitude));
+                    var loc = new MyLocation(p.Latitude, p.Longitude);
+                    loc.number=i++;
+                    locs.Add(loc);
                 }
 
                 var game = new Games();
@@ -88,11 +90,11 @@ namespace mmuc_zombie.pages
                 game.name = nameTextfield.Text;
                 game.state = 0;
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
-               // game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
-               //     startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
-                //    startTimePicker.Value.Value.Minute, 0);
-                //game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
-                //    endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
+                game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
+                   startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
+                   startTimePicker.Value.Value.Minute, 0);
+                game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
+                   endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs);
             }

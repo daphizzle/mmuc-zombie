@@ -23,6 +23,7 @@ namespace mmuc_zombie.pages
     {
 
         List<MyLocation> middlePoints = new List<MyLocation>();
+        List<Games> games = new List<Games>();
         public OfficialGames()
         {
             InitializeComponent();
@@ -33,9 +34,12 @@ namespace mmuc_zombie.pages
         public void onDataChange(List<MyParseObject>  list)
         {
             var parse=new Driver();
+            int gameCounter = 0;
             foreach (MyParseObject o in list)
             {
                  string id=o.Id;
+                 games.Add((Games)o);
+                 
                  parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
                      {
                          if (r.Success)
@@ -44,12 +48,27 @@ namespace mmuc_zombie.pages
                                  {
                                      
                                      drawPolygons((List<MyLocation>)r.Data.Results);
-
+                                     gameCounter++;
+                                     if (gameCounter == list.Count)
+                                     {
+                                         drawPushPins();
+                                         if (!loadGames())
+                                         {
+                                             noResults.Visibility = System.Windows.Visibility.Visible;
+                                             gameList.Visibility = System.Windows.Visibility.Collapsed;
+                                         }
+                                         else
+                                         {
+                                             noResults.Visibility = System.Windows.Visibility.Collapsed;
+                                             gameList.Visibility = System.Windows.Visibility.Visible;
+                                         }
+                                     }
                                  });
                          }
                      });  
              }
-            drawPushPins();
+          
+           
         }
 
         
@@ -73,7 +92,8 @@ namespace mmuc_zombie.pages
             newPolygon.Stroke = new SolidColorBrush(clr);
             newPolygon.StrokeThickness = 3;
             newPolygon.Opacity = 0.3;
-            foreach (MyLocation l in list)
+            var newlist=list.OrderBy(x=>x.number).ToList();
+            foreach (MyLocation l in newlist)
             {
                 newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude,l.longitude));
             }
@@ -112,40 +132,25 @@ namespace mmuc_zombie.pages
         
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!loadGames())
-            {
-                noResults.Visibility = System.Windows.Visibility.Visible;
-                gameList.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                noResults.Visibility = System.Windows.Visibility.Collapsed;
-                gameList.Visibility = System.Windows.Visibility.Visible;
-            }
+    
         }
 
         private bool loadGames()
         {
             /* TEST DATA */
-            List<GameTmp> games = new List<GameTmp>(3);
-            games.Add(new GameTmp("Zombie Informatiks", DateTime.Today, DateTime.Today, "Join us!", null));
-            games.Add(new GameTmp("Zombie DFKI", DateTime.Today, DateTime.Today, "Join us!", null));
-            games.Add(new GameTmp("Zombie VC", DateTime.Today, DateTime.Today, "Join us!", null));
-            games.Add(new GameTmp("WP7 :)", new DateTime(2012, 09, 17), new DateTime(2012, 09, 17), "Join us!", null));
-            /* TEST DATA */
-
+      
             mmuc_zombie.components.officialGame tmpUI;
             //var _parse = new Driver();
 
-            foreach (GameTmp tmp in games)
+            foreach (Games tmp in games)
             {                
                 //_parse.Objects.Save(tmp);
                 
                 tmpUI = new mmuc_zombie.components.officialGame();
-                tmpUI.gameName.Text = tmp.Name;
-                tmpUI.startTime.Text = tmp.Start.ToShortDateString();
-                tmpUI.endTime.Text = tmp.End.ToShortDateString();
-                tmpUI.description.Text = tmp.Description.Equals("") ? "No description." : tmp.Description;
+                tmpUI.gameName.Text = tmp.name;
+                tmpUI.startTime.Text = tmp.startTime.Value.ToString();
+                tmpUI.endTime.Text = tmp.endTime.Value.ToString();
+                tmpUI.description.Text = tmp.description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);              
                 gameStack.Children.Add(tmpUI);
             }
