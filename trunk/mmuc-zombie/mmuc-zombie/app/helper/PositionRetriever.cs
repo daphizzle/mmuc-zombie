@@ -11,6 +11,9 @@ using System.Windows.Shapes;
 using System.Device.Location;
 using Microsoft.Phone.Shell;
 using Parse;
+using mmuc_zombie.app.model;
+using System.Diagnostics;
+using mmuc_zombie.app.listener;
 
 namespace mmuc_zombie.app.helper
 {
@@ -41,14 +44,16 @@ namespace mmuc_zombie.app.helper
         void onPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             User user = (User)service.State["user"];
-            if (user.location != null)
+            if (user.locationId != null)
             {
-                user.location.Latitude = e.Position.Location.Latitude;
-                user.location.Longitude = e.Position.Location.Longitude;
+                MyLocation loc = new MyLocation(e.Position.Location.Latitude, e.Position.Location.Longitude);
+                loc.Id = user.locationId;
+                loc.update();
             }
             else
             {
-                GeoPoint loc = new GeoPoint(e.Position.Location.Latitude, e.Position.Location.Longitude);
+                MyLocation loc = new MyLocation(e.Position.Location.Latitude, e.Position.Location.Longitude);
+                loc.create(new LocationListener(user));
             }
         }
 
@@ -61,13 +66,13 @@ namespace mmuc_zombie.app.helper
             switch (e.Status)
             {
                 case GeoPositionStatus.Disabled:
-                    //TODO: display error
+                    //TODO: display error ? 
                     break;
                 case GeoPositionStatus.Initializing:
-                    //TODO: display error
+                    //Don´t do anything data aquisition should start soon
                     break;
                 case GeoPositionStatus.NoData:
-                    //TODO: display error
+                    //TODO: display error ? or just wait for new Data
                     break;
                 case GeoPositionStatus.Ready:
                     //This is the good case, don´t display errors

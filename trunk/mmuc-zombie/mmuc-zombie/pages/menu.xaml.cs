@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Controls.Maps;
 
 namespace mmuc_zombie.pages
 {
@@ -49,6 +50,14 @@ namespace mmuc_zombie.pages
         {
             NavigationService.Navigate(new Uri("/pages/Test.xaml", UriKind.Relative));
         }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Games.findPendingGames(this);
+        }
+
+
+
 
     }
 }

@@ -75,11 +75,13 @@
     </Compile>
     <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
+    <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
     <Compile Include="app\modelTest\HallOfFame.cs" />
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
+    <Compile Include="app\model\MyLocation.cs" />
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
@@ -131,6 +133,9 @@
     </Compile>
     <Compile Include="pages\FacebookLogin.xaml.cs">
       <DependentUpon>FacebookLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\WindowsPhoneControl1.xaml.cs">
+      <DependentUpon>WindowsPhoneControl1.xaml</DependentUpon>
     </Compile>
     <Compile Include="templates\TemplatePage.xaml.cs">
       <DependentUpon>TemplatePage.xaml</DependentUpon>
@@ -198,6 +203,10 @@
     <Page Include="pages\FacebookLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\WindowsPhoneControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="templates\TemplatePage.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -37,23 +37,21 @@ namespace mmuc_zombie
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //Create 3 Games
-            Games gameNear1 = new Games();
-            gameNear1.location = new GeoPoint(1, 1);
-            gameNear1.name = "near Game 1";
-            gameNear1.create();
+            ////Create 2 Games
+            //Games gameNear1 = new Games();
+            //gameNear1.latitude = 45;
+            //gameNear1.longitude = 4;
+            //gameNear1.name = "finished game";
+            //gameNear1.state = 2;
+            //gameNear1.create();
 
-            Games gameNear2 = new Games();
-            gameNear2.location = new GeoPoint(2, 2);
-            gameNear2.name = "near Game 2";
-            gameNear2.create();
-
-            Games gameFar = new Games();
-            gameFar.location = new GeoPoint(89, 89);
-            gameFar.name = "far Game";
-            gameFar.create();
-
-            Games.findNearActiveGames(this);
+            //Games gameNear2 = new Games();
+            //gameNear2.latitude = 43;
+            //gameNear2.longitude = 5;
+            //gameNear2.name = "pending game";
+            //gameNear2.create();
+            //gameNear2.state = 0;
+            //Games.findPendingGames(this);
             
 
         }

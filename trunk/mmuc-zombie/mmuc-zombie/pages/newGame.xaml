@@ -6,8 +6,9 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-           xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -62,10 +63,18 @@
             		<TextBlock Text="area" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
             	</controls:PivotItem.Header>
                 <Grid>
-                    <TextBox Height="72" HorizontalAlignment="Left" Margin="12,231,0,0" Name="textBox2" Text="Latitude" VerticalAlignment="Top" Width="456" />
-                    <TextBox Height="72" HorizontalAlignment="Left" Margin="12,309,0,0" Name="textBox3" Text="Longitude" VerticalAlignment="Top" Width="456" />
-                    <Button Content="save" Height="72" HorizontalAlignment="Left" Margin="12,417,0,0" Name="saveLocation" VerticalAlignment="Top" Width="160" />
 
+                        <m:Map x:Name="MapWithPolygon" CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" 
+                               Mode="Road" Grid.Column="0" Grid.Row="1" MouseLeftButtonDown="MapWithPolygon_MouseLeftButtonDown"
+                               Height="400" VerticalAlignment="Top">
+                        <m:MapLayer x:Name="NewPolygonLayer">
+                        </m:MapLayer>
+                        </m:Map>
+                    <Button Name="btnCreatePolygon" Tag="false" Click="btnCreatePolygon_Click"
+                                    Margin="0,400,0,0"
+                                    Height="100">
+                        <TextBlock Name="txtButton">Draw area</TextBlock>
+                    </Button>
                 </Grid>
             </controls:PivotItem>
 

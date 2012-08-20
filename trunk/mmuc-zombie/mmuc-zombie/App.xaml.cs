@@ -16,6 +16,8 @@ using Parse;
 using System.IO.IsolatedStorage;
 using System.IO;
 using System.Diagnostics;
+using mmuc_zombie.app.model;
+using mmuc_zombie.app.listener;
 
 namespace mmuc_zombie
 {
