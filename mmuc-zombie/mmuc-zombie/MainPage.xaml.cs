@@ -17,10 +17,11 @@ using System.Device.Location;
 
 namespace mmuc_zombie
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : PhoneApplicationPage,MyListener
     {
 
         PhoneApplicationService service = PhoneApplicationService.Current;
+        List<MyParseObject> gameList;
 
         // Constructor
         public MainPage()
@@ -28,20 +29,33 @@ namespace mmuc_zombie
             InitializeComponent();
         }
 
+
+        public void onDataChange(List<MyParseObject> list)
+        {
+            gameList = list;
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            User user = (User)service.State["user"];
-            if (user.locationId != null)
-            {
-                Location loc = new Location(4,5);
-                loc.Id = user.locationId;
-                loc.update();
-            }
-            else
-            {
-                Location loc = new Location(2, 3);
-                loc.create(new LocationListener(user));
-            }
+            //Create 3 Games
+            Games gameNear1 = new Games();
+            gameNear1.location = new GeoPoint(1, 1);
+            gameNear1.name = "near Game 1";
+            gameNear1.create();
+
+            Games gameNear2 = new Games();
+            gameNear2.location = new GeoPoint(2, 2);
+            gameNear2.name = "near Game 2";
+            gameNear2.create();
+
+            Games gameFar = new Games();
+            gameFar.location = new GeoPoint(89, 89);
+            gameFar.name = "far Game";
+            gameFar.create();
+
+            Games.findNearActiveGames(this);
+            
+
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {

@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Device.Location;
 using Microsoft.Phone.Shell;
+using Parse;
 
 namespace mmuc_zombie.app.helper
 {
@@ -40,16 +41,14 @@ namespace mmuc_zombie.app.helper
         void onPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             User user = (User)service.State["user"];
-            if (user.locationId != null)
+            if (user.location != null)
             {
-                Location loc = new Location(e.Position.Location.Latitude, e.Position.Location.Longitude);
-                loc.Id = user.locationId;
-                loc.update();
+                user.location.Latitude = e.Position.Location.Latitude;
+                user.location.Longitude = e.Position.Location.Longitude;
             }
             else
             {
-                Location loc = new Location(e.Position.Location.Latitude, e.Position.Location.Longitude);
-                loc.create(new LocationListener(user));
+                GeoPoint loc = new GeoPoint(e.Position.Location.Latitude, e.Position.Location.Longitude);
             }
         }
 
