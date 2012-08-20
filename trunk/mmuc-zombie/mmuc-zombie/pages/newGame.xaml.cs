@@ -86,14 +86,13 @@ namespace mmuc_zombie.pages
                 var user = (User)service.State["user"];
                 game.ownerId = user.Id;
                 game.name = nameTextfield.Text;
-                game.locationId = user.locationId;
                 game.state = 0;
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
-                game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
-                    startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
-                    startTimePicker.Value.Value.Minute, 0);
-                game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
-                    endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
+               // game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
+               //     startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
+                //    startTimePicker.Value.Value.Minute, 0);
+                //game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
+                //    endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs);
             }
@@ -176,18 +175,9 @@ namespace mmuc_zombie.pages
             }
         }
 
-        public static bool pnpoly(int nvert, MyLocation[] locs, double testx, double testy)
-        {
-            int i, j;
-            bool c = false;
-            for (i = 0, j = nvert - 1; i < nvert; j = i++)
-            {
-                if (((locs[i].longitude > testy) != (locs[j].longitude > testy)) &&
-                 (testx < (locs[j].latitude - locs[i].latitude) * (testy - locs[i].longitude) / (locs[j].longitude - locs[i].longitude) + locs[i].latitude))
-                    c = !c;
-            }
-            return c;
-        }
+        
+
+
        
 
         

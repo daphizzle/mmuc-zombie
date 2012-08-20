@@ -24,8 +24,8 @@ public class Games : MyParseObject
     public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    public DateTime startTime{get;set;}
-    public DateTime endTime { get; set; }
+    //public DateTime startTime{get;set;}
+    //public DateTime endTime { get; set; }
     public string locationId { get; set; }
     public string ownerId { get; set; }
 
@@ -57,7 +57,7 @@ public class Games : MyParseObject
     static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();
-        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
+        parse.Objects.Query<Games>().Where(c => c.state ==0).Execute(r =>
             {
                 if (r.Success)
                 {

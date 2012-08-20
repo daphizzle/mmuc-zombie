@@ -82,6 +82,7 @@
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
     <Compile Include="app\model\MyLocation.cs" />
+    <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
@@ -91,6 +92,9 @@
     <Compile Include="app\listener\StartupListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\HallFame.xaml.cs">
       <DependentUpon>HallFame.xaml</DependentUpon>
@@ -163,6 +167,10 @@
     <Page Include="components\officialGame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\GameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\HallFame.xaml">
       <Generator>MSBuild:Compile</Generator>
