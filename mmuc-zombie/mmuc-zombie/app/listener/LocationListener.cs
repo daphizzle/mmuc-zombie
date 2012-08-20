@@ -8,26 +8,25 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using Microsoft.Phone.Shell;
 using System.Collections.Generic;
-using System.Diagnostics;
-using mmuc_zombie.app.helper;
+using mmuc_zombie.app.model;
 
-
-namespace mmuc_zombie
+namespace mmuc_zombie.app.listener
 {
-    public class LoginListener : MyListener
+    public class LocationListener : MyListener
     {
-        private PhoneApplicationService service = PhoneApplicationService.Current;
+        User user;
+
+        public LocationListener(User user)
+        {
+            this.user = user;
+        }
 
         public void onDataChange(List<MyParseObject> list)
         {
-            Debug.WriteLine("Logged in as" + ((User)list[0]).UserName);
             //there is only one MyParseObject
-            service.State["user"] = (User)list[0];
-            new PositionRetriever();
+            user.locationId = ((MyLocation)list[0]).Id;
+            user.update();
         }
-       
-
     }
 }

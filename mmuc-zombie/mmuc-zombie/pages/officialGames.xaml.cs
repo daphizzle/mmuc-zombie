@@ -10,19 +10,63 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Controls.Maps;
 using Microsoft.Phone.UserData;
 using mmuc_zombie.app.model;
 using Parse;
 
 namespace mmuc_zombie.pages
 {
-    public partial class OfficialGames : PhoneApplicationPage
+    public partial class OfficialGames : PhoneApplicationPage,MyListener
     {
         public OfficialGames()
         {
             InitializeComponent();
+            Games.findPendingGames(this);
+           
+            
+        }
+        public void onDataChange(List<MyParseObject>  list)
+        {
+            var parse=new Driver();
+            foreach (MyParseObject o in list)
+            {
+                 string id=o.Id;
+                 parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
+                     {
+                         if (r.Success)
+                         {
+                             Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                 {
+
+                                     drawPolygons((List<MyLocation>)r.Data.Results);
+
+                                 });
+                         }
+                     });  
+             }
         }
 
+        
+
+        private void drawPolygons(List<MyLocation> list)
+        {
+            MapPolygon newPolygon = new MapPolygon();
+            // Defines the polygon fill details
+            newPolygon.Locations = new LocationCollection();
+            newPolygon.Fill = new SolidColorBrush(Colors.Blue);
+            newPolygon.Stroke = new SolidColorBrush(Colors.Green);
+            newPolygon.StrokeThickness = 3;
+            newPolygon.Opacity = 0.8;
+            foreach (MyLocation l in list)
+            {
+                newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude,l.longitude));
+            }
+            NewPolygonLayer.Children.Add(newPolygon);
+        }
+
+ 	
+        
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             if (!loadGames())

@@ -21,7 +21,7 @@ public class User :  MyParseObject
     public string Password{get;set;}
     public string facebook { get; set; }
     public string email { get; set; }
-    public GeoPoint location { get; set; }
+    public string locationId { get; set; }
 
    
       
