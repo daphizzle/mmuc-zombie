@@ -39,13 +39,12 @@ namespace mmuc_zombie.pages
 
         private void saveButtonClick(object sender, EventArgs e)
         {
-            Location location = new Location();
             var game = new Games();
             PhoneApplicationService service = PhoneApplicationService.Current;
             var user = (User)service.State["user"];
             game.ownerId = user.Id;
             game.name = nameTextfield.Text;
-            game.locationId = user.locationId;
+            game.location = user.location;
             game.players = (int)Math.Round(playerSlider.Value*10.0);
           //  game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,startDatePicker.Value.Value.Day,startTimePicker.Value.Value.Hour,startTimePicker.Value.Value.Minute,0).ToString();
 

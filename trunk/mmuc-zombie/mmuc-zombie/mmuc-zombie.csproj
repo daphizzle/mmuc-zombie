@@ -87,7 +87,6 @@
     <Compile Include="app\listener\LoginListener.cs" />
     <Compile Include="app\listener\MyListener.cs" />
     <Compile Include="app\listener\StartupListener.cs" />
-    <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
@@ -103,10 +102,8 @@
     <Compile Include="pages\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="app\model\Game.cs" />
     <Compile Include="app\model\Games.cs" />
     <Compile Include="app\model\ImmunityMode.cs" />
-    <Compile Include="app\model\Location.cs" />
     <Compile Include="app\model\ModesPerGame.cs" />
     <Compile Include="app\model\QuarantineMode.cs" />
     <Compile Include="app\model\Queries.cs" />
