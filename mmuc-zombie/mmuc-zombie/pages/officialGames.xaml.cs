@@ -14,11 +14,15 @@ using Microsoft.Phone.Controls.Maps;
 using Microsoft.Phone.UserData;
 using mmuc_zombie.app.model;
 using Parse;
+using System.Diagnostics;
+using System.Device.Location;
 
 namespace mmuc_zombie.pages
 {
     public partial class OfficialGames : PhoneApplicationPage,MyListener
     {
+
+        List<MyLocation> middlePoints = new List<MyLocation>();
         public OfficialGames()
         {
             InitializeComponent();
@@ -38,31 +42,70 @@ namespace mmuc_zombie.pages
                          {
                              Deployment.Current.Dispatcher.BeginInvoke(() =>
                                  {
-
+                                     
                                      drawPolygons((List<MyLocation>)r.Data.Results);
 
                                  });
                          }
                      });  
              }
+            drawPushPins();
         }
 
         
 
         private void drawPolygons(List<MyLocation> list)
         {
-            MapPolygon newPolygon = new MapPolygon();
+            MyPolygon newPolygon = new MyPolygon();
             // Defines the polygon fill details
             newPolygon.Locations = new LocationCollection();
-            newPolygon.Fill = new SolidColorBrush(Colors.Blue);
-            newPolygon.Stroke = new SolidColorBrush(Colors.Green);
+            Random rand = new Random();
+            Color clr = Colors.White;
+            switch (rand.Next(5))
+            {
+                case 0: clr = Colors.Blue; break;
+                case 1: clr = Colors.Green; break;
+                case 2: clr = Colors.Orange; break;
+                case 3: clr = Colors.Yellow; break;
+                case 4: clr = Colors.Red; break;
+            }
+            newPolygon.Fill = new SolidColorBrush(clr);
+            newPolygon.Stroke = new SolidColorBrush(clr);
             newPolygon.StrokeThickness = 3;
-            newPolygon.Opacity = 0.8;
+            newPolygon.Opacity = 0.3;
             foreach (MyLocation l in list)
             {
                 newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude,l.longitude));
             }
             NewPolygonLayer.Children.Add(newPolygon);
+            
+            var tempLoc = new MyLocation(newPolygon.middlePoint().Latitude,newPolygon.middlePoint().Longitude);
+            tempLoc.gameId = list[0].gameId;
+            middlePoints.Add(tempLoc);
+        
+        }
+
+        private void drawPushPins()
+        {
+            foreach (MyLocation loc in middlePoints)
+            {
+                var p = new Pushpin();
+                p.Location = new GeoCoordinate(loc.latitude, loc.longitude);
+                p.MouseEnter += new System.Windows.Input.MouseEventHandler(polygonClick);
+                p.Name =loc.gameId;
+                p.Content = loc.gameId;
+                NewPolygonLayer.Children.Add(p);
+            }
+            MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(middlePoints[0].latitude, middlePoints[0].longitude), 0.5, 0.5));
+            MapWithPolygon.ZoomLevel = 13;
+
+        }
+
+        private void polygonClick(Object sender,MouseEventArgs e)
+        {
+            Pushpin p = (Pushpin)sender;
+            NavigationService.Navigate(new Uri("/pages/GameView.xaml?gameId="+p.Name, UriKind.Relative));
+
         }
 
  	
