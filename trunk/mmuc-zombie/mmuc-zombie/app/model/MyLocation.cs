@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
 
 namespace mmuc_zombie.app.model
 {
@@ -16,7 +17,7 @@ namespace mmuc_zombie.app.model
         public double latitude { get; set; }
         public double longitude { get; set; }
         public string gameId { get; set; }
-
+        public int number { get; set; }
         public MyLocation()
         {
         }
@@ -25,6 +26,5 @@ namespace mmuc_zombie.app.model
             latitude = lat;
             longitude = lon;
         }
-
     }
 }
