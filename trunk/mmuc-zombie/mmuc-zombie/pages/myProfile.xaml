@@ -12,7 +12,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
@@ -34,21 +34,24 @@
 				<controls:PivotItem.Header>
             		<TextBlock FontSize="54" Text="personal" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
-				
-                <Grid>
-                    <TextBox  Height="72" Margin="0,254,7,209" Name="nickname" Text="nickname" Width="436" TextAlignment="Center" Foreground="#FFC16614" Canvas.Left="1" Canvas.Top="3" HorizontalAlignment="Right" />
-                    <TextBlock Height="19" Margin="29,316,20,200" Name="textBlock1" Text="How other users will recognize you" Width="407" TextAlignment="Center" FontSize="15" Foreground="#FF969696" Canvas.Left="53" Canvas.Top="221" />
-                    <Image Height="216" Margin="110,29,118,290" Name="avatar" Stretch="Fill" Canvas.Left="21" Canvas.Top="129" Source="/mmuc-zombie;component/ext/img/avatar.png" />
+
+                <Grid x:Name="fbUserGrid" HorizontalAlignment="Center" Width="413">
+                    <TextBlock Height="19" Margin="0,344,13,197" Name="textBlock1" Text="How other users will recognize you" Width="386" TextAlignment="Center" FontSize="15" Foreground="#FF969696" Canvas.Left="53" Canvas.Top="221" HorizontalAlignment="Right" />
+                    <Canvas HorizontalAlignment="Left" Margin="13,0,0,224" Name="canvas1" Width="385" Height="320" VerticalAlignment="Bottom" Background="#FF767676">
+                        <TextBox Name="nickname" Text="nickname" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" />
+                        <Image Height="144" Name="avatar" Stretch="Fill" Canvas.Left="121" Canvas.Top="94" Source="{Binding Path=Picture.PictureUrl.Url}" Width="146" />
+                        <TextBlock Name="name" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <Image Height="32" Name="facebook" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="227" Canvas.Top="200" />
+                    </Canvas>
                 </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem >
-            	
+            <controls:PivotItem >            	
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		<TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>                                       
             	</controls:PivotItem.Header>
-				
+
                 <Grid>
                     <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,100,0,0">
                         <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="userStackPanel" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
@@ -56,8 +59,39 @@
                     </ListBox>
                     <TextBox Height="78" HorizontalAlignment="Left" Margin="33,20,0,0" Name="friendSearchtextBox" Text="" VerticalAlignment="Top" Width="394" />
                 </Grid>
+
             </controls:PivotItem>
 
+            <!--Pivot item two-->
+            <controls:PivotItem >
+                <controls:PivotItem.Header>
+                    <TextBlock FontSize="54" Text="social" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                </controls:PivotItem.Header>
+
+                <Grid x:Name="ContentGrid" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <ListBox x:Name="lbFriends" ItemsSource="{Binding Friends}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Source="{Binding PicLink}" Stretch="None" Height="60"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <StackPanel Grid.Row="1"></StackPanel>
+                </Grid>
+
+            </controls:PivotItem>
+            
             <!--Pivot item three-->
             <controls:PivotItem >
             	<controls:PivotItem.Header>

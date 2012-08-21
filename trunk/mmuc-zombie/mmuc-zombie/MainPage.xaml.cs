@@ -44,6 +44,11 @@ namespace mmuc_zombie
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            // verifying whether the user is already logged on facebook or not.
+            if (!String.IsNullOrWhiteSpace(App.AccessToken))
+            {                                
+                facebookLink.Visibility = System.Windows.Visibility.Collapsed;
+            }
         }
             
 
@@ -59,7 +64,7 @@ namespace mmuc_zombie
 
         private void facebookLink_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/pages/FacebookConnect.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/FacebookLogin.xaml", UriKind.Relative));
         }
     }
 }

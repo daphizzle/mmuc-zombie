@@ -61,6 +61,7 @@
     <Reference Include="System.Device" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Servicemodel.Web" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -74,7 +75,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="app\helper\CoreTask.cs" />
+    <Compile Include="app\facebook\FBFriends.cs" />
+    <Compile Include="app\facebook\FBUser.cs" />
     <Compile Include="app\helper\FacebookURIs.cs" />
+    <Compile Include="app\helper\JsonStringSerializer.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
     <Compile Include="app\helper\StaticHelper.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
@@ -298,6 +302,7 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="ext\img\facebook.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
