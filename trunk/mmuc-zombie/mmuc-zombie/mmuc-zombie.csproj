@@ -83,6 +83,10 @@
     <Compile Include="app\modelTest\UserTmp.cs" />
     <Compile Include="app\model\MyLocation.cs" />
     <Compile Include="app\model\MyPolygon.cs" />
+    <Compile Include="app\model\Invite.cs" />
+    <Compile Include="components\inviteFriends.xaml.cs">
+      <DependentUpon>inviteFriends.xaml</DependentUpon>
+    </Compile>
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
@@ -92,6 +96,9 @@
     <Compile Include="app\listener\StartupListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\friendsView.xaml.cs">
+      <DependentUpon>friendsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
@@ -150,8 +157,8 @@
     <Compile Include="templates\TemplatePivot.xaml.cs">
       <DependentUpon>TemplatePivot.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\Test.xaml.cs">
-      <DependentUpon>Test.xaml</DependentUpon>
+    <Compile Include="pages\CustomGames.xaml.cs">
+      <DependentUpon>CustomGames.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -160,6 +167,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\inviteFriends.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="components\myGameAvailable.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -167,6 +178,10 @@
     <Page Include="components\officialGame.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="components\friendsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\GameView.xaml">
       <SubType>Designer</SubType>
@@ -228,7 +243,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="pages\Test.xaml">
+    <Page Include="pages\CustomGames.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

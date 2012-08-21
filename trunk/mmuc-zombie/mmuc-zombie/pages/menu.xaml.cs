@@ -48,7 +48,7 @@ namespace mmuc_zombie.pages
 
         private void customGames_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/pages/Test.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/CustomGames.xaml", UriKind.Relative));
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
