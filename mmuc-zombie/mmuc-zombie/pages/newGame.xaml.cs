@@ -29,12 +29,14 @@ namespace mmuc_zombie.pages
         // through single mouse clicks.
         bool inCreatePolygonMode = false;
         MyLocation loc;
+        public List<Invite> invites=new List<Invite>();
         public NewGame()
         {
             InitializeComponent();
 
             PhoneApplicationService service = PhoneApplicationService.Current;
             User user = (User)service.State["user"];
+            string userId = user.Id;
             var parser = new Driver();
            
                 parser.Objects.Get<MyLocation>(user.locationId, r =>
@@ -42,21 +44,51 @@ namespace mmuc_zombie.pages
                     if (r.Success)
                     {
                         loc = r.Data;
-                         Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {   
-                        
-                        MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(loc.latitude, loc.longitude), 0.5, 0.5));
-                        MapWithPolygon.ZoomLevel = 13;
-
+                        parser.Objects.Query<Friend>().Where(c => c.user == userId).Execute(r2 =>
+                        {
+                            if (r2.Success)
+                            {
+                                List<Friend> friends = (List<Friend>)r2.Data.Results;
+                                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                {
+                                    MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(loc.latitude, loc.longitude), 0.5, 0.5));
+                                    MapWithPolygon.ZoomLevel = 13;
+                                    if (!loadUsers(friends))
+                                    {            
+                                        userListBox.Visibility = System.Windows.Visibility.Collapsed;
+                                    }
+                                    else
+                                    {
+                                        userListBox.Visibility = System.Windows.Visibility.Visible;
+                                    }
+                                });
+                            }
                         });
-                    }
-                });
-
+                       
+                }
+            });
+                       
             
         }
+        private bool loadUsers( List<Friend> friends)
+        {
+            /* TEST DATA */
 
-   
+            mmuc_zombie.components.inviteFriends tmpUI;
+       
+              
+                
+                foreach (Friend friend in friends)
+                {
+                     tmpUI = new mmuc_zombie.components.inviteFriends();
+                     tmpUI.nameTextBlock.Text = friend.friend;
+                     tmpUI.createInvite(friend.friend);
+                     tmpUI.invites = invites;
+                     userStackPanel.Children.Add(tmpUI);
+            }
 
+            return userStackPanel.Children.Count > 0;
+        }
      
         
 
@@ -97,7 +129,7 @@ namespace mmuc_zombie.pages
                 game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
                    endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
-                game.create(locs);
+                game.create(locs,invites);
             }
       
 

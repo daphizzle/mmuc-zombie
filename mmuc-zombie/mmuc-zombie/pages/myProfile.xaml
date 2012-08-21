@@ -49,7 +49,13 @@
             		<TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
 				
-                <Grid/>
+                <Grid>
+                    <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,100,0,0">
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="userStackPanel" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
+                        </StackPanel>
+                    </ListBox>
+                    <TextBox Height="78" HorizontalAlignment="Left" Margin="33,20,0,0" Name="friendSearchtextBox" Text="" VerticalAlignment="Top" Width="394" />
+                </Grid>
             </controls:PivotItem>
 
             <!--Pivot item three-->

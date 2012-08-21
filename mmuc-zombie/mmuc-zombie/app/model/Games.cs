@@ -18,13 +18,13 @@ using System.Diagnostics;
 public class Games : MyParseObject
 {
     //pending = 0, active = 1, finshed = 2
-    public int state { get; set; } 
+    public int state { get; set; }
     public int players { get; set; }
-    public Boolean privateGame {get;set;}
+    public Boolean privateGame { get; set; }
     public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    public DateTime? startTime{get;set;}
+    public DateTime? startTime { get; set; }
     public DateTime? endTime { get; set; }
     public string locationId { get; set; }
     public string description { get; set; }
@@ -51,14 +51,14 @@ public class Games : MyParseObject
     //            listener.onDataChange(list);
     //        }
     //    });
-        
-    
+
+
     //}
 
     static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();
-        parse.Objects.Query<Games>().Where(c => c.state ==0).Execute(r =>
+        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
             {
                 if (r.Success)
                 {
@@ -71,9 +71,9 @@ public class Games : MyParseObject
                     listener.onDataChange(list);
                 }
             });
-    }   
+    }
 
-    public void create(List<MyLocation> list)
+    public void create(List<MyLocation> list, List<Invite> invites)
     {
         var parse = new Driver();
         parse.Objects.Save(this, r =>
@@ -86,9 +86,48 @@ public class Games : MyParseObject
                         l.gameId = Id;
                         Debug.WriteLine("(" + l.latitude + "," + l.longitude + ")");
                         l.create();
-                        
+
+                    }
+                    foreach (Invite i in invites)
+                    {
+                        i.gameId = Id;
+                        i.create();
                     }
 
+                }
+            });
+    }
+
+
+    internal static void findCustomGames(MyListener listener)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId=user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        parse.Objects.Query<Invite>().Where(c => c.userId == userId).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Invite> invites=(List<Invite>)r.Data.Results;
+                    int counter = 0;
+                    foreach (Invite i in invites)
+                    {  
+                      parse.Objects.Get<Games>(i.gameId,r2 =>
+                      {
+                        if (r2.Success)
+                         {
+                             counter++;
+                             Games game = (Games)r2.Data;
+                             list.Add(game);
+                             if (counter == invites.Count)
+                             {
+                                 listener.onDataChange(list);
+                             }
+                        }
+                     });
+                  }
                 }
             });
     }
@@ -110,6 +149,7 @@ public class Games : MyParseObject
                 }
             }));
     }
+
 
 
 }
