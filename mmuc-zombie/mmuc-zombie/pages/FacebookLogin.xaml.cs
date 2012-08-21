@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using mmuc_zombie.app.helper;
+using System.Diagnostics;
 
 namespace mmuc_zombie.pages
 {
@@ -28,16 +29,26 @@ namespace mmuc_zombie.pages
 
         private void wbLogin_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
+            string strStart = FacebookURIs.m_strUrl;
             string strLoweredAddress = e.Uri.OriginalString.ToLower();
-            if (strLoweredAddress.Contains("access_token"))
+            if (strLoweredAddress.StartsWith(strStart))
+            {             
+                String strTmp = e.Uri.OriginalString.Substring(strStart.Count());
+                Uri tmp = FacebookURIs.GetTokenLoadUri(strTmp);
+                wbLogin.Navigate(tmp);
+                return;
+            }
+
+            string key = "access_token=";
+            string strTest = wbLogin.SaveToString();
+            if (strTest.Contains(key))
             {
-                int nPos = strLoweredAddress.IndexOf("access_token");
-                string strPart = strLoweredAddress.Substring(nPos + 13); // 13 acces_token=
+                int nPos = strTest.IndexOf(key);
+                string strPart = strTest.Substring(nPos + key.Count());
                 nPos = strPart.IndexOf("&");
-                strPart = strPart.Substring(0, nPos); 
+                strPart = strPart.Substring(0, nPos);
                 App.AccessToken = strPart;                
-                NavigationService.GoBack();                
-                txtError.Text = "OK";
+                NavigationService.GoBack();             
                 return;
             }
 	
