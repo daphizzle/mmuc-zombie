@@ -14,6 +14,7 @@ using Parse;
 using System.Diagnostics;
 using Microsoft.Phone.Shell;
 using System.Device.Location;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie
 {
@@ -37,22 +38,8 @@ namespace mmuc_zombie
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ////Create 2 Games
-            //Games gameNear1 = new Games();
-            //gameNear1.latitude = 45;
-            //gameNear1.longitude = 4;
-            //gameNear1.name = "finished game";
-            //gameNear1.state = 2;
-            //gameNear1.create();
-
-            //Games gameNear2 = new Games();
-            //gameNear2.latitude = 43;
-            //gameNear2.longitude = 5;
-            //gameNear2.name = "pending game";
-            //gameNear2.create();
-            //gameNear2.state = 0;
-            //Games.findPendingGames(this);
-            
+            CoreTask task = new CoreTask();
+            task.start();
 
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
