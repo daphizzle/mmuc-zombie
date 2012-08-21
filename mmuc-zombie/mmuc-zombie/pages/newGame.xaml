@@ -54,6 +54,8 @@
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="21,276,0,0" Name="textBlock4" Text="Start:" VerticalAlignment="Top" />
                     <TextBlock Height="42" HorizontalAlignment="Left" Margin="20,366,0,0" Name="textBlock5" Text="End:" VerticalAlignment="Top" />
                     <TextBox Height="72" HorizontalAlignment="Left" Margin="312,100,0,0"  Name="playerValueTextbox" Text="" VerticalAlignment="Top" Width="88" IsEnabled="False" />
+                    <TextBox Height="107" HorizontalAlignment="Left" Margin="114,427,0,0" Name="descriptionBox" Text="" VerticalAlignment="Top" Width="315" />
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="18,434,0,0" Name="descriptionBlock" Text="Description:" VerticalAlignment="Top" />
                 </Grid>
             </controls:PivotItem>
 

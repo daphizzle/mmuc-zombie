@@ -89,6 +89,7 @@ namespace mmuc_zombie.pages
                 game.ownerId = user.Id;
                 game.name = nameTextfield.Text;
                 game.state = 0;
+                game.description = descriptionBox.Text;
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
                 game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
                    startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
