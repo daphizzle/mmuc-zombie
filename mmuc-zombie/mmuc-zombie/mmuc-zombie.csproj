@@ -92,6 +92,9 @@
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
     <Compile Include="app\model\PendingGames.cs" />
+    <Compile Include="components\gamePlayed.xaml.cs">
+      <DependentUpon>gamePlayed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="components\facebookFriendView.xaml.cs">
       <DependentUpon>facebookFriendView.xaml</DependentUpon>
     </Compile>
@@ -185,6 +188,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\gamePlayed.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="components\facebookFriendView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
