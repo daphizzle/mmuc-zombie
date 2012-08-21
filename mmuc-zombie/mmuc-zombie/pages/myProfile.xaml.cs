@@ -194,7 +194,21 @@ namespace mmuc_zombie.pages
             }
             try
             {                
-                lbFriends.DataContext = JsonStringSerializer.Deserialize<FBFriends>(e.Result); ;
+                //fbFriends.DataContext = JsonStringSerializer.Deserialize<FBFriends>(e.Result); ;
+
+                FBFriends friends = JsonStringSerializer.Deserialize<FBFriends>(e.Result);
+
+                mmuc_zombie.components.facebookFriendView tmpUI;
+
+                foreach (FBUser tmp in friends.Friends)
+                {
+                    tmpUI = new mmuc_zombie.components.facebookFriendView();
+                    tmpUI.name.Text = tmp.Name;
+                    tmpUI.image.Source = new BitmapImage(new Uri(tmp.PicLink, UriKind.Absolute));
+                    tmpUI.Margin = new Thickness(0, 5, 0, 5);
+                    friendStack.Children.Add(tmpUI);
+                }
+
             }
             catch (Exception eX)
             {
