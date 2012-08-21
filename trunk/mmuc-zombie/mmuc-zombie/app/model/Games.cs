@@ -93,4 +93,23 @@ public class Games : MyParseObject
             });
     }
 
+    static public void findById(string gameId, MyListener listener)
+    {
+        var parse = new Driver();
+        parse.Objects.Get<Games>(gameId,(r=>
+            {
+                if(r.Success)
+                {
+                    var game = r.Data;
+                    List<MyParseObject> l = new List<MyParseObject>();
+                    l.Add(game);
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            listener.onDataChange(l);
+                        });
+                }
+            }));
+    }
+
+
 }
