@@ -10,7 +10,9 @@
     
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
         <TextBlock Height="30" Margin="12,10,12,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Button Height="76" HorizontalAlignment="Right" Margin="0,42,0,0" Name="join" VerticalAlignment="Top" Width="105" BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom">
+        <Button Height="76" HorizontalAlignment="Right" Margin="0,42,0,0" Name="join" VerticalAlignment="Top" Width="105" 
+                BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Bottom" Click="join_Click">
             <Button.Background>
                 <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/_next.png" Stretch="None" />
             </Button.Background>
@@ -21,6 +23,6 @@
         <TextBlock FontSize="16" Height="18" Margin="60,59,99,0" Name="endTime" Text="end time" VerticalAlignment="Top" Foreground="#FFD8D8D8" />        
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="13,59,0,0" Name="textBlock5" Text="End:" VerticalAlignment="Top" FontWeight="Bold" Width="39" />
         <TextBlock FontSize="15" Margin="13,83,99,0" Name="description" Text="Description..." TextTrimming="None" Height="35" VerticalAlignment="Top" />
-        <HyperlinkButton Content="read more" Height="20" Margin="13,120,12,0" Name="readMore" VerticalAlignment="Top" FontSize="16" Foreground="#FF6F6F6F" />
+        <!--<HyperlinkButton Content="read more" Height="20" Margin="13,120,12,0" Name="readMore" VerticalAlignment="Top" FontSize="16" Foreground="#FF6F6F6F" />-->
     </Grid>
 </UserControl>

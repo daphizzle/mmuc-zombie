@@ -38,8 +38,11 @@
                     <Grid>
                         <TextBlock Height="30" HorizontalAlignment="Left" Margin="9,10,0,0" Name="noResults" Text="No Results." VerticalAlignment="Top" Width="441" TextTrimming="None" FontSize="22" Visibility="Collapsed" />
                         <!-- RESULTS: GAMES -->
-                        <ListBox Name="gameList" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
-                            <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="gameStack" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
+                        <ListBox Name="gameList" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
+                            <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="gameStack" 
+                                        Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
+                                        Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                             </StackPanel>
                         </ListBox>
 

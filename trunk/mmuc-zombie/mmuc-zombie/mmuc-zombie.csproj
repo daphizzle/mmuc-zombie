@@ -73,17 +73,21 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="app\helper\CoreTask.cs" />
     <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
+    <Compile Include="app\helper\StaticHelper.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
     <Compile Include="app\modelTest\HallOfFame.cs" />
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
+    <Compile Include="app\model\GameLobby.cs" />
     <Compile Include="app\model\MyLocation.cs" />
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
+    <Compile Include="app\model\PendingGames.cs" />
     <Compile Include="components\inviteFriends.xaml.cs">
       <DependentUpon>inviteFriends.xaml</DependentUpon>
     </Compile>
@@ -99,6 +103,13 @@
     </Compile>
     <Compile Include="components\friendsView.xaml.cs">
       <DependentUpon>friendsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\playerView.xaml.cs">
+      <DependentUpon>playerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\ActiveGame.cs" />
+    <Compile Include="pages\GameStart.xaml.cs">
+      <DependentUpon>GameStart.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
@@ -180,6 +191,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="components\friendsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\playerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\GameStart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

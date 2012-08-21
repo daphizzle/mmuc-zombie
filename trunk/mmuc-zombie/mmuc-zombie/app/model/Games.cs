@@ -17,7 +17,7 @@ using System.Diagnostics;
 
 public class Games : MyParseObject
 {
-    //pending = 0, active = 1, finshed = 2
+    //pending = 0, waiting = 1, active = 2, finshed = 3
     public int state { get; set; }
     public int players { get; set; }
     public Boolean privateGame { get; set; }
@@ -149,6 +149,7 @@ public class Games : MyParseObject
                 }
             }));
     }
+
 
 
 

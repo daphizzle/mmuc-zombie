@@ -137,16 +137,12 @@ namespace mmuc_zombie.pages
 
         private bool loadGames()
         {
-            /* TEST DATA */
-      
             mmuc_zombie.components.officialGame tmpUI;
-            //var _parse = new Driver();
-
+         
             foreach (Games tmp in games)
             {                
-                //_parse.Objects.Save(tmp);
-                
                 tmpUI = new mmuc_zombie.components.officialGame();
+                tmpUI.gameId = tmp.Id;
                 tmpUI.gameName.Text = tmp.name;
                 tmpUI.startTime.Text = tmp.startTime.Value.ToString();
                 tmpUI.endTime.Text = tmp.endTime.Value.ToString();
