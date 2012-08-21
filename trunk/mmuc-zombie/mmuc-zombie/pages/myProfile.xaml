@@ -76,11 +76,6 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <!--<ListBox x:Name="lbFriends" ItemsSource="{Binding Friends}">
-                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="facebookFriends" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
-                        </StackPanel>
-                    </ListBox>-->
-
                     <ListBox Name="fbFriends" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                  FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
                         <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="friendStack" 
@@ -88,9 +83,7 @@
                                         Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                         </StackPanel>
                     </ListBox>
-
-
-
+                    <HyperlinkButton Content="Connect to Facebook" Height="30" HorizontalAlignment="Left" Margin="8,8,0,0" Name="oauth" VerticalAlignment="Top" Width="434" Click="oauth_Click" />
                 </Grid>
 
             </controls:PivotItem>
@@ -100,8 +93,22 @@
             	<controls:PivotItem.Header>
             		<TextBlock FontSize="54" Text="history" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
-				
-                <Grid/>
+
+                <Grid x:Name="HistoryGrid" Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListBox Name="History" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="historyStack" 
+                                        Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
+                                        Visibility="Visible" HorizontalAlignment="Center" Width="456" >
+                        </StackPanel>
+                    </ListBox>
+                    </Grid>
+                
             </controls:PivotItem>
 
             <!--Pivot item three-->

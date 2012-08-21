@@ -158,11 +158,13 @@ namespace mmuc_zombie.pages
                 fbUserGrid.DataContext = new FBUser("/mmuc-zombie;component/ext/img/avatar.png");
                 name.Visibility = Visibility.Collapsed;
                 facebook.Visibility = Visibility.Collapsed;
+                oauth.Visibility = Visibility.Visible;
             }
             else
             {                
                 name.Visibility = Visibility.Visible;
                 facebook.Visibility = Visibility.Visible;
+                oauth.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -225,6 +227,11 @@ namespace mmuc_zombie.pages
         private void loadLocalFriends()
         {
             //throw new NotImplementedException();
+        }
+
+        private void oauth_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/pages/FacebookLogin.xaml", UriKind.Relative));
         }
 
     }
