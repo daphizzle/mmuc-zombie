@@ -8,6 +8,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696"
+    xmlns:mec="clr-namespace:Microsoft.Expression.Controls;assembly=Microsoft.Expression.Controls"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -73,21 +75,22 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <ListBox x:Name="lbFriends" ItemsSource="{Binding Friends}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="80"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="{Binding PicLink}" Stretch="None" Height="60"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Name}" VerticalAlignment="Center"/>
-                                </Grid>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+
+                    <!--<ListBox x:Name="lbFriends" ItemsSource="{Binding Friends}">
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="facebookFriends" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
+                        </StackPanel>
+                    </ListBox>-->
+
+                    <ListBox Name="fbFriends" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="friendStack" 
+                                        Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
+                                        Visibility="Visible" HorizontalAlignment="Center" Width="456" >
+                        </StackPanel>
                     </ListBox>
-                    <StackPanel Grid.Row="1"></StackPanel>
+
+
+
                 </Grid>
 
             </controls:PivotItem>

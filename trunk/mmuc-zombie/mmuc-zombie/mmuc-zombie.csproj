@@ -92,6 +92,9 @@
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
     <Compile Include="app\model\PendingGames.cs" />
+    <Compile Include="components\facebookFriendView.xaml.cs">
+      <DependentUpon>facebookFriendView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="components\inviteFriends.xaml.cs">
       <DependentUpon>inviteFriends.xaml</DependentUpon>
     </Compile>
@@ -182,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\facebookFriendView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="components\inviteFriends.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -303,6 +310,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="ext\img\facebook.png" />
+    <Resource Include="ext\img\_add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
