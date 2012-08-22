@@ -26,6 +26,7 @@ namespace mmuc_zombie.app.helper
         static User user;
         static PhoneApplicationService service;
         static private List<User>lobbyUserList;
+        static private List<Message> messageList;
  
         static public void start()
         {
@@ -50,7 +51,30 @@ namespace mmuc_zombie.app.helper
         {
             check_GameStarted(check_GameStartedCallback);
             reload_LobbyUserList(reload_LobbyUserListCallback);
+            reload_ChatWindow(reload_ChatWindowCallback);
         }
+
+        static public void reload_ChatWindowCallback(Response<ResultsResponse<Message>> r)
+        {
+            if (r.Success)
+            {
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    messageList = (List<Message>)r.Data.Results;
+                    var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                    var mypage = (GameStart)currentPage;
+                    mypage.chatWindow.ItemsSource = messageList;
+                });
+            }
+        }
+
+        private static void reload_ChatWindow(Action<Response<ResultsResponse<Message>>> callback)
+        {
+            string gameId = user.activeGame;
+            var parse = new Driver();
+            parse.Objects.Query<Message>().Where(c => c.gameId == gameId).Execute(callback);
+        }
+
         static public void reload_LobbyUserListCallback(Response<ResultsResponse<User>> r)
         {
             if (r.Success)
@@ -223,6 +247,8 @@ namespace mmuc_zombie.app.helper
             parse.Objects.Query<PendingGames>().Where(c => c.Id == user.Id && dateInt >= c.startTime).Execute(callback);
 
         }
+
+       
     }
  }
 
