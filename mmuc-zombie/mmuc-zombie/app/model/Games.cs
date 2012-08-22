@@ -13,6 +13,7 @@ using Microsoft.Phone.Shell;
 using System.Collections.Generic;
 using mmuc_zombie.app.model;
 using System.Diagnostics;
+using Microsoft.Phone.Controls;
 
 
 public class Games : MyParseObject
@@ -90,10 +91,14 @@ public class Games : MyParseObject
                     }
                     foreach (Invite i in invites)
                     {
-                        i.gameId = Id;
+                        i.gameId = Id;  
                         i.create();
                     }
-
+                    var pendingGame = new PendingGames();
+                    pendingGame.gameId = Id;
+                    pendingGame.userId = this.ownerId;
+                    pendingGame.create();
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + Id, UriKind.Relative));
                 }
             });
     }
