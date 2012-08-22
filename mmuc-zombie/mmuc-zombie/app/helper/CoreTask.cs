@@ -76,7 +76,7 @@ namespace mmuc_zombie.app.helper
         }
       
 
-        static private void idleMode()
+        static public void idleMode()
         {   
             //bei einem join wird ein neuer timer gestartetund userstate auf 1 gesetzt
             timer.Stop();
