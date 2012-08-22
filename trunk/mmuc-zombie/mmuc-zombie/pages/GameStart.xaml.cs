@@ -75,5 +75,10 @@ namespace mmuc_zombie.pages
             GameLobby.deleteGame(gameId);
         }
 
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }
