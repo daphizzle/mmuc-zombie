@@ -21,6 +21,7 @@ namespace mmuc_zombie.pages
     {
         private Games game;
         private User user;
+        PhoneApplicationService service;
        
 
         public GameStart()
@@ -32,6 +33,8 @@ namespace mmuc_zombie.pages
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
                 String gameId = NavigationContext.QueryString["gameId"];
+                service = PhoneApplicationService.Current;
+                user = (User)service.State["user"];
                 getGame(gameId,getGameCallback);
         }
 
@@ -43,7 +46,14 @@ namespace mmuc_zombie.pages
         public void getGameCallback(Response<Games> r)
         {
             if (r.Success)
-                game = r.Data;
+            {
+                game = (Games)r.Data;
+                gameName.Text = game.name;
+                if (game.ownerId == user.Id)
+                {
+                    startButton.Visibility = Visibility.Visible;
+                }
+            }
         }
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
@@ -57,8 +67,7 @@ namespace mmuc_zombie.pages
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
-            PhoneApplicationService service = PhoneApplicationService.Current;
-             user = (User)service.State["user"];
+            
              var parse = new Driver();
             if (game.ownerId.Equals(user.Id))
             {
@@ -75,6 +84,52 @@ namespace mmuc_zombie.pages
             CoreTask.idleMode();
             NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
+        }
+
+
+        //Classes which are needed to select between Datatemplates
+        public abstract class DataTemplateSelector : ContentControl
+        {
+            public virtual DataTemplate SelectTemplate(object item, DependencyObject container)
+            {
+                return null;
+            }
+
+            protected override void OnContentChanged(object oldContent, object newContent)
+            {
+                base.OnContentChanged(oldContent, newContent);
+
+                ContentTemplate = SelectTemplate(newContent, this);
+            }
+        }
+
+        public class UserMessageTemplateSelector : DataTemplateSelector
+        {
+            public DataTemplate messageTemplate { get; set; }
+            public DataTemplate playerTemplate { get; set; }
+
+            public override DataTemplate SelectTemplate(object item,
+              DependencyObject container)
+            {
+                if (item is User)
+                    return playerTemplate;
+                return messageTemplate;
+            }
+        }
+
+        private void sendButton_Click(object sender, RoutedEventArgs e)
+        {
+            string message = user.UserName + ": " + messageInput.Text;
+            messageInput.Text = "";
+            Message msg = new Message();
+            msg.gameId = game.Id;
+            msg.msg = message;
+            msg.create();
+        }
+
+        private void chatWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
         }
       
           

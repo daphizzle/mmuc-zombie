@@ -29,9 +29,13 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="530"/>
+                <RowDefinition Height="380"/>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <TextBlock Name="gameName" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top"
+                       TextAlignment="Center" Height="90" Width="400"/>
             <ListBox Name="playerList" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                  FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
                 <ListBox.ItemTemplate>
@@ -40,16 +44,39 @@
                                         Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
                                         Visibility="Visible" HorizontalAlignment="Center" 
                                         Width="456" Grid.Row="0">
-                            <TextBlock Height="30" Margin="294,10,12,0" Text="{Binding Id}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-                            <!--<Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage" Margin="13,10,240,12" />-->
+                            <TextBlock Height="30" Margin="50,50,12,0" Text="{Binding UserName}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+                            <Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage" Margin="13,10,240,12" />
                         </StackPanel>
                     </DataTemplate>
-              </ListBox.ItemTemplate>
-              
+                </ListBox.ItemTemplate>
+
             </ListBox>
-            <Button Name="cancelButton" Content="Leave Game" Click="cancelButton_Click" Margin="-2,528,244,2" Grid.RowSpan="2" />
-            <Button Name="startButton" Content="Start Game" Click="startButton_Click" Margin="242,528,0,2" 
-                    Visibility="Collapsed" Grid.RowSpan="2" />
+            <ListBox IsEnabled="False" Name="chatWindow" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
+                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0" SelectionChanged="chatWindow_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="messageStack" 
+                                        Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
+                                        Visibility="Visible" HorizontalAlignment="Center" 
+                                        Width="456" Grid.Row="0">
+                            <TextBlock Height="30" Margin="5,5,12,0" Text="{Binding msg}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+            <TextBox Name="messageInput" Text ="" Grid.Row="1" Margin="-7,93,85,89" Grid.RowSpan="3" />
+            <Button Content="Send" Grid.Row="1" Height="76" HorizontalAlignment="Left" Margin="352,87,0,0"
+                    Name="sendButton" VerticalAlignment="Top" Width="110" 
+                    Grid.RowSpan="3" Click="sendButton_Click" />
+            <Button Name="cancelButton" Content="Leave Game" 
+                    Click="cancelButton_Click" Margin="-2,0,244,2" 
+                    Grid.Row="3" Height="100"
+                    VerticalAlignment="Bottom" />
+            <Button Name="startButton" Content="Start Game" 
+                    Click="startButton_Click" Margin="242,528,0,2" 
+                    Visibility="Collapsed" Height="100" Grid.Row="3" />
+            
         </Grid>
     </Grid>
  

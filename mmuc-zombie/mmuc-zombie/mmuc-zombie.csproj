@@ -88,6 +88,7 @@
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
     <Compile Include="app\model\GameLobby.cs" />
+    <Compile Include="app\model\Message.cs" />
     <Compile Include="app\model\MyLocation.cs" />
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
