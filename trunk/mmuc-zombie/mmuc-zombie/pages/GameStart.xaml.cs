@@ -16,7 +16,7 @@ using Parse;
 
 namespace mmuc_zombie.pages
 {
-    public partial class GameStart : PhoneApplicationPage,MyListener
+    public partial class GameStart : PhoneApplicationPage
     {
         private Games game;
         private User user;
