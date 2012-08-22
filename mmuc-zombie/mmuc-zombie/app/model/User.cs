@@ -14,9 +14,15 @@ using System.Diagnostics;
 
 public class User :  MyParseObject
 {
+    public string activeGame { get; set; }
 
 
-
+    public int status { get; set; }
+    //int=0: "idle mode" he is doing nothing, he ha no pending games; no timertask is running, if he joins a game he switch to status 1
+    //int=1: "pending-games mode" he waits for games to start. timertask checks if game is started. if game started he switch to status 2. if he leaves all pending games he switch to status 1.
+    //int=2: "lobby-mode" user has joined a game , timertask checks if gameowner creates a game. if he does user switch to status 3. user can leave:if he has pending games left he switch to status 1, if not he switch to status 0.
+    //int 3: "ingame" mode  many things are checked ...(infection, userlocation ...)if he leaves a game: it is checked if he has pending events if yes he switches to status 1 else 0
+    
     public string UserName{get;set;}
     public string Password{get;set;}
     public string facebook { get; set; }
