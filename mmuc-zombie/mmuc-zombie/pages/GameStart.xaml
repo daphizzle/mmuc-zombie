@@ -34,11 +34,18 @@
             </Grid.RowDefinitions>
             <ListBox Name="playerList" Grid.Row="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
                                  FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
-                <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="playerStack" 
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="playerStack" 
                                         Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
                                         Visibility="Visible" HorizontalAlignment="Center" 
                                         Width="456" Grid.Row="0">
-                </StackPanel>
+                            <TextBlock Height="30" Margin="294,10,12,0" Text="{Binding userName}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+                            <!--<Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage" Margin="13,10,240,12" />-->
+                        </StackPanel>
+                    </DataTemplate>
+              </ListBox.ItemTemplate>
+              
             </ListBox>
             <Button Name="cancelButton" Content="Leave Game" Click="cancelButton_Click" Margin="-2,528,244,2" Grid.RowSpan="2" />
             <Button Name="startButton" Content="Start Game" Click="startButton_Click" Margin="242,528,0,2" 

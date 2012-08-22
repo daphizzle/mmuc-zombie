@@ -76,6 +76,9 @@ public class Games : MyParseObject
 
     public void create(List<MyLocation> list, List<Invite> invites)
     {
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+
         var parse = new Driver();
         parse.Objects.Save(this, r =>
             {
@@ -94,11 +97,21 @@ public class Games : MyParseObject
                         i.gameId = Id;  
                         i.create();
                     }
-                    var pendingGame = new PendingGames();
-                    pendingGame.gameId = Id;
-                    pendingGame.userId = this.ownerId;
-                    pendingGame.create();
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + Id, UriKind.Relative));
+                    user.activeGame = Id;
+                    user.status = 1;
+                    parse.Objects.Update(user.Id,user,(ro=>
+                        {
+                            if(ro.Success)
+                            {
+                                Debug.WriteLine("Update works!");
+                            }else{
+                                Debug.WriteLine(ro.Error.Message);
+                            }
+                        }));
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + Id, UriKind.Relative));
+                        });
                 }
             });
     }

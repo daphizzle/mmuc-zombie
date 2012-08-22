@@ -33,7 +33,6 @@ namespace mmuc_zombie.app.helper
             timer.Interval = new TimeSpan(0, 1, 0);
             PhoneApplicationService service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
-            //to see the state of the user write it into the service
             timer.Start();
         }
 

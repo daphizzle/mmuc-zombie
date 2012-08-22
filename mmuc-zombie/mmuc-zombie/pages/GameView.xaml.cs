@@ -18,7 +18,7 @@ namespace mmuc_zombie.pages
     public partial class GameView : PhoneApplicationPage, MyListener
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        Roles role = new Roles();
+        PendingGames pGame = new PendingGames();
 
         public GameView()
         {
@@ -35,9 +35,10 @@ namespace mmuc_zombie.pages
         private void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             User user = (User)service.State["user"];
-            role.userId = user.Id;
-            role.create();
-                            
+            user.status = 1;
+            
+            pGame.userId = user.Id;
+            pGame.create();
         }
 
         public void onDataChange(List<MyParseObject> l)
@@ -54,11 +55,9 @@ namespace mmuc_zombie.pages
                 StartTime.Text = ((DateTime)game.startTime).ToString();
                 EndTime.Text = ((DateTime)game.endTime).ToString();
                 Description.Text = game.description;
+                //set relevant data for pending game
+                pGame.gameId = game.Id;
 
-                //set the relevant data for joining the game
-                role.gameId = game.Id;
-                role.startTime = game.startTime;
-                role.endTime = game.endTime;
             }
             if (o is PendingGames)
             {
