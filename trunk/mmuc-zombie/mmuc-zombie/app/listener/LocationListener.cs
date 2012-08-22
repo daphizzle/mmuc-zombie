@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using mmuc_zombie.app.model;
+using Parse;
 
 namespace mmuc_zombie.app.listener
 {
@@ -25,8 +26,9 @@ namespace mmuc_zombie.app.listener
         public void onDataChange(List<MyParseObject> list)
         {
             //there is only one MyParseObject
-            user.locationId = ((MyLocation)list[0]).Id;
-            user.update();
+            string locId = ((MyLocation)list[0]).Id;
+            var parse = new Driver();
+            parse.Objects.Update<User>(user.Id).Set(u => u.locationId, locId).Execute();
         }
     }
 }

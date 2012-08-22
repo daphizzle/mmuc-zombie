@@ -98,10 +98,6 @@ namespace mmuc_zombie.pages
             playerValueTextbox.Text = value.ToString() ;
         }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
 
         private void saveButtonClick(object sender, EventArgs e)
         {

@@ -35,6 +35,8 @@ namespace mmuc_zombie.app.model
             });
         }
 
+
+        [Obsolete("Different way of finding pending games implemented")]
         public static void isPendingGamesStarted(User user, DateTime date, MyListener listener)
         {
             var parser = new Driver();

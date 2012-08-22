@@ -165,8 +165,8 @@ namespace mmuc_zombie.app.helper
 
 
 
-        ///////////////////////////////////////////////////////////////////
-        //isnt used atm
+
+        [Obsolete("new way implemented")]
         public void check_pendingGameStartedCallback(Response<ResultsResponse<PendingGames>> r)
         {
              if (r.Success)
@@ -183,7 +183,8 @@ namespace mmuc_zombie.app.helper
                 else check_noPendingGames(check_noPendingGamesCallBack);
              }
         }
-        //inst used atm
+
+        [Obsolete("new way implemented")]
         private void  check_noPendingGamesCallBack(Response<ResultsResponse<PendingGames>> r)
         {
              if (r.Success)
@@ -197,21 +198,21 @@ namespace mmuc_zombie.app.helper
              }
         }
 
-        //isnt used atm
+        [Obsolete("new way implemented")]
         private void check_noPendingGames(Action<Response<ResultsResponse<PendingGames>>> callback)
         {
             string userId = user.Id;
             var parse = new Driver();
             parse.Objects.Query<PendingGames>().Where(c => c.Id == user.Id).Execute(callback);
         }
-        //isnt used atm
+        [Obsolete("new way implemented")]
         private void pendingMode()
         {
             //default status leaved der user aus einer lobby/game, oder ein game endet oder wird abgebrochen, switchen alle user back in den mode
             //ein user wird in die pending liste geadded in dem  moment wo er ein game joined. Falls ein game für einen user beendet ist wird er wieder gelöscht. falls er a
             check_pendingGameStarted(check_pendingGameStartedCallback);
         }
-        //isnt used atm
+       [Obsolete("new way implemented")]
         private void check_pendingGameStarted(Action<Response<ResultsResponse<PendingGames>>> callback)
         {
             string userId = user.Id;

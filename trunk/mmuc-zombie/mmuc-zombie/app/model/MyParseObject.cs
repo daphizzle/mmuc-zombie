@@ -44,9 +44,13 @@ public class MyParseObject :ParseObject{
         });
    
     }
+
+    [Obsolete("update very buggy in parse api")]
     public void update()  {
         update(null);
     }
+
+    [Obsolete("update very buggy in parse api")]
     public Boolean update(MyListener listener)
     {
         String s = this.GetType().Name;
