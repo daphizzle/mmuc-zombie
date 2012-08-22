@@ -13,6 +13,7 @@ using Microsoft.Phone.Controls;
 using mmuc_zombie.app.model;
 using Microsoft.Phone.Shell;
 using Parse;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
@@ -76,6 +77,7 @@ namespace mmuc_zombie.pages
                 {
                 });
             }
+            CoreTask.idleMode();
             NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
         }
