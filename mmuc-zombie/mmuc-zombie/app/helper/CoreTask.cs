@@ -113,9 +113,12 @@ namespace mmuc_zombie.app.helper
                     parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
                     {
                     });
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
-                }
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
+                        });
+                }
             }
         }
 
