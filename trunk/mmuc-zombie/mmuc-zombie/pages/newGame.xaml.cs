@@ -130,6 +130,7 @@ namespace mmuc_zombie.pages
                    endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs,invites);
+               
             }
       
 
