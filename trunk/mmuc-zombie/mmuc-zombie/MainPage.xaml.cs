@@ -38,8 +38,6 @@ namespace mmuc_zombie
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CoreTask task = new CoreTask();
-            task.start();
 
         }
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)

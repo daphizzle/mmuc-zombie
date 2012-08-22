@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using mmuc_zombie.app.model;
 using System.Diagnostics;
 using Microsoft.Phone.Controls;
+using mmuc_zombie.app.helper;
 
 
 public class Games : MyParseObject
@@ -97,17 +98,17 @@ public class Games : MyParseObject
                         i.gameId = Id;  
                         i.create();
                     }
-                    user.activeGame = Id;
                     user.status = 1;
-                    parse.Objects.Update(user.Id,user,(ro=>
+                    user.activeGame = Id;
+                    service.State["user"] = user; 
+                    parse.Objects.Update<User>(user.Id).Set(u=>u.status,1).Set(u=>user.activeGame,Id).Execute(ro=>
                         {
-                            if(ro.Success)
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>
                             {
-                                Debug.WriteLine("Update works!");
-                            }else{
-                                Debug.WriteLine(ro.Error.Message);
-                            }
-                        }));
+                                
+                                CoreTask.start();
+                            });
+                               });
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + Id, UriKind.Relative));

@@ -12,13 +12,15 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using mmuc_zombie.app.model;
+using Parse;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
     public partial class GameView : PhoneApplicationPage, MyListener
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        PendingGames pGame = new PendingGames();
+        String gameId;
 
         public GameView()
         {
@@ -27,18 +29,31 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            String gameId = NavigationContext.QueryString["gameId"];
+            gameId = NavigationContext.QueryString["gameId"];
             Games.findById(gameId,this);
-            PendingGames.findUsersByGameId(gameId, this);
+
         }
 
         private void JoinButton_Click(object sender, RoutedEventArgs e)
         {
             User user = (User)service.State["user"];
+            var parse = new Driver();
             user.status = 1;
+            user.activeGame = gameId;
+            service.State["user"] = user;
+            parse.Objects.Update<User>(user.Id).Set(u => u.status, 1).Set(u => user.activeGame, gameId).Execute(ro =>
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+
+                        CoreTask.start();
+                    });
+                });
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + gameId, UriKind.Relative));
+                });
             
-            pGame.userId = user.Id;
-            pGame.create();
         }
 
         public void onDataChange(List<MyParseObject> l)
@@ -55,14 +70,8 @@ namespace mmuc_zombie.pages
                 StartTime.Text = ((DateTime)game.startTime).ToString();
                 EndTime.Text = ((DateTime)game.endTime).ToString();
                 Description.Text = game.description;
-                //set relevant data for pending game
-                pGame.gameId = game.Id;
 
-            }
-            if (o is PendingGames)
-            {
-                //there are many roles, but we only need the count
-                RegPlayers.Text = "" + l.Count;
+
             }
         }
     }

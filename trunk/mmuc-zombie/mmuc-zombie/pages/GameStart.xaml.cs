@@ -61,16 +61,21 @@ namespace mmuc_zombie.pages
         {
             PhoneApplicationService service = PhoneApplicationService.Current;
              user = (User)service.State["user"];
-            if (game.ownerId.Equals(user.activeGame))
+             var parse = new Driver();
+            if (game.ownerId.Equals(user.Id))
             {
-                game.state = 3; // Game is canceled
-                game.update();
+                
+                parse.Objects.Update<Games>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
             }
             else
             {
-                user.activeGame = "";
                 user.status = 0;
-                user.update();
+                user.activeGame = "";
+                service.State["user"] = user;
+                parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
+                {
+                });
+
                 NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
             }
 

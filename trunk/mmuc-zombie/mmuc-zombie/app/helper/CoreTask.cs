@@ -22,22 +22,22 @@ namespace mmuc_zombie.app.helper
     public class CoreTask 
     {
 
-        DispatcherTimer timer = new DispatcherTimer();
-        User user;
-       
-        private List<User>lobbyUserList;
+        static DispatcherTimer timer = new DispatcherTimer();
+        static User user;
+        static PhoneApplicationService service;
+        static private List<User>lobbyUserList;
  
-        public void start()
+        static public void start()
         {
             timer.Tick += new EventHandler(timerTask);
-            timer.Interval = new TimeSpan(0, 1, 0);
-            PhoneApplicationService service = PhoneApplicationService.Current;
+            timer.Interval = new TimeSpan(0, 0, 10);
+            service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
             timer.Start();
         }
 
 
-        public void timerTask (object Sender,EventArgs e){
+        static public void timerTask (object Sender,EventArgs e){
             if (user.status==0)
                 idleMode();
             else if (user.status==1)
@@ -46,69 +46,80 @@ namespace mmuc_zombie.app.helper
                 ingameMode();
         }
 
-        private void lobbyMode()
+        static private void lobbyMode()
         {
             check_GameStarted(check_GameStartedCallback);
             reload_LobbyUserList(reload_LobbyUserListCallback);
         }
-        public void reload_LobbyUserListCallback(Response<ResultsResponse<User>> r)
+        static public void reload_LobbyUserListCallback(Response<ResultsResponse<User>> r)
         {
             if (r.Success)
             {
-                 lobbyUserList = (List<User>)r.Data.Results;
-                 var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                 var mypage = (GameStart)currentPage;
-                 mypage.playerList.ItemsSource = lobbyUserList;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        lobbyUserList = (List<User>)r.Data.Results;
+                        var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                        var mypage = (GameStart)currentPage;
+                        mypage.playerList.ItemsSource = lobbyUserList;
+                    });
             }
         }
-        private void reload_LobbyUserList(Action<Response<ResultsResponse<User>>> callback)
+        static private void reload_LobbyUserList(Action<Response<ResultsResponse<User>>> callback)
         {
             string gameId = user.activeGame;
             var parse = new Driver();
             parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
         }
-        private void ingameMode()
+        static private void ingameMode()
         {
  	        throw new NotImplementedException();
         }
       
 
-        private void idleMode()
+        static private void idleMode()
         {   
             //bei einem join wird ein neuer timer gestartetund userstate auf 1 gesetzt
             timer.Stop();
         }
 
-         private void check_GameStarted( Action<Response<Games>> callback)
+         static private void check_GameStarted( Action<Response<Games>> callback)
         {   
             string gameId=user.activeGame;
             var parse = new Driver();
             parse.Objects.Get<Games>(gameId,callback);
 
         }
-        public void check_GameStartedCallback(Response<Games> r)
+        static public void check_GameStartedCallback(Response<Games> r)
         {
             if(r.Success)
             {
+                var parse = new Driver();
                 var game = r.Data;
                 if (game.state == 1) //falls auf gamestart geklickt wird sollte game.state auf 1 gesetzt werden
                 {
+
                     user.status = 2;
-                    user.update();
+                    service.State["user"] = user;
+                    parse.Objects.Update<User>(user.Id).Set(u => u.status, 2).Execute(ro =>
+                    {
+                    });
                     //switching to gameview
                 }
                 else if (game.state == 3)
                 {
                     user.status = 0;
                     user.activeGame = "";
-                    user.update();
+                    service.State["user"] = user;
+                    parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
+                    {
+                    });
                     (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
                 }
 
             }
         }
 
-        private  T ListFindHelper<T>(DependencyObject parentElement) where T : DependencyObject
+        static private  T ListFindHelper<T>(DependencyObject parentElement) where T : DependencyObject
         {
             var count = VisualTreeHelper.GetChildrenCount(parentElement);
             if (count == 0)

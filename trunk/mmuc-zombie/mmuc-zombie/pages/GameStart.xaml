@@ -40,7 +40,7 @@
                                         Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
                                         Visibility="Visible" HorizontalAlignment="Center" 
                                         Width="456" Grid.Row="0">
-                            <TextBlock Height="30" Margin="294,10,12,0" Text="{Binding userName}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+                            <TextBlock Height="30" Margin="294,10,12,0" Text="{Binding Id}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
                             <!--<Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage" Margin="13,10,240,12" />-->
                         </StackPanel>
                     </DataTemplate>
