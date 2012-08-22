@@ -18,8 +18,6 @@ public class Roles : MyParseObject
         public DateTime? endTime { get; set; }
         public DateTime? startTime { get; set; }
         public int rank { get; set; }
-        //gets id from MyParsobject so not needed imho
-        //public string roleId { get; set; }
         public string roleType { get; set; }
 
     }

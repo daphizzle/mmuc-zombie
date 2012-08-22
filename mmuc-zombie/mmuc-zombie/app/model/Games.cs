@@ -33,30 +33,6 @@ public class Games : MyParseObject
     public string ownerId { get; set; }
 
 
-    //static public void findNearActiveGames(MyListener listener)
-    //{
-    //    PhoneApplicationService service = PhoneApplicationService.Current;
-    //    var parse = new Driver();
-    //    User user = (User)service.State["user"];
-    //    var latitudeOffsetUp = user.latitude + 10;
-    //    var latitudeOffsetDown = user.latitude - 10;
-    //    parse.Objects.Query<Games>().Where(c => c.latitude < latitudeOffsetUp && c.latitude > latitudeOffsetDown).Execute(r =>
-    //    {
-    //        if (r.Success)
-    //        {
-    //            List<Games> found = (List<Games>)r.Data.Results;
-    //            List<MyParseObject> list = new List<MyParseObject>();
-    //            foreach (Games g in found)
-    //            {
-    //                list.Add(g);
-    //            }
-    //            listener.onDataChange(list);
-    //        }
-    //    });
-
-
-    //}
-
     static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();

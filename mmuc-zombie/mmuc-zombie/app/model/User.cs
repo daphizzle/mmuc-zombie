@@ -58,23 +58,7 @@ public class User :  MyParseObject
         }
     }
 
-    //public static void findByGameId(string gameId, MyListener listener)
-    //{
-    //    var parser = new Driver();
-    //    parser.Objects.Query<>().Where(c =>c.ga(gameId,r =>
-    //        {
-    //            if(r.Success)
-    //            {
-    //                var user = r.Data;
-    //                List<MyParseObject> l = new List<MyParseObject>();
-    //                l.Add(user);
-    //                Deployment.Current.Dispatcher.BeginInvoke(()=>
-    //                    {
-    //                        listener.onDataChange(l);
-    //                    });
-    //            }
-    //}
-        
+
  
     
 }

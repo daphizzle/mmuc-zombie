@@ -46,9 +46,10 @@ namespace mmuc_zombie.app.helper
             User user = (User)service.State["user"];
             if (user.locationId != null)
             {
-                MyLocation loc = new MyLocation(e.Position.Location.Latitude, e.Position.Location.Longitude);
-                loc.Id = user.locationId;
-                loc.update();
+                double lat = e.Position.Location.Latitude;
+                double lon = e.Position.Location.Longitude;
+                var parse = new Driver();
+                parse.Objects.Update<MyLocation>(user.locationId).Set(u => u.latitude, lat).Set(u => u.longitude, lon).Execute();
             }
             else
             {

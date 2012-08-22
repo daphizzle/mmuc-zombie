@@ -47,9 +47,6 @@ namespace mmuc_zombie.pages
         }
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            game.state = 1;
-            game.update();
-            fillRolesPerGameTable();
             
         }
 
@@ -68,15 +65,13 @@ namespace mmuc_zombie.pages
                 
                 parse.Objects.Update<Games>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
             }
-            else
+            user.status = 0;
+            user.activeGame = "";
+            service.State["user"] = user;
+            parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
             {
-                user.status = 0;
-                user.activeGame = "";
-                service.State["user"] = user;
-                parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
-                {
-                });
-            }
+            });
+            
             CoreTask.idleMode();
             NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
