@@ -75,9 +75,8 @@ namespace mmuc_zombie.pages
                 parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
                 {
                 });
-
-                NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
             }
+            NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
         }
       
