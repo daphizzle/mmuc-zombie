@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Parse;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Phone.Shell;
 
 public class User :  MyParseObject
 {
@@ -31,6 +32,8 @@ public class User :  MyParseObject
 
     public new void  update()
     {
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        service.State["user"] = this ;
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
             Set(u => u.status, status).
@@ -45,8 +48,9 @@ public class User :  MyParseObject
                 {
                     if (r.Success)
                         Debug.WriteLine("User : " + Id + " successfull updated");
-                
+                    
                 });
+        
     }
    
 

@@ -41,7 +41,7 @@ namespace mmuc_zombie.app.helper
             newPolygon.Fill = new SolidColorBrush(clr);
             newPolygon.Stroke = new SolidColorBrush(Colors.Red);
             newPolygon.StrokeThickness = 3;
-            newPolygon.Opacity = 0.1;
+            newPolygon.Opacity = 0.5;
             var newlist = list.OrderBy(x => x.number).ToList();
             foreach (MyLocation l in newlist)
             {

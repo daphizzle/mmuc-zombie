@@ -44,6 +44,8 @@ namespace mmuc_zombie.pages
         }
         public void getPinsData()
         {
+            locationList = new List<MyLocation>();
+            roleList = new List<Roles>();
             Debug.WriteLine("getPinsData");
             Query.getUsersByGame(user.activeGame, r =>
             {
@@ -51,34 +53,40 @@ namespace mmuc_zombie.pages
                 {
                     userList = (List<User>)r.Data.Results;
                     Debug.WriteLine("got Users");
-                    String[] locationIds = new String[userList.Count];
-                    String[] roleIds = new String[userList.Count];
-                    for (int i = 0; i < userList.Count; i++)
-                    {
-                        locationIds[i] = userList[i].locationId;
-                        roleIds[i] = userList[i].activeRole;
-                    }
-                    Query.getRoles(user.activeGame, r0 =>
-                    {
-                        if (r0.Success)
-                        {
-                            Debug.WriteLine("got Roles");
-                            roleList = (List<Roles>)r0.Data.Results;
-                            Query.getLocations(user.activeGame, r1 =>
-                            {
-                                if (r1.Success)
-                                {
 
-                                    Debug.WriteLine("got locations");
-                                    locationList = (List<MyLocation>)r1.Data.Results;
+                    foreach (User u in userList)
+                    {
+                        Query.getRole(u.activeRole, r0 =>
+                        {
+                            if (r0.Success)
+                            {
+                                Debug.WriteLine("got Roles");
+                               
                                     Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                    {
-                                        drawPins();
-                                    });
-                                }
-                            });
-                        }
-                    });
+                                      {
+                                          roleList.Add(r0.Data);
+                                if (userList.Count == roleList.Count && userList.Count == locationList.Count)
+                                    drawPins();
+                                      });
+                            }
+                        });
+                        Query.getLocation(u.locationId, r0 =>
+                        {
+                            if (r0.Success)
+                            {
+                                Debug.WriteLine("got Locations");
+                               
+                                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                      {
+                                          locationList.Add(r0.Data);
+                                          if (userList.Count == roleList.Count && userList.Count == locationList.Count)
+                                              drawPins();
+                                      });
+                            }
+                        });
+
+
+                    }
                 }
             });
 
@@ -86,6 +94,7 @@ namespace mmuc_zombie.pages
 
         private void drawPins()
         {
+            mapLayer.Children.Clear();
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
@@ -95,6 +104,8 @@ namespace mmuc_zombie.pages
                 Debug.WriteLine("Role" + roleList[i]);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
+                
+               
             //    System.Windows.Controls.Image img = new System.Windows.Controls.Image();
             //    img.Source = new BitmapImage(new Uri("/Images/myLocation.png", UriKind.Relative));
                 if (roleList[i].roleType.Equals("Zombie"))
@@ -121,8 +132,14 @@ namespace mmuc_zombie.pages
         {
             if (r.Success)
             {
-                var list = (List<MyLocation>)r.Data.Results;
-                mapLayer.Children.Add(StaticHelper.drawPolygon(list, Colors.White));
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        var list = (List<MyLocation>)r.Data.Results;
+                        map.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(list[0].latitude, list[0].longitude), 0.5, 0.5));
+                        map.ZoomLevel = 13;
+                        gameAreaLayer.Children.Add(StaticHelper.drawPolygon(list, Colors.Yellow));
+
+                    });
             }
 
         }

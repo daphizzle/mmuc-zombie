@@ -28,7 +28,8 @@ namespace mmuc_zombie.app.listener
             //there is only one MyParseObject
             string locId = ((MyLocation)list[0]).Id;
             var parse = new Driver();
-            parse.Objects.Update<User>(user.Id).Set(u => u.locationId, locId).Execute();
+            user.locationId = locId;
+            user.update();
         }
     }
 }

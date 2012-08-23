@@ -23,7 +23,8 @@
                     <m:Map.Center>
                         <my:GeoCoordinate Altitude="NaN" Course="NaN" HorizontalAccuracy="NaN" Latitude="49" Longitude="5" Speed="NaN" VerticalAccuracy="NaN" />
                     </m:Map.Center>
-                    <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
+                <m:MapLayer x:Name="gameAreaLayer" Height="Auto" Width="Auto"/>
+                <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
                     </m:MapLayer>
                 </m:Map>
             </Grid>
