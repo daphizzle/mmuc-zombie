@@ -135,13 +135,177 @@ namespace mmuc_zombie.pages
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         var list = (List<MyLocation>)r.Data.Results;
-                        map.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(list[0].latitude, list[0].longitude), 0.5, 0.5));
-                        map.ZoomLevel = 13;
+                        double west = int.MaxValue;
+                        double east = int.MinValue;
+                        double north = int.MinValue;
+                        double south = int.MaxValue;
+                        foreach (MyLocation l in list)
+                        {
+                            if (l.latitude < west)
+                                west = l.latitude;
+                            if (l.latitude > east)
+                                east = l.latitude;
+                            if (l.longitude < south)
+                                south = l.longitude;
+                            if (l.longitude > north)
+                                north = l.longitude;
+                        }
+                        var mid = new GeoCoordinate();
+                        double lat = 0;
+                        double lon = 0;
+                        foreach (MyLocation g in list)
+                        {
+                            lat += g.latitude;
+                            lon += g.longitude;
+                        }
+                        mid.Latitude = lat / list.Count;
+                        mid.Longitude = lon / list.Count;
+                        double widthE = east - mid.Latitude;
+                        double widthW = mid.Latitude - west;
+                        double heightN = north - mid.Longitude;
+                        double heightS = mid.Longitude - south;
+                        double width = 0;
+                        double height = 0;
+                        if (widthE > widthW)
+                        {
+                            width = widthE;
+                        }
+                        else
+                        {
+                            width = widthW;
+                        }
+                        if (heightN > heightS)
+                        {
+                            height = heightN;
+                        }
+                        else
+                        {
+                            height = heightS;
+                        }
+                        if (height > width)
+                        {
+                            width = height;
+                        }
+                        else
+                        {
+                            height = width;
+                        }
+
+                        map.SetView(new LocationRect(mid,height,width));
                         gameAreaLayer.Children.Add(StaticHelper.drawPolygon(list, Colors.Yellow));
 
                     });
             }
 
         }
+
+        private void computeCorners(List<MyLocation> list,double east, double west, double north, double south)
+        {
+
+        }
+
+        
+        private void map_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
+        
+        }
+
+
+
+        private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_MapZoom(object sender, MapZoomEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_KeyUp(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_MapPan(object sender, MapDragEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+
+        private void map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_ViewChangeEnd(object sender, MapEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_ViewChangeStart(object sender, MapEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        
+        private void map_ViewChangeOnFrame(object sender, MapEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+        private void map_TargetViewChanged(object sender, MapEventArgs e)
+        {
+            e.Handled = true;
+        }
+
+
+
+        private void map_MouseEnter(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void map_MouseLeave(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void map_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+        }
+
     }
 }
