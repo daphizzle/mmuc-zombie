@@ -94,18 +94,19 @@ namespace mmuc_zombie.pages
 
         private void drawPins()
         {
+            debug.Text = "";
             mapLayer.Children.Clear();
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
-                p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
+                p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                 Debug.WriteLine("-----------------------------------");
                 Debug.WriteLine("User" + userList[i].Id);
                 Debug.WriteLine("Location " + locationList[i]);
                 Debug.WriteLine("Role" + roleList[i]);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
-                
+                debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].latitude + ")\n";
                
                 if (roleList[i].roleType.Equals("Zombie"))
                 {
@@ -203,113 +204,110 @@ namespace mmuc_zombie.pages
 
         }
 
-        private void computeCorners(List<MyLocation> list,double east, double west, double north, double south)
-        {
 
-        }
 
         
-        private void map_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            e.Handled = true;
+        //private void map_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
+        //{
+        //    e.Handled = true;
         
-        }
+        //}
 
 
 
-        private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_MapZoom(object sender, MapZoomEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_MapZoom(object sender, MapZoomEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_KeyUp(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_KeyDown(object sender, KeyEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_MapPan(object sender, MapDragEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_MapPan(object sender, MapDragEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
 
-        private void map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_ViewChangeEnd(object sender, MapEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ViewChangeEnd(object sender, MapEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_ViewChangeStart(object sender, MapEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ViewChangeStart(object sender, MapEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
         
-        private void map_ViewChangeOnFrame(object sender, MapEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ViewChangeOnFrame(object sender, MapEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
-        private void map_TargetViewChanged(object sender, MapEventArgs e)
-        {
-            e.Handled = true;
-        }
+        //private void map_TargetViewChanged(object sender, MapEventArgs e)
+        //{
+        //    e.Handled = true;
+        //}
 
 
 
-        private void map_MouseEnter(object sender, MouseEventArgs e)
-        {
+        //private void map_MouseEnter(object sender, MouseEventArgs e)
+        //{
             
-        }
+        //}
 
-        private void map_MouseLeave(object sender, MouseEventArgs e)
-        {
+        //private void map_MouseLeave(object sender, MouseEventArgs e)
+        //{
 
-        }
+        //}
 
-        private void map_MouseMove(object sender, MouseEventArgs e)
-        {
+        //private void map_MouseMove(object sender, MouseEventArgs e)
+        //{
             
-        }
+        //}
 
     }
 }
