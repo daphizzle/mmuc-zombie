@@ -325,6 +325,13 @@
     </Content>
     <Resource Include="ext\img\facebook.png" />
     <Resource Include="ext\img\_add.png" />
+    <Resource Include="ext\img\survior2.jpg" />
+    <Resource Include="ext\img\survivor1.jpg" />
+    <Resource Include="ext\img\zombie1.jpg" />
+    <Resource Include="ext\img\zombie2.jpg" />
+    <Resource Include="ext\img\zombie3.jpg" />
+    <Resource Include="ext\img\zombie5.jpg" />
+    <Resource Include="ext\img\zombie6.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />

@@ -14,6 +14,7 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:System.Device.Location;assembly=System.Device">
+	
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -56,6 +57,7 @@
                     </m:Map.Center>
                     <m:MapLayer x:Name="gameAreaLayer" Height="Auto" Width="Auto"/>
                     <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
+                	
                     </m:MapLayer>
                 </m:Map>
             </controls:PivotItem>

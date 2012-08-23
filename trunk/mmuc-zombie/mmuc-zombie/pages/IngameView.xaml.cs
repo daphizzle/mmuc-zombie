@@ -98,6 +98,7 @@ namespace mmuc_zombie.pages
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
+                p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
                 Debug.WriteLine("-----------------------------------");
                 Debug.WriteLine("User" + userList[i].Id);
                 Debug.WriteLine("Location " + locationList[i]);
@@ -106,10 +107,13 @@ namespace mmuc_zombie.pages
                 p.Name = userList[i].Id;
                 
                
-            //    System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-            //    img.Source = new BitmapImage(new Uri("/Images/myLocation.png", UriKind.Relative));
                 if (roleList[i].roleType.Equals("Zombie"))
-                    p.Background=new SolidColorBrush(Colors.Red);
+                {
+                    
+                    p.Background = new SolidColorBrush(Colors.Red);
+                    
+                  
+                }
                 else
                     p.Background = new SolidColorBrush(Colors.Green);
                 mapLayer.Children.Add(p);
