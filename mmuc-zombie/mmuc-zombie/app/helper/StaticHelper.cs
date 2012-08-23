@@ -34,7 +34,8 @@ namespace mmuc_zombie.app.helper
 
 
         public static MyPolygon drawPolygon(List<MyLocation> list, Color clr)
-        {
+        {   
+            
             MyPolygon newPolygon = new MyPolygon();
             // Defines the polygon fill details
             newPolygon.Locations = new LocationCollection();
@@ -49,5 +50,38 @@ namespace mmuc_zombie.app.helper
             }
             return newPolygon;
         }
+        private static double ToDegrees(double radians)
+        {
+            return radians * (180 / Math.PI);
+        }
+        private static double ToRadian(double degrees) { return degrees * (Math.PI / 180); }
+
+
+        public static MyPolygon drawEllipse(MyLocation loc, Color clr)
+        {
+            double earthRadiusInMeters = 6367.0 * 1000.0;
+            var lat = ToRadian(loc.toGeoCoordinate().Latitude);
+            var lng = ToRadian(loc.toGeoCoordinate().Longitude);
+            var d = loc.toGeoCoordinate().HorizontalAccuracy / earthRadiusInMeters;
+
+            var locations = new List<MyLocation>();
+
+            for (var x = 0; x <= 360; x++)
+            {
+                var brng = ToRadian(x);
+                var latRadians = Math.Asin(Math.Sin(lat) * Math.Cos(d) + Math.Cos(lat) * Math.Sin(d) * Math.Cos(brng));
+                var lngRadians = lng + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(lat), Math.Cos(d) - Math.Sin(lat) * Math.Sin(latRadians));
+
+                locations.Add(new MyLocation()
+                {
+                    latitude = ToDegrees(latRadians),
+                    longitude = ToDegrees(lngRadians)
+                });
+            }
+
+            return drawPolygon(locations, clr);
+        }
+        
+        
     }
 }

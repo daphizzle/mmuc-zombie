@@ -101,19 +101,10 @@ namespace mmuc_zombie.app.helper
         }
         static private void ingameMode()
         {
+            Query.getRole(user.activeRole, check_IsAliveCallback);
             Debug.WriteLine("Ingame Mode");
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-
-                var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                if (!(currentPage is IngameView))
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
-                else
-                {
-                    var myPage = (IngameView)currentPage;
-                    myPage.getPinsData();
-
-                }
+            
+               
                 //{
                 //    Debug.WriteLine("switching to Gamestart");
                 //    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
@@ -121,10 +112,43 @@ namespace mmuc_zombie.app.helper
                 //}
                 //var myPage=(IngameView)currentPage;
                 //myPage.getPinsData();
-            });          
+                      
         }
-    
 
+        static private void check_IsAliveCallback(Response<Roles> r)
+        {
+            if (r.Success)
+            {
+                Roles role = r.Data;
+                if (role.alive)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                     {
+
+                         var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                         if (!(currentPage is IngameView))
+                             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+
+
+                         var myPage = (IngameView)currentPage;
+                         myPage.getPinsData();
+                     });
+                }
+                else
+                {
+                    idleMode();
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            MessageBoxResult mb = MessageBox.Show("Sorry, you just died. But you can join another game!", "Alert", MessageBoxButton.OKCancel);
+                            if (mb != MessageBoxResult.OK)
+                            {
+                              (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+ 
+                            }
+                        });
+                }
+            }
+        }
         static public void idleMode()
         {
             Debug.WriteLine("Idle Mode");
