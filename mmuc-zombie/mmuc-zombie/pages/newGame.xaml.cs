@@ -120,11 +120,6 @@ namespace mmuc_zombie.pages
                 game.state = 0;
                 game.description = descriptionBox.Text;
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
-                game.startTime = new DateTime(startDatePicker.Value.Value.Year, startDatePicker.Value.Value.Month,
-                   startDatePicker.Value.Value.Day, startTimePicker.Value.Value.Hour,
-                   startTimePicker.Value.Value.Minute, 0);
-                game.endTime = new DateTime(endDatePicker.Value.Value.Year, endDatePicker.Value.Value.Month,
-                   endDatePicker.Value.Value.Day, endTimePicker.Value.Value.Hour, endTimePicker.Value.Value.Minute, 0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs,invites);
                
@@ -211,6 +206,7 @@ namespace mmuc_zombie.pages
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             PositionRetriever.startPositionRetrieving(100);
+            playerSlider.Value = 3;
         }
 
         
