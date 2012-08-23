@@ -65,7 +65,10 @@ namespace mmuc_zombie.pages
                                 if (r1.Success)
                                 {
                                     locationList = (List<MyLocation>)r1.Data.Results;
-                                    drawPins();
+                                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                    {
+                                        drawPins();
+                                    });
                                 }
                             });
                         }

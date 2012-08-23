@@ -48,11 +48,15 @@ namespace mmuc_zombie.pages
             if (r.Success)
             {
                 game = (Games)r.Data;
-                gameName.Text = game.name;
-                if (game.ownerId == user.Id)
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
-                    startButton.Visibility = Visibility.Visible;
-                }
+                    gameName.Text = game.name;
+
+                    if (game.ownerId.Equals(user.Id))
+                    {
+                        startButton.Visibility = Visibility.Visible;
+                    }
+                });
             }
         }
         private void startButton_Click(object sender, RoutedEventArgs e)

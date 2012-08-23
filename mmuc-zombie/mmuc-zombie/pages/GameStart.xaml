@@ -74,7 +74,7 @@
                     Grid.Row="3" Height="100"
                     VerticalAlignment="Bottom" />
             <Button Name="startButton" Content="Start Game" 
-                    Click="startButton_Click" Margin="242,528,0,2" 
+                    Click="startButton_Click" Margin="242,0,0,2" 
                     Visibility="Collapsed" Height="100" Grid.Row="3" />
             
         </Grid>
