@@ -57,6 +57,68 @@ namespace mmuc_zombie.pages
         }
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            game.state = 1;
+            var parse = new Driver();
+            parse.Objects.Update<Games>(game.Id).Set(u => u.state, 1).Execute(ro => { });
+            fillRolesPerGameTable();
+            
+        }
+
+        private void fillRolesPerGameTable()
+        {
+            Query.getUsersByGame(user.activeGame, addRolesPerGame);
+        }
+
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            PhoneApplicationService service = PhoneApplicationService.Current;
+             user = (User)service.State["user"];
+             var parse = new Driver();
+            if (game.ownerId.Equals(user.Id))
+            {
+                
+                parse.Objects.Update<Games>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
+            }
+            else
+            {
+                user.status = 0;
+                user.activeGame = "";
+                service.State["user"] = user;
+                parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
+                {
+                });
+            }
+            CoreTask.idleMode();
+            NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+
+        }
+        public void addRolesPerGame (Response<ResultsResponse<User>> r)
+        {
+            if (r.Success)
+            {
+                List<User> list = (List<User>)r.Data.Results;
+                int i = 0;
+                foreach (User u in list)
+                {
+                    Roles role=new Roles();
+                    role.gameId=user.activeGame;
+                    role.userId=user.Id;
+                    role.startTime = DateTime.Now;
+                    if (ifZombie(i++,list.Count))
+                        role.roleType="Zombie";
+                    role.create();
+
+
+                }
+            }
+
+        }
+
+        private bool ifZombie(int i, int p)
+        {
+            return i > p / 4 * 3;
+        }
+    }
             
         }
 

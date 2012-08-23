@@ -10,8 +10,6 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 
-namespace mmuc_zombie.app.model
-{
     public class MyLocation : MyParseObject
     {
         public double latitude { get; set; }
@@ -27,4 +25,4 @@ namespace mmuc_zombie.app.model
             longitude = lon;
         }
     }
-}
+

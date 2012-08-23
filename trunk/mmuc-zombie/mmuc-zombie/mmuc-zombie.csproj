@@ -87,7 +87,6 @@
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
-    <Compile Include="app\model\GameLobby.cs" />
     <Compile Include="app\model\Message.cs" />
     <Compile Include="app\model\MyLocation.cs" />
     <Compile Include="app\model\MyPolygon.cs" />
@@ -141,10 +140,10 @@
     <Compile Include="app\model\ImmunityMode.cs" />
     <Compile Include="app\model\ModesPerGame.cs" />
     <Compile Include="app\model\QuarantineMode.cs" />
-    <Compile Include="app\model\Queries.cs" />
+    <Compile Include="app\model\Query.cs" />
     <Compile Include="app\model\Friend.cs" />
     <Compile Include="app\model\MyParseObject.cs" />
-    <Compile Include="app\model\RolesPerGame.cs" />
+    <Compile Include="app\model\Roles.cs" />
     <Compile Include="app\model\Survivor.cs" />
     <Compile Include="app\model\User.cs" />
     <Compile Include="app\model\Zombie.cs" />
@@ -166,6 +165,9 @@
     </Compile>
     <Compile Include="pages\FacebookLogin.xaml.cs">
       <DependentUpon>FacebookLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="pages\IngameView.xaml.cs">
+      <DependentUpon>IngameView.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\WindowsPhoneControl1.xaml.cs">
       <DependentUpon>WindowsPhoneControl1.xaml</DependentUpon>
@@ -264,6 +266,10 @@
     <Page Include="pages\FacebookLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="pages\IngameView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="pages\WindowsPhoneControl1.xaml">
       <SubType>Designer</SubType>
