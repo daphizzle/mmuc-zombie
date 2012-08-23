@@ -16,6 +16,7 @@ using mmuc_zombie.app.model;
 using Parse;
 using System.Diagnostics;
 using System.Device.Location;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
@@ -124,7 +125,7 @@ namespace mmuc_zombie.pages
         private void polygonClick(Object sender, MouseEventArgs e)
         {
             Pushpin p = (Pushpin)sender;
-            NavigationService.Navigate(new Uri("/pages/GameView.xaml?gameId=" + p.Name, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/GameStart.xaml?gameId=" + p.Name, UriKind.Relative));
 
         }
 
@@ -132,20 +133,18 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-
+            PositionRetriever.startPositionRetrieving(100);
         }
 
         private bool loadGames()
         {
-            /* TEST DATA */
+            
 
             mmuc_zombie.components.officialGame tmpUI;
-            //var _parse = new Driver();
-
+           
             foreach (Games tmp in games)
             {
-                //_parse.Objects.Save(tmp);
-
+           
                 tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameName.Text = tmp.name;
                 tmpUI.startTime.Text = tmp.startTime.Value.ToString();

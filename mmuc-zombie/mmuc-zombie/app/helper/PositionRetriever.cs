@@ -19,15 +19,14 @@ namespace mmuc_zombie.app.helper
 {
     public class PositionRetriever
     {
-        GeoCoordinateWatcher watcher;
-        PhoneApplicationService service = PhoneApplicationService.Current;
+        static GeoCoordinateWatcher watcher;
+        
 
-
-        public PositionRetriever()
+        public static void startPositionRetrieving(int threshold)
         {
             // Reinitialize the GeoCoordinateWatcher
             watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
-            watcher.MovementThreshold = 100;//distance in metres
+            watcher.MovementThreshold = threshold;//distance in metres
 
             // Add event handlers for StatusChanged and PositionChanged events
             watcher.StatusChanged += new EventHandler<GeoPositionStatusChangedEventArgs>(watcherStatusChanged);
@@ -41,8 +40,10 @@ namespace mmuc_zombie.app.helper
         /// Custom method called from the PositionChanged event handler
         /// </summary>
         /// <param name="e"></param>
-        void onPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
+        static void onPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
+            Debug.WriteLine("should update Location now!");
+            PhoneApplicationService service = PhoneApplicationService.Current;
             User user = (User)service.State["user"];
             if (user.locationId != null)
             {
@@ -62,20 +63,24 @@ namespace mmuc_zombie.app.helper
         /// Custom method called from the StatusChanged event handler
         /// </summary>
         /// <param name="e"></param>
-        void onStatusChanged(GeoPositionStatusChangedEventArgs e)
+        static void onStatusChanged(GeoPositionStatusChangedEventArgs e)
         {
             switch (e.Status)
             {
                 case GeoPositionStatus.Disabled:
+                    Debug.WriteLine("Watcher disabled");
                     //TODO: display error ? 
                     break;
                 case GeoPositionStatus.Initializing:
                     //Don´t do anything data aquisition should start soon
                     break;
                 case GeoPositionStatus.NoData:
+                    Debug.WriteLine("Watcher got no Data");
+                    
                     //TODO: display error ? or just wait for new Data
                     break;
                 case GeoPositionStatus.Ready:
+                    Debug.WriteLine("Watcher running!");
                     //This is the good case, don´t display errors
                     break;
 
@@ -91,7 +96,7 @@ namespace mmuc_zombie.app.helper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void watcherStatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
+        static void watcherStatusChanged(object sender, GeoPositionStatusChangedEventArgs e)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => onStatusChanged(e));
 
@@ -103,7 +108,7 @@ namespace mmuc_zombie.app.helper
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        void watcherPositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
+        static void watcherPositionChanged(object sender, GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
             Deployment.Current.Dispatcher.BeginInvoke(() => onPositionChanged(e));
         }

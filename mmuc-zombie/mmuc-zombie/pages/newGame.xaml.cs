@@ -16,6 +16,7 @@ using Microsoft.Phone.Controls.Maps.Platform;
 using Parse;
 using mmuc_zombie.app.model;
 using System.Device.Location;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
@@ -205,6 +206,11 @@ namespace mmuc_zombie.pages
                     NewPolygonLayer.Children.Add(newPolygon);
                 }
             }
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            PositionRetriever.startPositionRetrieving(100);
         }
 
         
