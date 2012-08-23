@@ -160,9 +160,7 @@ namespace mmuc_zombie.app.helper
                     user.status = 0;
                     user.activeGame = "";
                     service.State["user"] = user;
-                    parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
-                    {
-                    });
+                    user.update();
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));

@@ -29,7 +29,7 @@ namespace mmuc_zombie.app.listener
             string locId = ((MyLocation)list[0]).Id;
             var parse = new Driver();
             user.locationId = locId;
-            user.update();
+            user.updateCurrentUser();
         }
     }
 }

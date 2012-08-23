@@ -12,7 +12,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="m:Pushpin">
-                        <Image Height="40" Source="/mmuc-zombie;component/ext/img/menu_op5.png" Stretch="Fill" Width="40"/>
+                        <Image Height="50" Source="/mmuc-zombie;component/ext/img/survivor1.jpg" Stretch="Fill" Width="5s0"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

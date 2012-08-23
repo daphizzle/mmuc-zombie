@@ -20,6 +20,12 @@ public class Query
         parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
 
     }
+    static public void getRolesbyGame(string gameId, Action<Response<ResultsResponse<Roles>>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Query<Roles>().Where(c => c.gameId == gameId && c.alive==true).Execute(callback);
+    }
+
     static public void getGame(string gameId, Action<Response<Games>> callback)
     {
         var parse = new Driver();
@@ -30,6 +36,12 @@ public class Query
     {
         var parse = new Driver();
         parse.Objects.Query<MyLocation>().Where(c => c.gameId == gameId).Execute(callback);
+
+    }
+    static public void getUser(string userId, Action<Response<User>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Get<User>(userId, callback);
 
     }
     [Obsolete("doesn't work atm")]
