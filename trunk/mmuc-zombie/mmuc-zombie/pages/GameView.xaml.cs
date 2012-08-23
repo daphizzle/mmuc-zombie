@@ -17,6 +17,7 @@ using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
+    [Obsolete ("This pages is no longer used")]
     public partial class GameView : PhoneApplicationPage, MyListener
     {
         PhoneApplicationService service = PhoneApplicationService.Current;

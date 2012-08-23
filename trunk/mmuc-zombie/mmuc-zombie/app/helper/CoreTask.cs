@@ -64,8 +64,11 @@ namespace mmuc_zombie.app.helper
                 {
                     messageList = (List<Message>)r.Data.Results;
                     var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                    var mypage = (GameStart)currentPage;
-                    mypage.chatWindow.ItemsSource = messageList;
+                    if (currentPage is GameStart)
+                    {
+                        var mypage = (GameStart)currentPage;
+                        mypage.chatWindow.ItemsSource = messageList;
+                    }
                 });
             }
         }
@@ -103,7 +106,7 @@ namespace mmuc_zombie.app.helper
             {
 
                 var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                if (currentPage is GameStart)
+                if (!(currentPage is IngameView))
                     (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
                 else
                 {

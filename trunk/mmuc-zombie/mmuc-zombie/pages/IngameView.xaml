@@ -13,7 +13,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
-    shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:System.Device.Location;assembly=System.Device">
+    shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:System.Device.Location;assembly=System.Device" 
+    BackKeyPress="PhoneApplicationPage_BackKeyPress"
+    Loaded="PhoneApplicationPage_Loaded">
 	
 
     <!--LayoutRoot is the root grid where all page content is placed-->

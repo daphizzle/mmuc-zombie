@@ -17,8 +17,16 @@
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot">
-        
-        <controls:Panorama Title="Zombie Outbreak">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo"/>
+            <TextBlock x:Name="PageTitle" FontSize="54" Text="Game Lobby" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+        </StackPanel>
+        <!--<controls:Panorama Title="Zombie Outbreak">
         	<controls:Panorama.Resources>
         		<DataTemplate x:Key="DataTemplateTitle">
         			<TextBlock x:Name="title" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" Margin="20,125,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="Auto"/>
@@ -30,26 +38,9 @@
 		            
         <controls:Panorama.Background>
             <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/background-panorama.jpg" Stretch="None" />
-        </controls:Panorama.Background>
+        </controls:Panorama.Background>-->
         
-            <!--Panorama item one-->
-            <!--<controls:PanoramaItem Header="What's new">
-            	<controls:PanoramaItem.Resources>
-            		<DataTemplate x:Key="DataTemplateTitle">
-            			<TextBlock x:Name="whatsnew" FontSize="54" Text="What's new" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
-            		</DataTemplate>
-            	</controls:PanoramaItem.Resources>
-            	<controls:PanoramaItem.HeaderTemplate>
-            		<StaticResource ResourceKey="DataTemplateTitle"/>
-            	</controls:PanoramaItem.HeaderTemplate>
-				
-                <Grid>
-                    <my:Map HorizontalAlignment="Center" Margin="4,4,0,-17" Name="map1" Width="413"  CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" />
-                </Grid>
-            </controls:PanoramaItem>-->
-
-            <!--Panorama item two-->
-            <controls:PanoramaItem Header="Menu" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey">
+                 <!--<controls:PanoramaItem Header="Menu" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey">
             	<controls:PanoramaItem.Resources>
             		<DataTemplate x:Key="DataTemplateMenu">
             			<TextBlock x:Name="menu" FontSize="54" Text="Menu" Margin="9,-10,0,-30" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
@@ -57,18 +48,18 @@
             	</controls:PanoramaItem.Resources>
             	<controls:PanoramaItem.HeaderTemplate>
             		<StaticResource ResourceKey="DataTemplateMenu"/>
-            	</controls:PanoramaItem.HeaderTemplate>
+            	</controls:PanoramaItem.HeaderTemplate>-->
 
-                <ListBox x:Name="listBox" FontSize="{StaticResource PhoneFontSizeLarge}">
-                    <Grid HorizontalAlignment="Stretch" Margin="0" ShowGridLines="False" UseLayoutRounding="True" VerticalAlignment="Stretch" AllowDrop="False" Background="Transparent" IsHitTestVisible="True" Height="710" Width="398">
+        <!--<ListBox x:Name="listBox" Grid.Row="1" FontSize="{StaticResource PhoneFontSizeLarge}">-->
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" Margin="0" ShowGridLines="False" UseLayoutRounding="True" VerticalAlignment="Stretch" AllowDrop="False" Background="Transparent" IsHitTestVisible="True" Height="710" Width="398">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="182"/>
                             <RowDefinition Height="180"/>
                             <RowDefinition Height="238"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200"/>
-                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="230"/>
+                            <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- ROW #1 -->
@@ -101,9 +92,8 @@
                             <ScottIsAFool_Controls:TileSlider Name="customGames"  TextSlidesFrom="Left" Text="Custom Games" LongText="Look into the games created by other users" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op6.png" Click="customGames_Click" />
                         </StackPanel>
                     </Grid>
-                </ListBox>
-            </controls:PanoramaItem>
-        </controls:Panorama>
+        <!--</ListBox> -->
+
     </Grid>
         
 

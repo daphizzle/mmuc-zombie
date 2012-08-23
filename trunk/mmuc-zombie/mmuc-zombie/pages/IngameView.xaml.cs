@@ -102,11 +102,9 @@ namespace mmuc_zombie.pages
                 p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                 Debug.WriteLine("-----------------------------------");
                 Debug.WriteLine("User" + userList[i].Id);
-                Debug.WriteLine("Location " + locationList[i]);
-                Debug.WriteLine("Role" + roleList[i]);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
-                debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].latitude + ")\n";
+                debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
                
                 if (roleList[i].roleType.Equals("Zombie"))
                 {
@@ -202,6 +200,27 @@ namespace mmuc_zombie.pages
                     });
             }
 
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            PositionRetriever.startPositionRetrieving(1);
+        }
+
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult mb = MessageBox.Show("Do you want to leave the game?", "Alert", MessageBoxButton.OKCancel);
+            if (mb != MessageBoxResult.OK)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                user.activeGame = "";
+                user.status = 0;
+                user.update();
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+            }
         }
 
 
