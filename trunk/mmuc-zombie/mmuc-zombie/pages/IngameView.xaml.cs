@@ -83,7 +83,9 @@ namespace mmuc_zombie.pages
                                       {
                                           locationList.Add(r0.Data);
                                           if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                              doIngameStuff(); ;
+                                          {
+                                              // doIngameStuff(); 
+                                          }
                                       });
                             }
                         });
