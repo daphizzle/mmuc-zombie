@@ -152,11 +152,14 @@ namespace mmuc_zombie.pages
                 }
                 else
                     p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
+                MyLocation fu=new MyLocation();
+                fu.fromGeoCoordinate(p.Location);
+                StaticHelper.drawEllipse(fu, Colors.Red);
                 mapLayer.Children.Add(p);
             }
 
         }
-
+        
 
 
         public void getGameCallback(Response<Games> r)

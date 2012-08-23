@@ -108,6 +108,7 @@ namespace mmuc_zombie.pages
                     role.gameId=user.activeGame;
                     role.userId=user.Id;
                     role.startTime = DateTime.Now;
+                    role.alive = false;
                     if (ifZombie())
                         role.roleType = "Zombie";
                     else
