@@ -122,7 +122,7 @@ namespace mmuc_zombie.pages
 
         private bool ifZombie(int i, int p)
         {
-            return i > p / 4 * 3;
+            return i < p / 4 * 3;
         }
   
         //Classes which are needed to select between Datatemplates
