@@ -52,7 +52,7 @@
 
             </ListBox>
             <ListBox IsEnabled="False" Name="chatWindow" Grid.Row="1" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0" SelectionChanged="chatWindow_SelectionChanged">
+                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="messageStack" 
