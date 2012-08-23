@@ -88,8 +88,11 @@ namespace mmuc_zombie.app.helper
                     {
                         lobbyUserList = (List<User>)r.Data.Results;
                         var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                        var mypage = (GameStart)currentPage;
-                        mypage.playerList.ItemsSource = lobbyUserList;
+                        if (currentPage is GameStart)
+                        {
+                            var mypage = (GameStart)currentPage;
+                            mypage.playerList.ItemsSource = lobbyUserList;
+                        }
                     });
             }
         }
@@ -128,10 +131,11 @@ namespace mmuc_zombie.app.helper
                          var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
                          if (!(currentPage is IngameView))
                              (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
-
-
-                         var myPage = (IngameView)currentPage;
-                         myPage.getPinsData();
+                         else
+                         {
+                             var myPage = (IngameView)currentPage;
+                             myPage.getPinsData();
+                         }
                      });
                 }
                 else
@@ -177,6 +181,10 @@ namespace mmuc_zombie.app.helper
                     user.status = 2;
                     service.State["user"] = user;
                     user.update();
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+                        });
                     //switching to gameview
                 }
                 else if (game.state == 3)

@@ -108,8 +108,8 @@ namespace mmuc_zombie.pages
                     role.gameId=user.activeGame;
                     role.userId=user.Id;
                     role.startTime = DateTime.Now;
-                    role.alive = false;
-                    if (ifZombie())
+                    role.alive = true;
+                    if (ifZombie(i++))
                         role.roleType = "Zombie";
                     else
                         role.roleType = "Survivor";
@@ -121,11 +121,11 @@ namespace mmuc_zombie.pages
 
         }
 
-        private bool ifZombie()
+        private bool ifZombie(int i)
         {
-             Random r=new Random(7);
-             return r.Next() > 2;
-             
+             //Random r=new Random(7);
+             //return r.Next() > 2;
+            return i == 0;
         }
   
         //Classes which are needed to select between Datatemplates

@@ -125,6 +125,7 @@ namespace mmuc_zombie.pages
         private void polygonClick(Object sender, MouseEventArgs e)
         {
             Pushpin p = (Pushpin)sender;
+            StaticHelper.userJoin(p.Name);
             NavigationService.Navigate(new Uri("/pages/GameStart.xaml?gameId=" + p.Name, UriKind.Relative));
 
         }

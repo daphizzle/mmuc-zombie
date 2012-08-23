@@ -31,6 +31,7 @@ namespace mmuc_zombie.components
         private void join_Click(object sender, RoutedEventArgs e)
         {
             var page = StaticHelper.GetParentOfType<PhoneApplicationPage>(this);
+            StaticHelper.userJoin(gameId);
             page.NavigationService.Navigate(new Uri("/pages/GameStart.xaml?gameId=" + gameId, UriKind.Relative));
         }
 

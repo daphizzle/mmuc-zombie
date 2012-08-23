@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls.Maps;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Phone.Shell;
 
 namespace mmuc_zombie.app.helper
 {
@@ -81,7 +82,17 @@ namespace mmuc_zombie.app.helper
 
             return drawPolygon(locations, clr);
         }
-        
-        
+
+
+
+        public static void userJoin(string p)
+        {
+            PhoneApplicationService service = PhoneApplicationService.Current;
+            User user = (User)service.State["user"];
+            user.activeGame = p;
+            user.status = 1;
+            user.updateCurrentUser();
+            CoreTask.start();
+        }
     }
 }
