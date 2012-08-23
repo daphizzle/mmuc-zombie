@@ -8,8 +8,9 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="145" d:DesignWidth="398">
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
-        <TextBlock Height="30" Margin="294,10,12,0" Name="nameTextBlock" Text=""  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage" Margin="13,10,240,12" />
+        <TextBlock Height="30" Margin="80,25,12,0" Text="Username"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+        <Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="userImage"
+                                  HorizontalAlignment="Left" Margin="0,-60,0,0" Stretch="Fill" Height="70" Width="70"/>
         <!--<TextBlock Height="18" HorizontalAlignment="Left" Margin="294,115,0,0" Name="textBlock1" Text="" VerticalAlignment="Top" Width="97" Foreground="#FF1ABA33" FontSize="14" />-->
     </Grid>
 </UserControl>
