@@ -49,6 +49,7 @@ namespace mmuc_zombie.app.helper
 
         static private void lobbyMode()
         {
+            Debug.WriteLine("LobbyMode");
             check_GameStarted(check_GameStartedCallback);
             reload_LobbyUserList(reload_LobbyUserListCallback);
             reload_ChatWindow(reload_ChatWindowCallback);
@@ -96,12 +97,24 @@ namespace mmuc_zombie.app.helper
         }
         static private void ingameMode()
         {
- 	        throw new NotImplementedException();
+            Debug.WriteLine("Ingame Mode");
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                if(currentPage is GameStart)
+                {
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+                    currentPage= ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                }
+                var myPage=(IngameView)currentPage;
+                myPage.getPinsData();
+            });          
         }
-      
+    
 
         static public void idleMode()
-        {   
+        {
+            Debug.WriteLine("Idle Mode");
             //bei einem join wird ein neuer timer gestartetund userstate auf 1 gesetzt
             timer.Stop();
         }
