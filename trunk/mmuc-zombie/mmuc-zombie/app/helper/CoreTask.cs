@@ -39,6 +39,7 @@ namespace mmuc_zombie.app.helper
 
 
         static public void timerTask (object Sender,EventArgs e){
+            Debug.WriteLine("TimerTask");
             if (user.status==0)
                 idleMode();
             else if (user.status==1)

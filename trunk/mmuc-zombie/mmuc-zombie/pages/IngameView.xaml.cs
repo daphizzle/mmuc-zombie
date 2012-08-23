@@ -17,6 +17,7 @@ using mmuc_zombie.app.helper;
 using Microsoft.Phone.Controls.Maps;
 using System.Device.Location;
 using System.Windows.Media.Imaging;
+using System.Diagnostics;
 
 namespace mmuc_zombie.pages
 {
@@ -43,11 +44,13 @@ namespace mmuc_zombie.pages
         }
         public void getPinsData()
         {
+            Debug.WriteLine("getPinsData");
             Query.getUsersByGame(user.activeGame, r =>
             {
                 if (r.Success)
                 {
                     userList = (List<User>)r.Data.Results;
+                    Debug.WriteLine("got Users");
                     String[] locationIds = new String[userList.Count];
                     String[] roleIds = new String[userList.Count];
                     for (int i = 0; i < userList.Count; i++)
@@ -59,11 +62,14 @@ namespace mmuc_zombie.pages
                     {
                         if (r0.Success)
                         {
+                            Debug.WriteLine("got Roles");
                             roleList = (List<Roles>)r0.Data.Results;
                             Query.getLocations(user.activeGame, r1 =>
                             {
                                 if (r1.Success)
                                 {
+
+                                    Debug.WriteLine("got locations");
                                     locationList = (List<MyLocation>)r1.Data.Results;
                                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                                     {
@@ -83,6 +89,10 @@ namespace mmuc_zombie.pages
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
+                Debug.WriteLine("-----------------------------------");
+                Debug.WriteLine("User" + userList[i].Id);
+                Debug.WriteLine("Location " + locationList[i]);
+                Debug.WriteLine("Role" + roleList[i]);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
             //    System.Windows.Controls.Image img = new System.Windows.Controls.Image();
