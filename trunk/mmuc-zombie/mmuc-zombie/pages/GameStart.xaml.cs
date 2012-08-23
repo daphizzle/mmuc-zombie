@@ -118,37 +118,7 @@ namespace mmuc_zombie.pages
         {
             return i > p / 4 * 3;
         }
-    }
-            
-        }
-
-        private void fillRolesPerGameTable()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-             var parse = new Driver();
-            if (game.ownerId.Equals(user.Id))
-            {
-                
-                parse.Objects.Update<Games>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
-            }
-            user.status = 0;
-            user.activeGame = "";
-            service.State["user"] = user;
-            parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
-            {
-            });
-            
-            CoreTask.idleMode();
-            NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
-
-        }
-
-
+  
         //Classes which are needed to select between Datatemplates
         public abstract class DataTemplateSelector : ContentControl
         {
@@ -189,10 +159,7 @@ namespace mmuc_zombie.pages
             msg.create();
         }
 
-        private void chatWindow_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
+      
       
           
        
