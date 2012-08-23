@@ -104,6 +104,7 @@ namespace mmuc_zombie.app.helper
                 var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
                 if(currentPage is GameStart)
                 {
+                    Debug.WriteLine("switching to Gamestart");
                     (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
                     currentPage= ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
                 }
@@ -131,16 +132,16 @@ namespace mmuc_zombie.app.helper
         {
             if(r.Success)
             {
+               
                 var parse = new Driver();
                 var game = r.Data;
+                Debug.WriteLine("got game " + game.Id);
                 if (game.state == 1) //falls auf gamestart geklickt wird sollte game.state auf 1 gesetzt werden
                 {
-
+                    Debug.WriteLine("game "+game.Id+" started ");
                     user.status = 2;
                     service.State["user"] = user;
-                    parse.Objects.Update<User>(user.Id).Set(u => u.status, 2).Execute(ro =>
-                    {
-                    });
+                    user.update();
                     //switching to gameview
                 }
                 else if (game.state == 3)
