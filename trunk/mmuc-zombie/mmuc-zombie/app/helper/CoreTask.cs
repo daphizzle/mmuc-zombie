@@ -31,7 +31,7 @@ namespace mmuc_zombie.app.helper
         static public void start()
         {
             timer.Tick += new EventHandler(timerTask);
-            timer.Interval = new TimeSpan(0, 0, 10);
+            timer.Interval = new TimeSpan(0, 0, 5);
             service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
             timer.Start();
@@ -101,15 +101,23 @@ namespace mmuc_zombie.app.helper
             Debug.WriteLine("Ingame Mode");
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
+
                 var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
-                if(currentPage is GameStart)
+                if (currentPage is GameStart)
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+                else
                 {
-                    Debug.WriteLine("switching to Gamestart");
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
-                    currentPage= ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
+                    var myPage = (IngameView)currentPage;
+                    myPage.getPinsData();
+
                 }
-                var myPage=(IngameView)currentPage;
-                myPage.getPinsData();
+                //{
+                //    Debug.WriteLine("switching to Gamestart");
+                //    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+                  
+                //}
+                //var myPage=(IngameView)currentPage;
+                //myPage.getPinsData();
             });          
         }
     
