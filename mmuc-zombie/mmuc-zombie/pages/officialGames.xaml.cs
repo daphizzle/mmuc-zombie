@@ -124,7 +124,9 @@ namespace mmuc_zombie.pages
         private void polygonClick(Object sender,MouseEventArgs e)
         {
             Pushpin p = (Pushpin)sender;
+            StaticHelper.userJoin(p.Name);
             NavigationService.Navigate(new Uri("/pages/GameStart.xaml?gameId="+p.Name, UriKind.Relative));
+
 
         }
 
@@ -144,8 +146,6 @@ namespace mmuc_zombie.pages
                 tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameId = tmp.Id;
                 tmpUI.gameName.Text = tmp.name;
-                tmpUI.startTime.Text = tmp.startTime.Value.ToString();
-                tmpUI.endTime.Text = tmp.endTime.Value.ToString();
                 tmpUI.description.Text = tmp.description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);              
                 gameStack.Children.Add(tmpUI);

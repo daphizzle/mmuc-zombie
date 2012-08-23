@@ -144,7 +144,7 @@ namespace mmuc_zombie.pages
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
                 
-                if (roleList[i].userId.Equals(user.activeRole))
+                if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
                 
                 if (roleList[i].roleType.Equals("Zombie"))
