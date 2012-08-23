@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:m="clr-namespace:Microsoft.Phone.Controls.Maps;assembly=Microsoft.Phone.Controls.Maps"
@@ -17,17 +18,57 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
        <!--ContentPanel<G - place additional content here-->
-   
+        <controls:Pivot Title="Zombie Outbreak">
+            <controls:Pivot.Resources>
+                <DataTemplate x:Key="DataTemplateTitle">
+                    <TextBlock x:Name="title" Text="Zombie Outbreak" Margin="0,0,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="180" HorizontalAlignment="Left"/>
+                </DataTemplate>
+            </controls:Pivot.Resources>
+            <controls:Pivot.TitleTemplate>
+                <StaticResource ResourceKey="DataTemplateTitle"/>
+            </controls:Pivot.TitleTemplate>
+
+
+            <!--Pivot item one-->
+            <controls:PivotItem>
+
+                <controls:PivotItem.Header>
+                    <TextBlock FontSize="54" Text="Map View" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                </controls:PivotItem.Header>
                 <m:Map x:Name="map" CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" 
-                               Mode="Road" Height="Auto" VerticalAlignment="Stretch" Width="Auto" CopyrightVisibility="Collapsed" ZoomLevel="10" LogoVisibility="Collapsed">
+                               Mode="Road" Height="Auto" VerticalAlignment="Stretch" Width="Auto" CopyrightVisibility="Collapsed" ZoomLevel="10" 
+                       LogoVisibility="Collapsed" 
+                       DoubleTap="map_DoubleTap" Hold="map_Hold" 
+                       MouseLeftButtonDown="map_MouseLeftButtonDown" MapZoom="map_MapZoom" 
+                       KeyDown="map_KeyDown" KeyUp="map_KeyUp" 
+                       ManipulationStarted="map_ManipulationStarted" ManipulationCompleted="map_ManipulationCompleted" MapPan="map_MapPan"
+                       MouseLeftButtonUp="map_MouseLeftButtonUp"
+                      Tap="map_Tap" ViewChangeStart="map_ViewChangeStart" ViewChangeEnd="map_ViewChangeEnd"
+                       ViewChangeOnFrame="map_ViewChangeOnFrame" ManipulationDelta="map_ManipulationDelta"
+                       TargetViewChanged="map_TargetViewChanged"
+
+                        MouseEnter="map_MouseEnter"
+                       MouseLeave="map_MouseLeave"
+                       MouseMove="map_MouseMove"
+                       >
                     <m:Map.Center>
                         <my:GeoCoordinate Altitude="NaN" Course="NaN" HorizontalAccuracy="NaN" Latitude="49" Longitude="5" Speed="NaN" VerticalAccuracy="NaN" />
                     </m:Map.Center>
-                <m:MapLayer x:Name="gameAreaLayer" Height="Auto" Width="Auto"/>
-                <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
+                    <m:MapLayer x:Name="gameAreaLayer" Height="Auto" Width="Auto"/>
+                    <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
                     </m:MapLayer>
                 </m:Map>
-            </Grid>
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem>
+                <controls:PivotItem.Header>
+                    <TextBlock FontSize="54" Text="Statistics" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                </controls:PivotItem.Header>
+            </controls:PivotItem>
+        </controls:Pivot>
+
+    </Grid>
      
  
     <!--Sample code showing usage of ApplicationBar-->
