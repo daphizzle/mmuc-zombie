@@ -29,11 +29,16 @@ public class User :  MyParseObject
     public string email { get; set; }
     public string locationId { get; set; }
 
+    public void updateCurrentUser()
+    {
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        service.State["user"] = this;
+        update();
+    }
 
     public new void  update()
     {
-        PhoneApplicationService service = PhoneApplicationService.Current;
-        service.State["user"] = this ;
+        
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
             Set(u => u.status, status).

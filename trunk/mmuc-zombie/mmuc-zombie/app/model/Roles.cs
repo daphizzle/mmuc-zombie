@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using Parse;
 using System.Collections.Generic;
 using Microsoft.Phone.Shell;
+using System.Diagnostics;
 
 public class Roles : MyParseObject
     {
@@ -22,6 +23,26 @@ public class Roles : MyParseObject
         //gets id from MyParsobject so not needed imho
         //public string roleId { get; set; }
         public string roleType { get; set; }
+        public Boolean alive { get; set; }
+        public new void update()
+        {
+
+            var parse = new Driver();
+            parse.Objects.Update<Roles>(this.Id).
+                Set(u => u.userId, userId).
+                Set(u => u.gameId, gameId).
+                Set(u => u.endTime, endTime).
+                Set(u => u.startTime, startTime).
+                Set(u => u.roleType, roleType).
+                Set(u => u.alive, alive).
+                Execute(r =>
+                {
+                    if (r.Success)
+                        Debug.WriteLine("Role : " + Id + " successfull updated");
+
+                });
+
+        }
         public new void create()
         {
             PhoneApplicationService service = PhoneApplicationService.Current;

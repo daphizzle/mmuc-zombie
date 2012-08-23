@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using System.Device.Location;
 
     public class MyLocation : MyParseObject
     {
@@ -24,5 +25,12 @@ using System.Collections.Generic;
             latitude = lat;
             longitude = lon;
         }
+        public GeoCoordinate toGeoCoordinate(){
+            return new GeoCoordinate(latitude, longitude);
+        }
+        public void fromGeoCoordinate (GeoCoordinate g){
+            latitude = g.Latitude;
+            longitude = g.Longitude;
+            }
     }
 

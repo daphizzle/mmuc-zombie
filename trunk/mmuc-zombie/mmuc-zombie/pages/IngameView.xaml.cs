@@ -28,6 +28,9 @@ namespace mmuc_zombie.pages
         List<Roles> roleList;
         User user;
         Games game;
+        private int nextPlayerCounter;
+        private Roles role;
+        private MyLocation myLocation;
         public IngameView()
         {
             InitializeComponent();
@@ -66,7 +69,7 @@ namespace mmuc_zombie.pages
                                       {
                                           roleList.Add(r0.Data);
                                 if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                    drawPins();
+                                    doIngameStuff();
                                       });
                             }
                         });
@@ -80,7 +83,7 @@ namespace mmuc_zombie.pages
                                       {
                                           locationList.Add(r0.Data);
                                           if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                              drawPins();
+                                              doIngameStuff(); ;
                                       });
                             }
                         });
@@ -92,6 +95,38 @@ namespace mmuc_zombie.pages
 
         }
 
+        private void doIngameStuff()
+        {
+            if (user==null){
+                PhoneApplicationService service = PhoneApplicationService.Current;
+                user = (User)service.State["user"];
+             }
+            drawPins();
+            if (nextPlayerCounter++ == 5)
+               if(role.roleType=="Zombie"){
+                   infectNearSurvivors();
+               }
+        }
+
+        private void infectNearSurvivors()
+        {
+            for (int i = 0; i < locationList.Count; i++)
+            {
+                if (userList[i].activeRole == "Survivor" &&
+                    myLocation.toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate()) < 25)
+                {
+                    roleList[i].alive = false;
+                    userList[i].activeGame = "";
+
+                }
+
+                
+                }
+            }
+
+               
+        
+
         private void drawPins()
         {
             debug.Text = "";
@@ -99,22 +134,24 @@ namespace mmuc_zombie.pages
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
-                p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                 Debug.WriteLine("-----------------------------------");
                 Debug.WriteLine("User" + userList[i].Id);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
                 debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
-               
+                if (locationList[i].Id.Equals(user.locationId))
+                        myLocation=locationList[i];
+                
+                if (roleList[i].userId.Equals(user.activeRole))
+                        role=roleList[i];
+                
                 if (roleList[i].roleType.Equals("Zombie"))
                 {
+                    p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
                     
-                    p.Background = new SolidColorBrush(Colors.Red);
-                    
-                  
                 }
                 else
-                    p.Background = new SolidColorBrush(Colors.Green);
+                    p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                 mapLayer.Children.Add(p);
             }
 
@@ -131,6 +168,34 @@ namespace mmuc_zombie.pages
         }
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void getGameAreaCallback(Response<ResultsResponse<MyLocation>> r)
         {
             if (r.Success)
