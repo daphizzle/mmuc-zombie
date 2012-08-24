@@ -72,13 +72,13 @@
                     Name="sendButton" VerticalAlignment="Top" Width="110" 
                     Grid.RowSpan="3" Click="sendButton_Click" />
             <Button Name="cancelButton" Content="Leave Game" 
-                    Click="cancelButton_Click" Margin="-2,0,244,2" 
+                    Click="cancelButton_Click" Margin="-2,0,261,2" 
                     Grid.Row="3" Height="100"
                     VerticalAlignment="Bottom" />
             <Button Name="startButton" Content="Start Game" 
-                    Click="startButton_Click" Margin="242,0,0,2" 
+                    Click="startButton_Click" Margin="279,0,0,2" 
                     Visibility="Collapsed" Height="100" Grid.Row="3" />
-            
+            <Button Content="Bots" Grid.Row="3" Height="72"    Visibility="Visible"  HorizontalAlignment="Left" Margin="176,14,0,0" Name="bots" VerticalAlignment="Top" Width="109" Click="bots_Click" />
         </Grid>
     </Grid>
  

@@ -31,7 +31,7 @@ namespace mmuc_zombie.app.helper
         static public void start()
         {
             timer.Tick += new EventHandler(timerTask);
-            timer.Interval = new TimeSpan(0, 0, 5);
+            timer.Interval = new TimeSpan(0, 0, 10);
             service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
             timer.Start();
@@ -134,7 +134,7 @@ namespace mmuc_zombie.app.helper
                          else
                          {
                              var myPage = (IngameView)currentPage;
-                             myPage.getPinsData();
+                         myPage.getPinsData();
                          }
                      });
                 }
