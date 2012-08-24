@@ -48,7 +48,7 @@ namespace mmuc_zombie.pages
                 nPos = strPart.IndexOf("&");
                 strPart = strPart.Substring(0, nPos);
                 App.AccessToken = strPart;                
-                NavigationService.GoBack();             
+                NavigationService.GoBack();
                 return;
             }
 	

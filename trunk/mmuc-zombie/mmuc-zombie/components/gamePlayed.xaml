@@ -10,15 +10,14 @@
     
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
         <TextBlock Height="30" Margin="12,10,12,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Button Height="71" HorizontalAlignment="Right" Margin="0,74,0,0" Name="join" VerticalAlignment="Top" Width="398" 
-                BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" 
+        <Button Height="71" Margin="0,74,0,0" Name="join" VerticalAlignment="Top" BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" 
                 VerticalContentAlignment="Bottom" Background="{x:Null}" Content="Statistics"></Button>
         <TextBlock FontSize="16" Height="18" Margin="60,40,214,0" Name="startTime" Text="start time" VerticalAlignment="Top" Foreground="#FFD8D8D8" />
         <TextBlock FontSize="16" HorizontalAlignment="Left" Margin="13,40,0,88" Name="textBlock4" Text="Start:" FontWeight="Bold" />
         
         <TextBlock FontSize="16" Height="18" Margin="60,0,214,70" Name="endTime" Text="end time" VerticalAlignment="Bottom" Foreground="#FFD8D8D8" />        
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="13,57,0,0" Name="textBlock5" Text="End:" VerticalAlignment="Top" FontWeight="Bold" Width="39" />
-        <TextBlock FontSize="16" Foreground="#FFD8D8D8" Height="18" Margin="261,40,13,0" Name="textBlock1" Text="nickname" VerticalAlignment="Top" />
-        <TextBlock FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" Margin="197,40,0,88" Name="textBlock2" Text="Author:" />        
+        <TextBlock FontSize="16" Foreground="#FFD8D8D8" Margin="0,40,13,87" Name="owner" Text="nickname" HorizontalAlignment="Right" Width="124" />
+        <TextBlock FontSize="16" FontWeight="Bold" Margin="0,40,143,88" Name="textBlock2" Text="Author:" HorizontalAlignment="Right" Width="58" />        
     </Grid>
 </UserControl>

@@ -19,7 +19,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
         <!--Pivot Control-->
-        <controls:Pivot>
+        <controls:Pivot Margin="0,0,0,49">
         	
 			<controls:Pivot.Resources>
         		<DataTemplate x:Key="DataTemplateTitle">
@@ -39,11 +39,11 @@
 
                 <Grid x:Name="fbUserGrid" HorizontalAlignment="Center" Width="413">
                     <TextBlock Height="19" Margin="0,344,13,197" Name="textBlock1" Text="How other users will recognize you" Width="386" TextAlignment="Center" FontSize="15" Foreground="#FF969696" Canvas.Left="53" Canvas.Top="221" HorizontalAlignment="Right" />
-                    <Canvas HorizontalAlignment="Left" Margin="13,0,0,224" Name="canvas1" Width="385" Height="320" VerticalAlignment="Bottom" Background="#FF767676">
-                        <TextBox Name="nickname" Text="nickname" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" />
+                    <Canvas HorizontalAlignment="Left" Margin="13,20,0,0" Name="canvas1" Width="385" Height="317" VerticalAlignment="Top" Background="#FF767676">
+                        <TextBox Name="nickname" Text="" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" DataContext="{Binding}" GotFocus="nickname_GotFocus" LostFocus="nickname_LostFocus" />
                         <Image Height="144" Name="avatar" Stretch="Fill" Canvas.Left="121" Canvas.Top="94" Source="{Binding Path=Picture.PictureUrl.Url}" Width="146" />
                         <TextBlock Name="name" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <Image Height="32" Name="facebook" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="227" Canvas.Top="200" />
+                        <Image Height="32" Name="facebook" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
                     </Canvas>
                 </Grid>
             </controls:PivotItem>
@@ -82,8 +82,7 @@
                                         Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
                                         Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                         </StackPanel>
-                    </ListBox>
-                    <HyperlinkButton Content="Connect to Facebook" Height="30" HorizontalAlignment="Left" Margin="8,8,0,0" Name="oauth" VerticalAlignment="Top" Width="434" Click="oauth_Click" />
+                    </ListBox>                    
                 </Grid>
 
             </controls:PivotItem>
@@ -116,7 +115,15 @@
             	<controls:PivotItem.Header>
             		<TextBlock FontSize="54" Text="achievements" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
-                <Grid/>
+                <Grid Height="557">
+                    <TextBlock Height="30" Margin="28,32,119,0" Name="nicknameAch" Text="NickName" VerticalAlignment="Top" FontSize="25" Width="309" />
+                    <TextBlock Height="30" Margin="29,62,120,0" Name="reputation" Text="Reputation" VerticalAlignment="Top" Width="307" />
+                    <Image Height="86" Margin="350,16,17,0" Name="reputationLogo" Stretch="Uniform" VerticalAlignment="Top" Source="file:///E:/-%20DEVELOP/DOT%20NET/mmuc-zombie/mmuc-zombie/ext/img/_star.png" />
+                    <ListBox Margin="32,111,17,0" Name="listBox1">
+                        <ListBoxItem Content="Played Games" />
+                        <ListBoxItem Content="Wins" />
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
             
         </controls:Pivot>
@@ -128,8 +135,9 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="ext/img/_save.png" Text="Save" Click="appbar_save_Click" />
-            <shell:ApplicationBarIconButton x:Name="appbar_cancel" IconUri="ext/img/_cancel.png" Text="Cancel" Click="appbar_cancel_Click" />
+            <!--shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="ext/img/_save.png" Text="Save" Click="appbar_save_Click" /-->
+            <!--shell:ApplicationBarIconButton x:Name="appbar_cancel" IconUri="ext/img/_cancel.png" Text="Cancel" Click="appbar_cancel_Click" /-->
+            <shell:ApplicationBarIconButton x:Name="appbar_facebook" IconUri="ext/img/_facebook.png" Text="Facebook Connect" Click="appbar_facebook_Click" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     

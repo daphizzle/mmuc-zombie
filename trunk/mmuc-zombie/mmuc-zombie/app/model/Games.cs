@@ -32,8 +32,18 @@ public class Games : MyParseObject
     public string description { get; set; }
     public string ownerId { get; set; }
 
+    public Games() { }
 
-    static public void findPendingGames(MyListener listener)
+    public Games(string name, DateTime start, DateTime end, string ownerId, string description) 
+    {
+        this.name = name;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.ownerId = ownerId;
+        this.description = description;
+    }
+
+	static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();
         parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
@@ -146,6 +156,30 @@ public class Games : MyParseObject
     }
 
 
+    static public void findByOwner(string ownerId, MyListener listener)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId = user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        parse.Objects.Query<Games>().Where(c => c.ownerId == ownerId).Execute(r =>
+        {
+            if (r.Success)
+            {
+                List<Games> games = (List<Games>)r.Data.Results;
+                //int counter = 0;
+                foreach (Games g in games)
+                {                    
+                    list.Add(g);
+                    if (list.Count == games.Count)
+                    {
+                        listener.onDataChange(list);
+                    }       
+                }
+            }
+        });
+    }
 
 
 }
