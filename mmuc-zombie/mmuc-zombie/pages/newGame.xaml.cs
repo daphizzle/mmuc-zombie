@@ -31,6 +31,9 @@ namespace mmuc_zombie.pages
         bool inCreatePolygonMode = false;
         MyLocation loc;
         public List<Invite> invites=new List<Invite>();
+        PhoneApplicationService service;
+        private bool _editable;
+
         public NewGame()
         {
             InitializeComponent();
@@ -207,6 +210,22 @@ namespace mmuc_zombie.pages
         {
             PositionRetriever.startPositionRetrieving(100);
             playerSlider.Value = 3;
+
+            editable();
+        }
+
+        private void editable()
+        {
+            String gameId = NavigationContext.QueryString["gameId"];
+            if (!String.IsNullOrWhiteSpace(gameId))
+            {
+                _editable = true;
+                service = PhoneApplicationService.Current;
+                User user = User.get();
+                //getGame(gameId, getGameCallback);
+                //populate fields
+                //save button -> update button (actions)
+            }
         }
 
         

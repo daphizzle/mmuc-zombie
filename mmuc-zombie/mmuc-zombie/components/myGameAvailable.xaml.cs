@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Parse;
 using mmuc_zombie.app.helper;
 using Microsoft.Phone.Controls;
+using System.Windows.Navigation;
 
 namespace mmuc_zombie.components
 {
@@ -49,6 +50,11 @@ namespace mmuc_zombie.components
                 {(
                     Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/GameStart.xaml?gameId=" + gameID, UriKind.Relative));
                 });
+        }
+
+        private void edit_Click(object sender, RoutedEventArgs e)
+        {
+            //NavigationService.Navigate(new Uri("/pages/NewGame.xaml", UriKind.Relative));
         } 
     }
 }

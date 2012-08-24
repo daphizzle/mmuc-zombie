@@ -112,7 +112,8 @@ public class User :  MyParseObject
                 List<MyParseObject> list = new List<MyParseObject>();
                 list.Add(user);
                 listener.onDataChange(list);
-                User.set(user);
+               
+                                   
             }
         });
 
