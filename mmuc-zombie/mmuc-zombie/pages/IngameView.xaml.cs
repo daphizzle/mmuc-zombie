@@ -24,13 +24,14 @@ namespace mmuc_zombie.pages
     public partial class IngameView : PhoneApplicationPage
     {
         List<User> userList;
-        List<MyLocation> locationList;
-        List<Roles> roleList;
+        List<MyLocation> locationList = new List<MyLocation>();
+        List<Roles>roleList = new List<Roles>();
         User user;
         Games game;
         private int nextPlayerCounter;
         private Roles role;
         private MyLocation myLocation;
+        Boolean painting=false;
         public IngameView()
         {
             InitializeComponent();
@@ -47,54 +48,60 @@ namespace mmuc_zombie.pages
         }
         public void getPinsData()
         {
-            locationList = new List<MyLocation>();
-            roleList = new List<Roles>();
-            Debug.WriteLine("getPinsData");
-            Query.getUsersByGame(user.activeGame, r =>
+            if (!painting)
             {
-                if (r.Success)
+                painting = true;
+                Debug.WriteLine("getPinsData");
+                Query.getUsersByGame(user.activeGame, r =>
                 {
-                    userList = (List<User>)r.Data.Results;
-                    Debug.WriteLine("got Users");
-
-                    foreach (User u in userList)
+                    if (r.Success)
                     {
-                        Query.getRole(u.activeRole, r0 =>
-                        {
-                            if (r0.Success)
-                            {
-                                Debug.WriteLine("got Roles");
-                               
-                                    Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                      {
-                                          roleList.Add(r0.Data);
-                                if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                    doIngameStuff();
-                                      });
-                            }
-                        });
-                        Query.getLocation(u.locationId, r0 =>
-                        {
-                            if (r0.Success)
-                            {
-                                Debug.WriteLine("got Locations");
-                               
-                                Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                      {
-                                          locationList.Add(r0.Data);
-                                          if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                          {
-                                              // doIngameStuff(); 
-                                          }
-                                      });
-                            }
-                        });
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                         {
+                                             userList = (List<User>)r.Data.Results;
+                                             Debug.WriteLine("got Users");
+
+                                             foreach (User u in userList)
+                                             {
+                                                 Query.getRole(u.activeRole, r0 =>
+                                                 {
+                                                     if (r0.Success)
+                                                     {
+                                                         Debug.WriteLine("got Roles");
+
+                                                         Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                                           {
+                                                               roleList.Add(r0.Data);
+                                                               Query.getLocation(u.locationId, r1 =>
+                                                               {
+                                                                   if (r1.Success)
+                                                                   {
+                                                                       Debug.WriteLine("got Locations");
+
+                                                                       Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                                                       {
+                                                                           locationList.Add(r1.Data);
+                                                                           if (userList.Count == roleList.Count && userList.Count == locationList.Count)
+                                                                           {
+                                                                               drawPins();
+                                                                               locationList = new List<MyLocation>();
+                                                                               roleList = new List<Roles>();
+
+                                                                           }
+                                                                       });
+                                                                   }
+                                                               });
+                                                           });
+                                                     }
+                                                 });
+                                                 
 
 
+                                             }
+                                         });
                     }
-                }
-            });
-
+                });
+            }
         }
 
         private void doIngameStuff()
@@ -107,6 +114,7 @@ namespace mmuc_zombie.pages
             if (nextPlayerCounter++ == 5)
                if(role.roleType=="Zombie"){
                    infectNearSurvivors();
+                   nextPlayerCounter = 0;
                }
         }
 
@@ -143,21 +151,29 @@ namespace mmuc_zombie.pages
                 debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
-                
+                Debug.WriteLine("location "+locationList[i].Id); 
                 if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
-                
+
                 if (roleList[i].roleType.Equals("Zombie"))
                 {
-                    p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
-                    
+                  //  p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
+                 //   Debug.WriteLine("Zombiestyle");
+                    p.Background = new SolidColorBrush(Colors.Red);
+                    p.Content = "Zombie: " + userList[i].UserName;
                 }
                 else
-                    p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
+                {
+                 //   p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
+                  //  Debug.WriteLine("Survivorstyle");
+                    p.Background = new SolidColorBrush(Colors.Green);
+                    p.Content = "Survivor: " + userList[i].UserName;
+                }
                 MyLocation fu=new MyLocation();
                 fu.fromGeoCoordinate(p.Location);
-                StaticHelper.drawEllipse(fu, Colors.Red);
+               // StaticHelper.drawEllipse(fu, Colors.Red);
                 mapLayer.Children.Add(p);
+                painting = false;
             }
 
         }

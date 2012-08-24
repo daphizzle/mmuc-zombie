@@ -14,6 +14,7 @@ using mmuc_zombie.app.model;
 using Microsoft.Phone.Shell;
 using Parse;
 using mmuc_zombie.app.helper;
+using System.Device.Location;
 
 namespace mmuc_zombie.pages
 {
@@ -22,6 +23,7 @@ namespace mmuc_zombie.pages
         private Games game;
         private User user;
         PhoneApplicationService service;
+        private int botCounter;
        
 
         public GameStart()
@@ -55,6 +57,7 @@ namespace mmuc_zombie.pages
                     if (game.ownerId.Equals(user.Id))
                     {
                         startButton.Visibility = Visibility.Visible;
+                        bots.Visibility = Visibility.Visible;
                     }
                 });
             }
@@ -109,11 +112,19 @@ namespace mmuc_zombie.pages
                     role.userId=user.Id;
                     role.startTime = DateTime.Now;
                     role.alive = true;
-                    if (ifZombie(i++))
+                    if (ifZombie(i))
+                    {
                         role.roleType = "Zombie";
+                        u.activeRole = "Zombie";
+                    }
                     else
+                    {
                         role.roleType = "Survivor";
+                        u.activeRole = "Survivor";
+                    }
                     role.create();
+                    u.update();
+                    i++;
 
 
                 }
@@ -123,9 +134,9 @@ namespace mmuc_zombie.pages
 
         private bool ifZombie(int i)
         {
-             //Random r=new Random(7);
-             //return r.Next() > 2;
-            return i == 0;
+             Random r=new Random(7);
+             return r.Next() > 2;
+           
         }
   
         //Classes which are needed to select between Datatemplates
@@ -168,6 +179,35 @@ namespace mmuc_zombie.pages
             msg.create();
         }
 
+        private void bots_Click(object sender, RoutedEventArgs e)
+        {
+            Query.getLocation(user.locationId,paintBots);
+       
+        }
+        private void paintBots(Response<MyLocation> r){
+            if (r.Success)
+            {
+                var location= r.Data;
+                List<GeoCoordinate> coords=StaticHelper.drawCircle(location.toGeoCoordinate(),5);
+          
+                MyLocation l=new MyLocation();
+                l.latitude=coords[botCounter*20+35].Latitude;
+                l.longitude=coords[botCounter*20+50].Longitude;  
+                var parse=new Driver();
+                parse.Objects.Save(l,r2=>{
+                    if(r2.Success)
+                    {
+                           User b=new User();
+                           b.UserName="Bot "+botCounter++;
+                           b.activeGame=user.activeGame;
+                           b.locationId=r2.Data.Id;
+                           b.create();
+                    }
+                });
+            
+            }
+        }
+  
       
       
           

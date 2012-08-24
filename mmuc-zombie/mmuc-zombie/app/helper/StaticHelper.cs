@@ -12,6 +12,7 @@ using Microsoft.Phone.Controls.Maps;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Phone.Shell;
+using System.Device.Location;
 
 namespace mmuc_zombie.app.helper
 {
@@ -51,37 +52,34 @@ namespace mmuc_zombie.app.helper
             }
             return newPolygon;
         }
-        private static double ToDegrees(double radians)
-        {
-            return radians * (180 / Math.PI);
-        }
-        private static double ToRadian(double degrees) { return degrees * (Math.PI / 180); }
-
-
-        public static MyPolygon drawEllipse(MyLocation loc, Color clr)
-        {
-            double earthRadiusInMeters = 6367.0 * 1000.0;
-            var lat = ToRadian(loc.toGeoCoordinate().Latitude);
-            var lng = ToRadian(loc.toGeoCoordinate().Longitude);
-            var d = loc.toGeoCoordinate().HorizontalAccuracy / earthRadiusInMeters;
-
-            var locations = new List<MyLocation>();
-
-            for (var x = 0; x <= 360; x++)
-            {
-                var brng = ToRadian(x);
-                var latRadians = Math.Asin(Math.Sin(lat) * Math.Cos(d) + Math.Cos(lat) * Math.Sin(d) * Math.Cos(brng));
-                var lngRadians = lng + Math.Atan2(Math.Sin(brng) * Math.Sin(d) * Math.Cos(lat), Math.Cos(d) - Math.Sin(lat) * Math.Sin(latRadians));
-
-                locations.Add(new MyLocation()
-                {
-                    latitude = ToDegrees(latRadians),
-                    longitude = ToDegrees(lngRadians)
-                });
+      
+         public static List<GeoCoordinate> drawCircle(GeoCoordinate origin,int radius)
+        {  
+          var earthRadius = 6371;
+      
+          //latitude in radians
+            var lat = (double)(origin.Latitude*Math.PI)/180; 
+        
+            //longitude in radians
+            var lon = (double)(origin.Longitude*Math.PI)/180; 
+        
+            //angular distance covered on earth's surface
+            double d = (double)(radius)/earthRadius;  
+        
+            var points = new List<GeoCoordinate>();
+            for (int i = 0; i <= 360; i++) 
+            { 
+                var point = new GeoCoordinate();       
+                var bearing = (double)i * Math.PI / 180; //rad
+                point.Latitude = (double) Math.Asin(Math.Sin(lat)*Math.Cos(d) + Math.Cos(lat)*Math.Sin(d)*Math.Cos(bearing));
+                point.Longitude = (double)((lon + Math.Atan2(Math.Sin(bearing)*Math.Sin(d)*Math.Cos(lat), Math.Cos(d)-Math.Sin(lat)*Math.Sin(point.Latitude))) * 180) / Math.PI;
+                point.Latitude = (double)(point.Latitude * 180) / Math.PI;
+                points.Add(point);
             }
-
-            return drawPolygon(locations, clr);
+            return points;
+    
         }
+    
 
 
 
