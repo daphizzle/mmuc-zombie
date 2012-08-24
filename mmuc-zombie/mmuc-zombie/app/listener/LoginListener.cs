@@ -12,6 +12,7 @@ using Microsoft.Phone.Shell;
 using System.Collections.Generic;
 using System.Diagnostics;
 using mmuc_zombie.app.helper;
+using mmuc_zombie.app.model;
 
 
 namespace mmuc_zombie
@@ -24,6 +25,8 @@ namespace mmuc_zombie
         {
             Debug.WriteLine("Logged in as" + ((User)list[0]).UserName);
             //there is only one MyParseObject
+            //App.User = (User)list[0];
+            //User.set((User)list[0]);
             service.State["user"] = (User)list[0];
             PositionRetriever.startPositionRetrieving(100);
             

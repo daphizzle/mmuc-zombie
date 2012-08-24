@@ -12,7 +12,7 @@
         <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,10,0,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" Width="309" TextTrimming="None" FontSize="22" FontWeight="Bold" />
         <Image Height="32" HorizontalAlignment="Right" Margin="0,10,12,0" Name="edit" Stretch="Fill" VerticalAlignment="Top" Width="30" Source="/mmuc-zombie;component/ext/img/edit.png" FlowDirection="LeftToRight" />
         <Button Content="Cancel" Height="72" HorizontalAlignment="Left" Margin="0,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
-        <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="button2" VerticalAlignment="Top" Width="126" />
+        <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="join" VerticalAlignment="Top" Width="126" Click="join_Click" />
 
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,42,0,0" Name="startTime" Text="start time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />
         <TextBlock FontSize="16" HorizontalAlignment="Left" Margin="13,42,0,86" Name="textBlock4" Text="Start:" FontWeight="Bold" />

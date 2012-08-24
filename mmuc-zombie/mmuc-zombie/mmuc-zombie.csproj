@@ -74,9 +74,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="app\helper\Constants.cs" />
     <Compile Include="app\helper\CoreTask.cs" />
     <Compile Include="app\facebook\FBFriends.cs" />
     <Compile Include="app\facebook\FBUser.cs" />
+    <Compile Include="app\helper\Device.cs" />
     <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\helper\JsonStringSerializer.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
@@ -316,7 +318,6 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="ext\img\facebook.png" />
     <Resource Include="ext\img\_add.png" />
     <Resource Include="ext\img\survior2.jpg" />
     <Resource Include="ext\img\survivor1.jpg" />
@@ -325,6 +326,10 @@
     <Resource Include="ext\img\zombie3.jpg" />
     <Resource Include="ext\img\zombie5.jpg" />
     <Resource Include="ext\img\zombie6.jpg" />
+    <Resource Include="ext\img\facebook.png" />
+    <Content Include="ext\img\_facebook.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />

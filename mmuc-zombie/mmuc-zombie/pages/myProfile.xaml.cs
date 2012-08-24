@@ -15,6 +15,8 @@ using mmuc_zombie.app.helper;
 using System.Windows.Media.Imaging;
 using Parse;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Info;
+using mmuc_zombie.app.model;
 
 namespace mmuc_zombie.pages
 {
@@ -29,48 +31,52 @@ namespace mmuc_zombie.pages
         public MyProfile()
         {
             InitializeComponent();
-            PhoneApplicationService service = PhoneApplicationService.Current;
-            user = (User)service.State["user"];
-            string userId=user.Id;
-            var parse = new Driver();
-            parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<User> users=(List<User>)r.Data.Results;
-                    parse.Objects.Query<Friend>().Where(c => c.user ==userId ).Execute(r2 =>
-                       {
-                           if (r2.Success)
-                           {
-                               List<Friend> friends = (List<Friend>)r2.Data.Results;
-                              Deployment.Current.Dispatcher.BeginInvoke(() =>
-                              {
-                                   if (!loadUsers(users,friends))
-                                    {            
-                                        userListBox.Visibility = System.Windows.Visibility.Collapsed;
-                                    }
-                                    else
-                                    {
-                                        userListBox.Visibility = System.Windows.Visibility.Visible;
-                                    }
-                               });
-                           }
-                       });
-                  }
-            });
-       }
+            user = User.get();
+            InitializeOtherComponents();
             
-     
+            //PhoneApplicationService service = PhoneApplicationService.Current;
+            //user = App.User;
+            //user = (User)service.State["user"];
+            
+            if (user != null)
+            {                
+                string userId = user.Id;
+                var parse = new Driver();
+                parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(r =>
+                {
+                    if (r.Success)
+                    {
+                        List<User> users = (List<User>)r.Data.Results;
+                        parse.Objects.Query<Friend>().Where(c => c.user == userId).Execute(r2 =>
+                           {
+                               if (r2.Success)
+                               {
+                                   List<Friend> friends = (List<Friend>)r2.Data.Results;
+                                   Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                   {
+                                       if (!loadUsers(users, friends))
+                                       {
+                                           userListBox.Visibility = System.Windows.Visibility.Collapsed;
+                                       }
+                                       else
+                                       {
+                                           userListBox.Visibility = System.Windows.Visibility.Visible;
+                                       }
+                                   });
+                               }
+                           });
+                    }
+                });
+            }
+       }
 
-        private void appbar_save_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("save");
-        }
 
-        private void appbar_cancel_Click(object sender, EventArgs e)
+
+        private void InitializeOtherComponents()
         {
-            MessageBox.Show("cancel");
+            nickname.Text = String.IsNullOrWhiteSpace(user.NickName) ? Constants.NONICKNAME : user.NickName;
         }
+             
         private bool loadUsers(List<User> users,List<Friend> friends)
         {
             /* TEST DATA */
@@ -130,7 +136,8 @@ namespace mmuc_zombie.pages
             try
             {                
                 m_CurFacebookUser = JsonStringSerializer.Deserialize<FBUser>(e.Result);
-                fbUserGrid.DataContext = m_CurFacebookUser;                
+                fbUserGrid.DataContext = m_CurFacebookUser;
+                updateUser();
                 Console.Out.WriteLine("User data loaded");
             }
             catch (Exception eX)
@@ -142,6 +149,16 @@ namespace mmuc_zombie.pages
             validateUI();
         }
 
+        private void updateUser()
+        {
+            User tmp = User.get();
+            tmp.Facebook = m_CurFacebookUser == null ? tmp.Facebook : m_CurFacebookUser.Picture.PictureUrl.Url;
+            tmp.NickName = nickname.Text.Equals(Constants.NONICKNAME) ? tmp.NickName : nickname.Text;
+            tmp.updateCurrentUser();
+            //App.User.updateCurrentUser();
+            //appbar_facebook.IsEnabled = false;
+        }
+
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             initializeFacebookProfile();
@@ -149,6 +166,7 @@ namespace mmuc_zombie.pages
 
             validateUI();
             loadFriends();
+            loadHistory();
         }
 
         private void validateUI() 
@@ -158,13 +176,13 @@ namespace mmuc_zombie.pages
                 fbUserGrid.DataContext = new FBUser("/mmuc-zombie;component/ext/img/avatar.png");
                 name.Visibility = Visibility.Collapsed;
                 facebook.Visibility = Visibility.Collapsed;
-                oauth.Visibility = Visibility.Visible;
+                //if (appbar_facebook != null) appbar_facebook.IsEnabled = true;
             }
             else
             {                
                 name.Visibility = Visibility.Visible;
                 facebook.Visibility = Visibility.Visible;
-                oauth.Visibility = Visibility.Collapsed;
+                //if (appbar_facebook != null) appbar_facebook.IsEnabled = false;
             }
         }
 
@@ -229,10 +247,44 @@ namespace mmuc_zombie.pages
             //throw new NotImplementedException();
         }
 
-        private void oauth_Click(object sender, RoutedEventArgs e)
+        private void loadHistory()
+        {
+            List<Games> games = new List<Games>(4);
+
+            games.Add(new Games("Game 1",DateTime.Now,DateTime.Now,"1","..."));
+            games.Add(new Games("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
+            games.Add(new Games("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
+            games.Add(new Games("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
+
+            mmuc_zombie.components.gamePlayed tmpUI;
+            foreach (Games game in games)
+            {
+                tmpUI = new mmuc_zombie.components.gamePlayed();
+                tmpUI.gameName.Text = game.name;
+                tmpUI.gameId = game.Id;
+                tmpUI.startTime.Text = game.startTime.ToString();
+                tmpUI.endTime.Text = game.endTime.ToString();
+                //tmpUI.owner.Text = User.find(game.ownerId, null);
+                tmpUI.owner.Text = game.ownerId;
+                tmpUI.Margin = new Thickness(0, 5, 0, 5);
+                historyStack.Children.Add(tmpUI);
+            }
+        }
+
+        private void appbar_facebook_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/pages/FacebookLogin.xaml", UriKind.Relative));
         }
 
+        private void nickname_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (nickname.Text.Trim().Equals(Constants.NONICKNAME))
+                nickname.Text = "";
+        }
+
+        private void nickname_LostFocus(object sender, RoutedEventArgs e)
+        {
+            updateUser();
+        }
     }
 }

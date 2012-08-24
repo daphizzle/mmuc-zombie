@@ -16,6 +16,7 @@ namespace mmuc_zombie.app.facebook
     [DataContract]
     public class FBUser
     {
+
         public FBUser(string URI)
         {
             ID = "";

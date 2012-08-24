@@ -16,52 +16,59 @@ using Parse;
 
 namespace mmuc_zombie.pages
 {
-    public partial class MyGames : PhoneApplicationPage
+    public partial class MyGames : PhoneApplicationPage, MyListener
     {
+
+        List<Games> games = new List<Games>();
+
         public MyGames()
         {
             InitializeComponent();
+            Games.findByOwner(User.get().Id, this);
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            if (!loadGames())
+            //PositionRetriever.startPositionRetrieving(100);            
+        }
+
+        public void onDataChange(List<MyParseObject> list)
+        {
+            var parse = new Driver();            
+            foreach (MyParseObject o in list)
             {
-                noResults.Visibility = System.Windows.Visibility.Visible;
-                gameList.Visibility = System.Windows.Visibility.Collapsed;
+                string id = o.Id;
+                games.Add((Games)o);               
             }
-            else
+
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                noResults.Visibility = System.Windows.Visibility.Collapsed;
-                gameList.Visibility = System.Windows.Visibility.Visible;
-            }
+                if (!loadGames())
+                {
+                    noResults.Visibility = System.Windows.Visibility.Visible;
+                    gameList.Visibility = System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    noResults.Visibility = System.Windows.Visibility.Collapsed;
+                    gameList.Visibility = System.Windows.Visibility.Visible;
+                }
+            });
         }
 
         private bool loadGames()
-        {
-            /* TEST DATA */
-            List<GameTmp> games = new List<GameTmp>(3);
-            games.Add(new GameTmp("Zombie Informatiks", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("Zombie DFKI", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("Zombie VC", DateTime.Today, DateTime.Today));
-            games.Add(new GameTmp("WP7 :)", new DateTime(2012, 09, 17), new DateTime(2012, 09, 17)));
-            /* TEST DATA */
-
-            mmuc_zombie.components.myGameAvailable tmpUI;
-            //var _parse = new Driver();
-
-            foreach (GameTmp tmp in games)
-            {                
-                //_parse.Objects.Save(tmp);
-                
+        {            
+            mmuc_zombie.components.myGameAvailable tmpUI;            
+            foreach (Games tmp in games)
+            {                                
                 tmpUI = new mmuc_zombie.components.myGameAvailable();
-                tmpUI.gameName.Text = tmp.Name;
-                tmpUI.startTime.Text = tmp.Start.ToShortDateString();
-                tmpUI.endTime.Text = tmp.End.ToShortDateString();
+                tmpUI.gameID = tmp.Id;
+                tmpUI.gameName.Text = tmp.name;
+                tmpUI.startTime.Text = DateTime.Today.ToShortDateString(); // tmp.startTime.Value.ToShortDateString();
+                tmpUI.endTime.Text = DateTime.Today.ToShortDateString(); // tmp.endTime.Value.ToShortDateString();
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);              
                 gameStack.Children.Add(tmpUI);
             }
-
             return gameStack.Children.Count > 0;
         }
 

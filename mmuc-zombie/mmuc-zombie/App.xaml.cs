@@ -18,13 +18,23 @@ using System.IO;
 using System.Diagnostics;
 using mmuc_zombie.app.model;
 using mmuc_zombie.app.listener;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie
 {
     public partial class App : Application
     {
-        public static Microsoft.Phone.UserData.Contact con;        
+        public static Microsoft.Phone.UserData.Contact con;
+        private static Device deviceID;
         private static string m_strAccessToken; // FB
+        //private static Games currentGame;
+        //private static User user;
+
+        public static Device DeviceID 
+        {
+            get { return deviceID; }
+            set { deviceID = value; }
+        }
 
         public static string AccessToken //FB
         {
@@ -32,6 +42,17 @@ namespace mmuc_zombie
             set { m_strAccessToken = value; }
         }
 
+        //public static Games CurrentGame
+        //{
+        //    get { return currentGame; }
+        //    set { currentGame = value; }
+        //}
+
+        //public static User User
+        //{
+        //    get { return user; }
+        //    set { user = value; }
+        //}
 
         //IsolatedtStorage for file saving
         private IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
@@ -57,6 +78,8 @@ namespace mmuc_zombie
 
             // Phone-specific initialization
             InitializePhoneApplication();
+
+            deviceID = new Device();
 
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
@@ -103,8 +126,9 @@ namespace mmuc_zombie
                 using (var file = store.CreateFile("userId.txt"))
                 {
                     User user = new User();
-                    user.UserName = "Paetrda";
+                    user.UserName = "USER XYZ";
                     user.create(new StartupListener());
+                    User.set(user);
                 }
             }
             else
@@ -115,6 +139,11 @@ namespace mmuc_zombie
                     Debug.WriteLine("Reading userId" + userId);
                     User.find(userId,new LoginListener());
                 }
+            }
+
+            if (User.get() != null && App.DeviceID != null)
+            {
+                User.get().DeviceID = App.DeviceID.toString();
             }
         }
 
