@@ -10,7 +10,11 @@
     
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
         <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,10,0,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" Width="309" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Image Height="32" HorizontalAlignment="Right" Margin="0,10,12,0" Name="edit" Stretch="Fill" VerticalAlignment="Top" Width="30" Source="/mmuc-zombie;component/ext/img/edit.png" FlowDirection="LeftToRight" />
+        <Button Content="" Height="42" HorizontalAlignment="Right" Margin="0,10,12,0" Name="edit" VerticalAlignment="Top" Width="42" Click="edit_Click" BorderThickness="0">
+            <Button.Background>
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/edit.png" Stretch="Fill" />
+            </Button.Background>
+        </Button>
         <Button Content="Cancel" Height="72" HorizontalAlignment="Left" Margin="0,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
         <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="join" VerticalAlignment="Top" Width="126" Click="join_Click" />
 

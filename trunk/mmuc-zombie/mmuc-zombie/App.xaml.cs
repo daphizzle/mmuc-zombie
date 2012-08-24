@@ -127,8 +127,9 @@ namespace mmuc_zombie
                 {
                     User user = new User();
                     user.UserName = "USER XYZ";
+                    user.DeviceID = App.DeviceID.toString(); 
                     user.create(new StartupListener());
-                    User.set(user);
+                   // User.set(user);
                 }
             }
             else
@@ -141,10 +142,7 @@ namespace mmuc_zombie
                 }
             }
 
-            if (User.get() != null && App.DeviceID != null)
-            {
-                User.get().DeviceID = App.DeviceID.toString();
-            }
+  
         }
 
         // Code to execute when the application is deactivated (sent to background)

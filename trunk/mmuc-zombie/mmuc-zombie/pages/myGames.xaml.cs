@@ -62,6 +62,7 @@ namespace mmuc_zombie.pages
             foreach (Games tmp in games)
             {                                
                 tmpUI = new mmuc_zombie.components.myGameAvailable();
+                //tmpUI.edit.Visibility = tmp.ownerId.Equals(User.get().Id) ? Visibility.Visible : Visibility.Collapsed;                   
                 tmpUI.gameID = tmp.Id;
                 tmpUI.gameName.Text = tmp.name;
                 tmpUI.startTime.Text = DateTime.Today.ToShortDateString(); // tmp.startTime.Value.ToShortDateString();
