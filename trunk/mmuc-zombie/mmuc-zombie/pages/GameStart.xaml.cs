@@ -108,22 +108,33 @@ namespace mmuc_zombie.pages
                 foreach (User u in list)
                 {
                     Roles role=new Roles();
-                    role.gameId=user.activeGame;
-                    role.userId=user.Id;
+                    role.gameId=u.activeGame;
+                    role.userId=u.Id;
                     role.startTime = DateTime.Now;
                     role.alive = true;
                     if (ifZombie(i))
                     {
                         role.roleType = "Zombie";
-                        u.activeRole = "Zombie";
+                      
                     }
                     else
                     {
                         role.roleType = "Survivor";
-                        u.activeRole = "Survivor";
+                    
                     }
-                    role.create();
-                    u.update();
+                    var parse = new Driver();
+                    Deployment.Current.Dispatcher.BeginInvoke(()=>{
+                        parse.Objects.Save(role, r1 =>
+                        {
+                            if (r1.Success)
+                            {
+                                String id = r1.Data.Id;
+                                u.activeRole = id;
+                                u.update();
+                            }
+                        });
+                    }); 
+                   
                     i++;
 
 

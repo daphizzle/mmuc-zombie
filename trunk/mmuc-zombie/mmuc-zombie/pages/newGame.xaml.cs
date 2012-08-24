@@ -125,7 +125,7 @@ namespace mmuc_zombie.pages
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs,invites);
-               
+                
             }
       
 

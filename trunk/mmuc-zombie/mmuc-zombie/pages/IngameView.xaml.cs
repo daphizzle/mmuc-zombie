@@ -48,60 +48,64 @@ namespace mmuc_zombie.pages
         }
         public void getPinsData()
         {
-            if (!painting)
+            if (painting){
+            painting = true;
+            Debug.WriteLine("getPinsData");
+            Query.getUsersByGame(user.activeGame, r =>
             {
-                painting = true;
-                Debug.WriteLine("getPinsData");
-                Query.getUsersByGame(user.activeGame, r =>
+                if (r.Success)
                 {
-                    if (r.Success)
+                     Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                      {
+                    userList = (List<User>)r.Data.Results;
+                    Debug.WriteLine("got Users");
+
+                    foreach (User u in userList)
                     {
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                         {
-                                             userList = (List<User>)r.Data.Results;
-                                             Debug.WriteLine("got Users");
-
-                                             foreach (User u in userList)
-                                             {
-                                                 Query.getRole(u.activeRole, r0 =>
-                                                 {
-                                                     if (r0.Success)
-                                                     {
-                                                         Debug.WriteLine("got Roles");
-
-                                                         Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                                           {
-                                                               roleList.Add(r0.Data);
-                                                               Query.getLocation(u.locationId, r1 =>
-                                                               {
-                                                                   if (r1.Success)
-                                                                   {
-                                                                       Debug.WriteLine("got Locations");
-
-                                                                       Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                                                       {
-                                                                           locationList.Add(r1.Data);
-                                                                           if (userList.Count == roleList.Count && userList.Count == locationList.Count)
-                                                                           {
-                                                                               drawPins();
-                                                                               locationList = new List<MyLocation>();
-                                                                               roleList = new List<Roles>();
-
-                                                                           }
-                                                                       });
-                                                                   }
-                                                               });
-                                                           });
-                                                     }
-                                                 });
-                                                 
+                        Query.getRole(u.activeRole, r0 =>
+                        {
+                            if (r0.Success)
+                            {
+                                Debug.WriteLine("got Roles");
+                               
+                                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                      {
+                                          roleList.Add(r0.Data);
+                                          if (userList.Count == roleList.Count && userList.Count == locationList.Count)
+                                          {
+                                              drawPins();
+                                              locationList = new List<MyLocation>();
+                                              roleList = new List<Roles>();
+                                          }
+                                      });
+                            }
+                        });
+                        Query.getLocation(u.locationId, r0 =>
+                        {
+                            if (r0.Success)
+                            {
+                                Debug.WriteLine("got Locations");
+                               
+                                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                      {
+                                          locationList.Add(r0.Data);
+                                          if (userList.Count == roleList.Count && userList.Count == locationList.Count)
+                                          {
+                                               drawPins();
+                                               locationList = new List<MyLocation>();
+                                               roleList = new List<Roles>();
+                                           
+                                          }
+                                      });
+                            }
+                        });
 
 
-                                             }
-                                         });
                     }
-                });
-            }
+                                      });
+                }
+            });
+                }
         }
 
         private void doIngameStuff()
