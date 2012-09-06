@@ -205,6 +205,7 @@ namespace mmuc_zombie.pages
             {
            
                 tmpUI = new mmuc_zombie.components.officialGame();
+                tmpUI.gameId = tmp.Id;
                 tmpUI.gameName.Text = tmp.name;
                 tmpUI.description.Text = tmp.description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);
