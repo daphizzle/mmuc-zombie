@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using Parse;
 using mmuc_zombie.app.helper;
 using System.Device.Location;
+using System.Diagnostics;
 
 namespace mmuc_zombie.pages
 {
@@ -24,7 +25,8 @@ namespace mmuc_zombie.pages
         private User user;
         PhoneApplicationService service;
         private int botCounter;
-       
+        private int i;
+private  List<User> userList;
 
         public GameStart()
         {
@@ -64,17 +66,11 @@ namespace mmuc_zombie.pages
         }
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
-            game.state = 1;
-            var parse = new Driver();
-            parse.Objects.Update<Games>(game.Id).Set(u => u.state, 1).Execute(ro => { });
-            fillRolesPerGameTable();
+            Query.getUsersByGame(user.activeGame, getUsersPerGame);
+       
             
         }
 
-        private void fillRolesPerGameTable()
-        {
-            Query.getUsersByGame(user.activeGame, addRolesPerGame);
-        }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
@@ -99,55 +95,75 @@ namespace mmuc_zombie.pages
             NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
 
         }
-        public void addRolesPerGame (Response<ResultsResponse<User>> r)
+        private void createRoles()
+        {
+            var parse = new Driver();
+            if (i < userList.Count)
+            {
+                Roles role = new Roles();
+                role.gameId = userList[i].activeGame;
+                role.userId = userList[i].Id;
+                role.startTime = DateTime.Now;
+                role.alive = true;
+                if (ifZombie(i))
+                {
+                    role.roleType = "Zombie";
+
+                }
+                else
+                {
+                    role.roleType = "Survivor";
+
+                }
+               
+                parse.Objects.Save(role, r1 =>
+                {
+                    if (r1.Success)
+                    {
+                        Debug.WriteLine("create role: " + r1.Data.Id);
+                        userList[i].activeRole = r1.Data.Id;        
+                           userList[i].update(r2 =>
+                           {
+                              
+                                i++;
+                                createRoles();
+                                Debug.WriteLine("Assigned role " + r1.Data.Id + " to " + userList[i].Id);
+                       });
+                    }
+                });
+            }
+            else
+            {
+                i = 0;  
+                startGame();
+            }
+
+
+        }
+        private void startGame()
+        {   
+            var parse = new Driver();
+            game.state = 1;
+            game.update(r=>
+                {
+                    if(r.Success)
+                        Debug.WriteLine("Game started");
+                });
+        }
+        public void getUsersPerGame (Response<ResultsResponse<User>> r)
         {
             if (r.Success)
             {
-                List<User> list = (List<User>)r.Data.Results;
-                int i = 0;
-                foreach (User u in list)
-                {
-                    Roles role=new Roles();
-                    role.gameId=u.activeGame;
-                    role.userId=u.Id;
-                    role.startTime = DateTime.Now;
-                    role.alive = true;
-                    if (ifZombie(i))
-                    {
-                        role.roleType = "Zombie";
-                      
-                    }
-                    else
-                    {
-                        role.roleType = "Survivor";
-                    
-                    }
-                    var parse = new Driver();
-                    Deployment.Current.Dispatcher.BeginInvoke(()=>{
-                        parse.Objects.Save(role, r1 =>
-                        {
-                            if (r1.Success)
-                            {
-                                String id = r1.Data.Id;
-                                u.activeRole = id;
-                                u.update();
-                            }
-                        });
-                    }); 
-                   
-                    i++;
-
-
-                }
+                userList = (List<User>)r.Data.Results;
+                Debug.WriteLine("Get Users per Game");
+                createRoles();                              
             }
 
         }
 
         private bool ifZombie(int i)
         {
-             Random r=new Random(7);
-             return r.Next() > 2;
-           
+            return i > (userList.Count / 3);
         }
   
         //Classes which are needed to select between Datatemplates
@@ -187,7 +203,11 @@ namespace mmuc_zombie.pages
             Message msg = new Message();
             msg.gameId = game.Id;
             msg.msg = message;
-            msg.create();
+            msg.create(r =>
+            {
+                if (r.Success)
+                    Debug.WriteLine("Message created");
+            });
         }
 
         private void bots_Click(object sender, RoutedEventArgs e)
@@ -199,11 +219,13 @@ namespace mmuc_zombie.pages
             if (r.Success)
             {
                 var location= r.Data;
-                List<GeoCoordinate> coords=StaticHelper.drawCircle(location.toGeoCoordinate(),5);
+                List<GeoCoordinate> coords=StaticHelper.drawCircle(location.toGeoCoordinate(),1);
           
                 MyLocation l=new MyLocation();
-                l.latitude=coords[botCounter*20+35].Latitude;
-                l.longitude=coords[botCounter*20+50].Longitude;  
+                var fu = botCounter * 20 + 35;
+                var fuu = botCounter * 20 + 35;
+                l.latitude=coords[fu].Latitude;
+                l.longitude=coords[fuu].Longitude;  
                 var parse=new Driver();
                 parse.Objects.Save(l,r2=>{
                     if(r2.Success)
@@ -212,7 +234,11 @@ namespace mmuc_zombie.pages
                            b.UserName="Bot "+botCounter++;
                            b.activeGame=user.activeGame;
                            b.locationId=r2.Data.Id;
-                           b.create();
+                           b.create(r3=>
+                           {
+                               if (r.Success)
+                                   Debug.WriteLine("Bot with Id " + r3.Data.Id + " created. lat: "+l.latitude+" ,long: "+l.longitude);
+                           });
                     }
                 });
             

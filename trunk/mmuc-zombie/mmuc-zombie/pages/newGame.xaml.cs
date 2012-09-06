@@ -211,7 +211,7 @@ namespace mmuc_zombie.pages
             PositionRetriever.startPositionRetrieving(100);
             playerSlider.Value = 3;
 
-            editable();
+           // editable(); es gibt keine GameId bei einem neuen game-.- 
         }
 
         private void editable()

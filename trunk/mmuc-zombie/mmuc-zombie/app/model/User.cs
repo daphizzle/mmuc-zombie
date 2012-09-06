@@ -18,6 +18,7 @@ using mmuc_zombie;
 
 public class User :  MyParseObject
 {
+
     public string activeGame { get; set; }
 
 
@@ -50,6 +51,11 @@ public class User :  MyParseObject
         NickName = "";      
     }
 
+    public void saveToState()
+    {
+         PhoneApplicationService service = PhoneApplicationService.Current;
+         service.State["user"] = this;
+    }
     public static void set(User user)
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
@@ -98,7 +104,23 @@ public class User :  MyParseObject
                 });
         
     }
+    public new void update( Action<Response<DateTime>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Update<User>(this.Id).
+            Set(u => u.status, status).
+            Set(u => u.activeGame, activeGame).
+            Set(u => u.activeRole, activeRole).
+            Set(u => u.UserName, UserName).
+            Set(u => u.Password, Password).
+            Set(u => u.Facebook, Facebook).
+            Set(u => u.email, email).
+            Set(u => u.locationId, locationId).
+            Set(u => u.DeviceID, DeviceID).
+            Set(u => u.NickName, NickName).
+            Execute(callback);
 
+    }
 
     public static void find(string userId, MyListener listener)
     {

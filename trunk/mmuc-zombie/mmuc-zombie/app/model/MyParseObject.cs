@@ -15,11 +15,14 @@ using System.Diagnostics;
 
 
 public class MyParseObject :ParseObject{
+  
 
-    public void create(){
-        create(null);
+ 
+    public void create(Action<Response<ParseObject>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Save(this, callback);
     }
-
     public void create(MyListener listener){
         String s = this.GetType().Name;
         var parse = new Driver();

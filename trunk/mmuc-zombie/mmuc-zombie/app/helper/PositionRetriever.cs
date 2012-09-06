@@ -45,17 +45,35 @@ namespace mmuc_zombie.app.helper
             Debug.WriteLine("should update Location now!");
             PhoneApplicationService service = PhoneApplicationService.Current;
             User user = (User)service.State["user"];
-            if (user.locationId != null)
+            if (!user.locationId.Equals(""))
             {
                 double lat = e.Position.Location.Latitude;
                 double lon = e.Position.Location.Longitude;
                 var parse = new Driver();
-                parse.Objects.Update<MyLocation>(user.locationId).Set(u => u.latitude, lat).Set(u => u.longitude, lon).Execute();
+                parse.Objects.Update<MyLocation>(user.locationId).Set(u => u.latitude, lat).Set(u => u.longitude, lon).Execute(r =>
+                    {
+                      
+                            Debug.WriteLine("Location updated to Lat: " + lat + ", Long: " + lon);
+                    });
+
             }
             else
             {
                 MyLocation loc = new MyLocation(e.Position.Location.Latitude, e.Position.Location.Longitude);
-                loc.create(new LocationListener(user));
+                loc.create(r =>
+                {
+                    if (r.Success)
+                    {
+                        user.locationId = r.Data.Id;
+                        Debug.WriteLine("Location with Lat: " + e.Position.Location.Latitude + ", Long: " + e.Position.Location.Longitude + " created");
+                        user.update(r2=>
+                        {
+                            Debug.WriteLine("Location "+r.Data.Id+" assigned to User "+user.Id);
+                            user.saveToState();
+                        });
+                    }
+                });
+
             }
         }
 
