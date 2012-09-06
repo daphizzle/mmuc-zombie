@@ -50,6 +50,36 @@ public class Games : MyParseObject
                Execute(callback);
     }
 
+    public new void update()
+    {
+        var parse = new Driver();
+        parse.Objects.Update<Games>(this.Id).
+            Set(u => u.state, state).
+            Set(u => u.players, players).
+            Set(u => u.privateGame, privateGame).
+            Set(u => u.name, name).
+            Set(u => u.radius, radius).
+            Set(u => u.zombiesCount, zombiesCount).
+            Set(u => u.startTime, startTime).
+            Set(u => u.endTime, endTime).
+            Set(u => u.locationId, locationId).
+            Set(u => u.description, description).
+            Set(u => u.ownerId,ownerId).
+            Execute(r =>
+            {
+                if (r.Success)
+                {
+                    Debug.WriteLine("Game : " + Id + " successfull updated");
+                }
+                //else
+                //{
+                //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
+                //}
+
+            });
+
+    }
+
     public Games(string name, DateTime start, DateTime end, string ownerId, string description) 
     {
         this.name = name;
@@ -59,22 +89,10 @@ public class Games : MyParseObject
         this.description = description;
     }
 
-	static public void findPendingGames(MyListener listener)
+    static public void findPendingGames(Action<Response<ResultsResponse<Games>>> callback)
     {
         var parse = new Driver();
-        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Games> found = (List<Games>)r.Data.Results;
-                    List<MyParseObject> list = new List<MyParseObject>();
-                    foreach (Games g in found)
-                    {
-                        list.Add(g);
-                    }
-                    listener.onDataChange(list);
-                }
-            });
+        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(callback);
     }
 
     public void create(List<MyLocation> list, List<Invite> invites)
@@ -128,38 +146,16 @@ public class Games : MyParseObject
     }
 
 
-    internal static void findCustomGames(MyListener listener)
+    public static void findCustomGames(Action<Response<ResultsResponse<Invite>>> callback)
     {
         var parse = new Driver();
         PhoneApplicationService service = PhoneApplicationService.Current;
         User user = (User)service.State["user"];
         string userId=user.Id;
         List<MyParseObject> list = new List<MyParseObject>();
-        parse.Objects.Query<Invite>().Where(c => c.userId == userId).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Invite> invites=(List<Invite>)r.Data.Results;
-                    int counter = 0;
-                    foreach (Invite i in invites)
-                    {  
-                      parse.Objects.Get<Games>(i.gameId,r2 =>
-                      {
-                        if (r2.Success)
-                         {
-                             counter++;
-                             Games game = (Games)r2.Data;
-                             list.Add(game);
-                             if (counter == invites.Count)
-                             {
-                                 listener.onDataChange(list);
-                             }
-                        }
-                     });
-                  }
-                }
-            });
+        parse.Objects.Query<Invite>().Where(c => c.userId == userId).Execute(callback);
     }
+
 
     static public void findById(string gameId, MyListener listener)
     {
@@ -179,7 +175,22 @@ public class Games : MyParseObject
             }));
     }
 
+    static public void findMyGames(Action<Response<ResultsResponse<Games>>> callback)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId = user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        parse.Objects.Query<Games>().Where(c => c.ownerId == userId).Execute(callback);
+    }
 
+
+    /*
+     * Obsolete methods -- Be warned -- Do not use these
+     */
+
+    [Obsolete("Instead of this method user findMyGames")]
     static public void findByOwner(string ownerId, MyListener listener)
     {
         var parse = new Driver();
@@ -194,16 +205,69 @@ public class Games : MyParseObject
                 List<Games> games = (List<Games>)r.Data.Results;
                 //int counter = 0;
                 foreach (Games g in games)
-                {                    
+                {
                     list.Add(g);
                     if (list.Count == games.Count)
                     {
                         listener.onDataChange(list);
-                    }       
+                    }
                 }
             }
         });
     }
 
+
+    [Obsolete("Use other findCustomGames method")]
+    internal static void findCustomGames(MyListener listener)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId = user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        parse.Objects.Query<Invite>().Where(c => c.userId == userId).Execute(r =>
+        {
+            if (r.Success)
+            {
+                List<Invite> invites = (List<Invite>)r.Data.Results;
+                int counter = 0;
+                foreach (Invite i in invites)
+                {
+                    parse.Objects.Get<Games>(i.gameId, r2 =>
+                    {
+                        if (r2.Success)
+                        {
+                            counter++;
+                            Games game = (Games)r2.Data;
+                            list.Add(game);
+                            if (counter == invites.Count)
+                            {
+                                listener.onDataChange(list);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    [Obsolete("Use other findPendingGames method now")]
+	static public void findPendingGames(MyListener listener)
+    {
+        var parse = new Driver();
+        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Games> found = (List<Games>)r.Data.Results;
+                    List<MyParseObject> list = new List<MyParseObject>();
+                    foreach (Games g in found)
+                    {
+                        list.Add(g);
+                    }
+                    listener.onDataChange(list);
+                }
+            });
+    }
 
 }

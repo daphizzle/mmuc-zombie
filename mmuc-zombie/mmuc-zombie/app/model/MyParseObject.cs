@@ -46,7 +46,14 @@ public class MyParseObject :ParseObject{
                 Debug.WriteLine(s+" " + this.Id + " Error :" + msg);
             }
         });
-   
+    }
+
+    //In the future maybe change all method uses of the listener kind to this method 
+    public void create(String onlyForTheOverload,Action<Response<ParseObject>> callback)
+    {
+        String s = this.GetType().Name;
+        var parse = new Driver();
+        parse.Objects.Save(this, callback);
     }
 
     [Obsolete("update very buggy in parse api")]

@@ -20,7 +20,7 @@ using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
-    public partial class CustomGames : PhoneApplicationPage, MyListener
+    public partial class CustomGames : PhoneApplicationPage
     {
 
         List<MyLocation> middlePoints = new List<MyLocation>();
@@ -28,49 +28,107 @@ namespace mmuc_zombie.pages
         public CustomGames()
         {
             InitializeComponent();
-            Games.findCustomGames(this);
-
+            //Games.findCustomGames(this);
+            Games.findCustomGames(displayCustomGames);
 
         }
-        public void onDataChange(List<MyParseObject> list)
+
+        private void displayCustomGames(Response<ResultsResponse<Invite>> r)
         {
             var parse = new Driver();
-            int gameCounter = 0;
-            foreach (MyParseObject o in list)
+            if (r.Success)
             {
-                string id = o.Id;
-                games.Add((Games)o);
-
-                parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
+                List<Invite> invites = (List<Invite>)r.Data.Results;
+                foreach (Invite i in invites)
                 {
-                    if (r.Success)
+                    parse.Objects.Get<Games>(i.gameId, r2 =>
                     {
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        if (r2.Success)
                         {
+                            Games game = (Games)r2.Data;
+                            games.Add(game);
 
-                            drawPolygons((List<MyLocation>)r.Data.Results);
-                            gameCounter++;
-                            if (gameCounter == list.Count)
+
+                            if (games.Count == invites.Count)
                             {
-                                drawPushPins();
-                                if (!loadGames())
+                                int gameCounter = 0;
+                                foreach(Games g in games)
                                 {
-                                    noResults.Visibility = System.Windows.Visibility.Visible;
-                                    gameList.Visibility = System.Windows.Visibility.Collapsed;
-                                }
-                                else
-                                {
-                                    noResults.Visibility = System.Windows.Visibility.Collapsed;
-                                    gameList.Visibility = System.Windows.Visibility.Visible;
+                                    string id = g.Id;
+                                    parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r3 =>
+                                    {
+                                        if (r3.Success)
+                                        {
+                                            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                            {
+
+                                                drawPolygons((List<MyLocation>)r3.Data.Results);
+                                                gameCounter++;
+                                                if (gameCounter == games.Count)
+                                                {
+                                                    drawPushPins();
+                                                    if (!loadGames())
+                                                    {
+                                                        noResults.Visibility = System.Windows.Visibility.Visible;
+                                                        gameList.Visibility = System.Windows.Visibility.Collapsed;
+                                                    }
+                                                    else
+                                                    {
+                                                        noResults.Visibility = System.Windows.Visibility.Collapsed;
+                                                        gameList.Visibility = System.Windows.Visibility.Visible;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    });
                                 }
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
             }
-
-
         }
+
+        //Code cleanup: We now use direct callbacks instead of listeners for better readable and less widespread code
+        //public void onDataChange(List<MyParseObject> list)
+        //{
+        //    var parse = new Driver();
+        //    int gameCounter = 0;
+        //    foreach (MyParseObject o in list)
+        //    {
+        //        string id = o.Id;
+        //        games.Add((Games)o);
+
+        //        parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
+        //        {
+        //            if (r.Success)
+        //            {
+        //                Deployment.Current.Dispatcher.BeginInvoke(() =>
+        //                {
+
+        //                    drawPolygons((List<MyLocation>)r.Data.Results);
+        //                    gameCounter++;
+        //                    if (gameCounter == list.Count)
+        //                    {
+        //                        drawPushPins();
+        //                        if (!loadGames())
+        //                        {
+        //                            noResults.Visibility = System.Windows.Visibility.Visible;
+        //                            gameList.Visibility = System.Windows.Visibility.Collapsed;
+        //                        }
+        //                        else
+        //                        {
+        //                            noResults.Visibility = System.Windows.Visibility.Collapsed;
+        //                            gameList.Visibility = System.Windows.Visibility.Visible;
+        //                        }
+        //                    }
+        //                });
+        //            }
+        //        });
+        //    }
+
+
+        //}
 
 
 
@@ -148,8 +206,6 @@ namespace mmuc_zombie.pages
            
                 tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameName.Text = tmp.name;
-                tmpUI.startTime.Text = tmp.startTime.Value.ToString();
-                tmpUI.endTime.Text = tmp.endTime.Value.ToString();
                 tmpUI.description.Text = tmp.description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);
                 gameStack.Children.Add(tmpUI);

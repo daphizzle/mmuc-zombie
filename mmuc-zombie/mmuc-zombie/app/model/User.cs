@@ -141,6 +141,13 @@ public class User :  MyParseObject
 
     }
 
+    //maybe in the future replace usages of the listener kind method with this one
+    public static void find(string userId, Action<Response<User>> callback)
+    {
+        var driver = new Driver();
+        driver.Objects.Get<User>(userId,callback);
+    }
+
     public static void find(List<string> userIds, MyListener listener)
     {
         foreach (string userId in userIds)

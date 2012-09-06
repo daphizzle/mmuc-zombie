@@ -45,6 +45,7 @@
                         <TextBlock Name="name" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         <Image Height="32" Name="facebook" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
                     </Canvas>
+                    <Button Content="Clear Database" Height="80" HorizontalAlignment="Left" Margin="89,377,0,0" Name="button1" VerticalAlignment="Top" Width="253" Click="button1_Click" />
                 </Grid>
             </controls:PivotItem>
 

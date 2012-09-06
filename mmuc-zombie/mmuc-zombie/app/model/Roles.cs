@@ -20,8 +20,7 @@ public class Roles : MyParseObject
         public DateTime? endTime { get; set; }
         public DateTime? startTime { get; set; }
         public int rank { get; set; }
-        //gets id from MyParsobject so not needed imho
-        //public string roleId { get; set; }
+        public int infectionCount { get; set; }
         public string roleType { get; set; }
         public Boolean alive { get; set; }
         public new void update()
@@ -33,6 +32,7 @@ public class Roles : MyParseObject
                 Set(u => u.gameId, gameId).
                 Set(u => u.endTime, endTime).
                 Set(u => u.startTime, startTime).
+                Set(u => u.infectionCount,infectionCount).
                 Set(u => u.roleType, roleType).
                 Set(u => u.alive, alive).
                 Execute(r =>
@@ -56,6 +56,12 @@ public class Roles : MyParseObject
                     user.update();
                 }
             });
+        }
+
+        public static void find(String roleId,Action<Response<Roles>> callback)
+        {
+            var parse = new Driver();
+            parse.Objects.Get<Roles>(roleId, callback);
         }
 
     }
