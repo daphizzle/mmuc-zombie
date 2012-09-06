@@ -10,6 +10,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Device.Location;
+using Parse;
 
     public class MyLocation : MyParseObject
     {
@@ -32,5 +33,7 @@ using System.Device.Location;
             latitude = g.Latitude;
             longitude = g.Longitude;
             }
+        
+
     }
 

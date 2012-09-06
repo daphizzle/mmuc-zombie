@@ -33,6 +33,22 @@ public class Games : MyParseObject
     public string ownerId { get; set; }
 
     public Games() { }
+    public void update(Action<Response<DateTime>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Update<Games>(this.Id).
+               Set(u => u.state, state).
+               Set(u => u.players, players).
+               Set(u => u.privateGame, privateGame).
+               Set(u => u.name, name).
+               Set(u => u.radius, radius).
+               Set(u => u.zombiesCount, zombiesCount).
+               Set(u => u.startTime, startTime).
+               Set(u => u.endTime, endTime).
+               Set(u => u.description, description).
+               Set(u => u.ownerId, ownerId).
+               Execute(callback);
+    }
 
     public Games(string name, DateTime start, DateTime end, string ownerId, string description) 
     {
@@ -75,14 +91,22 @@ public class Games : MyParseObject
                     foreach (MyLocation l in list)
                     {
                         l.gameId = Id;
-                        Debug.WriteLine("(" + l.latitude + "," + l.longitude + ")");
-                        l.create();
+                        l.create(r2 =>
+                        {
+                            if (r.Success)
+                                Debug.WriteLine("(" + l.latitude + "," + l.longitude + ")");
+
+                        });
 
                     }
                     foreach (Invite i in invites)
                     {
-                        i.gameId = Id;  
-                        i.create();
+                        i.gameId = Id;
+                        i.create(r2 =>
+                            {
+                                if (r.Success)
+                                    Debug.WriteLine("Invite for user "+i.userId+" created");
+                            });
                     }
                     user.status = 1;
                     user.activeGame = Id;

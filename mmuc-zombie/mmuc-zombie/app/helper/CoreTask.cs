@@ -104,6 +104,8 @@ namespace mmuc_zombie.app.helper
         }
         static private void ingameMode()
         {
+         
+
             Query.getRole(user.activeRole, check_IsAliveCallback);
             Debug.WriteLine("Ingame Mode");
             
@@ -130,25 +132,28 @@ namespace mmuc_zombie.app.helper
 
                          var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
                          if (!(currentPage is IngameView))
+                         {   
                              (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+                         Debug.WriteLine("switch in ingamemode");
+                         }
                          else
                          {
                              var myPage = (IngameView)currentPage;
-                         myPage.getPinsData();
+                         myPage.loadData();
                          }
                      });
                 }
                 else
                 {
-                    idleMode();
+                    Debug.WriteLine("U got Killed");    
+                    
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
-                            MessageBoxResult mb = MessageBox.Show("Sorry, you just died. But you can join another game!", "Alert", MessageBoxButton.OKCancel);
-                            if (mb != MessageBoxResult.OK)
-                            {
-                              (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
- 
-                            }
+                            idleMode();
+                            MessageBoxResult mb = MessageBox.Show("Sorry, you just died. But you can join another game!", "Alert", MessageBoxButton.OK);
+                           (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+                              
+                            
                         });
                 }
             }
@@ -157,15 +162,25 @@ namespace mmuc_zombie.app.helper
         {
             Debug.WriteLine("Idle Mode");
             //bei einem join wird ein neuer timer gestartetund userstate auf 1 gesetzt
-            timer.Stop();
+           
+                           timer.Stop();
+                   
         }
 
          static private void check_GameStarted( Action<Response<Games>> callback)
         {   
-            string gameId=user.activeGame;
-            var parse = new Driver();
-            parse.Objects.Get<Games>(gameId,callback);
+               Query.getUser(user.Id, r =>
+                {
+                    if (r.Success)
+                        user = r.Data;
+                        user.saveToState();    
+                        string gameId = user.activeGame;
+                        var parse = new Driver();
+                        parse.Objects.Get<Games>(gameId, callback);
+                        
 
+                });
+            
         }
         static public void check_GameStartedCallback(Response<Games> r)
         {
