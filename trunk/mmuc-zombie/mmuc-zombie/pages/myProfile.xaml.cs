@@ -286,5 +286,90 @@ namespace mmuc_zombie.pages
         {
             updateUser();
         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            var parse = new Driver();
+            //delete all User
+            parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(r =>
+                {
+                    if (r.Success)
+                    {
+                        List<User> users = (List<User>)r.Data.Results;
+                        foreach(User u in users)
+                            parse.Objects.Delete<User>(u);
+                    }
+                });
+
+            //delete all Games
+            parse.Objects.Query<Games>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Games> games = (List<Games>)r.Data.Results;
+                    foreach (Games u in games)
+                        parse.Objects.Delete<Games>(u);
+                }
+            });
+
+            //delete all Locations
+            parse.Objects.Query<MyLocation>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<MyLocation> users = (List<MyLocation>)r.Data.Results;
+                    foreach (MyLocation u in users)
+                        parse.Objects.Delete<MyLocation>(u);
+                }
+            });
+
+
+            //delete all Roles
+            parse.Objects.Query<Roles>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Roles> users = (List<Roles>)r.Data.Results;
+                    foreach (Roles u in users)
+                        parse.Objects.Delete<Roles>(u);
+                }
+            });
+
+
+            //delete all Invites
+            parse.Objects.Query<Invite>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Invite> users = (List<Invite>)r.Data.Results;
+                    foreach (Invite u in users)
+                        parse.Objects.Delete<Invite>(u);
+                }
+            });
+
+
+            //delete all Message
+            parse.Objects.Query<Message>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Message> users = (List<Message>)r.Data.Results;
+                    foreach (Message u in users)
+                        parse.Objects.Delete<Message>(u);
+                }
+            });
+
+            //delete all Friends
+            parse.Objects.Query<Friend>().Where(c => c.Id == c.Id).Execute(r =>
+            {
+                if (r.Success)
+                {
+                    List<Friend> users = (List<Friend>)r.Data.Results;
+                    foreach (Friend u in users)
+                        parse.Objects.Delete<Friend>(u);
+                }
+            });
+
+        }
     }
 }

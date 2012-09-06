@@ -24,13 +24,12 @@ namespace mmuc_zombie.pages
     public partial class IngameView : PhoneApplicationPage
     {
         List<User> userList;
-        List<MyLocation> locationList = new List<MyLocation>();
+        List<MyLocation> locationList  = new List<MyLocation>(); 
         List<Roles>roleList = new List<Roles>();
         User user;
-        Games game;
-        private int nextPlayerCounter;
-        private Roles role;
-        private MyLocation myLocation;
+        Games game; 
+        Roles role;
+        MyLocation myLocation;
         Boolean painting=false;
         private int i;
    
@@ -40,6 +39,18 @@ namespace mmuc_zombie.pages
             PhoneApplicationService service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
             drawGameBorder();
+        }
+
+        //constructor used for testing only
+        public IngameView(List<User> uList, List<MyLocation> locList, List<Roles> rList, User user, Games game, Roles role, MyLocation myLoc)
+        {
+            userList = uList;
+            locationList = locList;
+            roleList = rList;
+            this.user = user;
+            this.game = game;
+            this.role = role;
+            myLocation = myLoc;
         }
 
         public void drawGameBorder()
@@ -128,32 +139,67 @@ namespace mmuc_zombie.pages
                 user = (User)service.State["user"];
              }
             drawPins();
-            if (nextPlayerCounter++ == 5)
-               if(role.roleType=="Zombie"){
-                   infectNearSurvivors();
-                   nextPlayerCounter = 0;
-               }
+            if(user.Id == game.ownerId){
+                infectSurvivors();
+            }
         }
 
-        private void infectNearSurvivors()
+        //set public for testing purpose
+        public void infectSurvivors()
         {
             for (int i = 0; i < locationList.Count; i++)
             {
-                if (userList[i].activeRole == "Survivor" &&
-                    myLocation.toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate()) < 25)
+                if (userList[i].activeRole.Equals("Survivor"))
                 {
-                    roleList[i].alive = false;
-                    userList[i].activeGame = "";
-
+                    //check how many zombies are near this survivor
+                    int infectionPlus = amountOfZombiesNearSurvivor(i);
+                    if (infectionPlus > 0)
+                    {
+                        //there are zombies near survivor
+                        if (roleList[i].infectionCount + infectionPlus > 5)
+                        {
+                            //survivor got infected and died
+                            roleList[i].alive = false;
+                            userList[i].activeGame = "";
+                            userList[i].status = 0;
+                            roleList[i].update();
+                            userList[i].update();
+                        }
+                        else
+                        {
+                            //survivor is getting infected but still alive
+                            roleList[i].infectionCount += infectionPlus;
+                            roleList[i].update();
+                        }
+                    }
+                    else
+                    {
+                        //there are no zombies near the survivor
+                        if (roleList[i].infectionCount > 0)
+                        {
+                            //this means that the user managed to escape the zombies while they were infecting him
+                            roleList[i].infectionCount = 0;
+                            roleList[i].update();
+                        }
+                    }
                 }
             }
         }
 
-     
-
-               
+        private int amountOfZombiesNearSurvivor(int i)
+        {
+            int zombies = 0;
+            for (int j = 0; j < userList.Count; j++)
+            {
+                if(userList[j].activeRole.Equals("Zombie")&&
+                    (locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate())<25))
+                {
+                    ++zombies;
+                }
+            }
+            return zombies;    
+        } 
         
-
         private void drawPins()
         {
             Debug.WriteLine("Start Drawing Users");

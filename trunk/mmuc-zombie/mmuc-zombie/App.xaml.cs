@@ -126,7 +126,7 @@ namespace mmuc_zombie
                 using (var file = store.CreateFile("userId.txt"))
                 {
                     User user = new User();
-                    user.UserName = "USER XYZ";
+                    user.UserName = "Dizzle";
                     user.DeviceID = App.DeviceID.toString(); 
                     user.create(new StartupListener());
                    // User.set(user);
@@ -141,8 +141,6 @@ namespace mmuc_zombie
                     User.find(userId,new LoginListener());
                 }
             }
-
-  
         }
 
         // Code to execute when the application is deactivated (sent to background)

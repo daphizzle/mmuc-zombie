@@ -28,10 +28,50 @@ namespace mmuc_zombie.pages
         public OfficialGames()
         {
             InitializeComponent();
-            Games.findPendingGames(this);
-           
+            //Games.findPendingGames(this);
+            Games.findPendingGames(displayPendingGamesCallback);
             
         }
+
+        public void displayPendingGamesCallback(Response<ResultsResponse<Games>> r)
+        {
+            if (r.Success)
+            {
+                games = (List<Games>)r.Data.Results;
+                int gameCounter = 0;
+                var parse = new Driver();
+                foreach (Games g in games)
+                {
+                    string id = g.Id;
+                    parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r2 =>
+                    {
+                        if (r2.Success)
+                        {
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                            {
+                                drawPolygons((List<MyLocation>)r2.Data.Results);
+                                gameCounter++;
+                                if (gameCounter == games.Count)
+                                {
+                                    drawPushPins();
+                                    if (!loadGames())
+                                    {
+                                        noResults.Visibility = System.Windows.Visibility.Visible;
+                                        gameList.Visibility = System.Windows.Visibility.Collapsed;
+                                    }
+                                    else
+                                    {
+                                        noResults.Visibility = System.Windows.Visibility.Collapsed;
+                                        gameList.Visibility = System.Windows.Visibility.Visible;
+                                    }
+                                }
+                            });
+                        }
+                    });  
+                }
+            }
+        }
+
         public void onDataChange(List<MyParseObject>  list)
         {
             var parse=new Driver();

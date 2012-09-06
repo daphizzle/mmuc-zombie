@@ -18,22 +18,15 @@ using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie
 {
-    public partial class MainPage : PhoneApplicationPage,MyListener
+    public partial class MainPage : PhoneApplicationPage
     {
 
         PhoneApplicationService service = PhoneApplicationService.Current;
-        List<MyParseObject> gameList;
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-        }
-
-
-        public void onDataChange(List<MyParseObject> list)
-        {
-            gameList = list;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

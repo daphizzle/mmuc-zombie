@@ -16,7 +16,7 @@ using Parse;
 
 namespace mmuc_zombie.pages
 {
-    public partial class MyGames : PhoneApplicationPage, MyListener
+    public partial class MyGames : PhoneApplicationPage
     {
 
         List<Games> games = new List<Games>();
@@ -24,7 +24,28 @@ namespace mmuc_zombie.pages
         public MyGames()
         {
             InitializeComponent();
-            Games.findByOwner(User.get().Id, this);
+            Games.findMyGames(displayGamesCallback);
+        }
+
+        private void displayGamesCallback(Response<ResultsResponse<Games>> r)
+        {
+            if (r.Success)
+            {
+                games = (List<Games>)r.Data.Results;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    if (!loadGames())
+                    {
+                        noResults.Visibility = System.Windows.Visibility.Visible;
+                        gameList.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                    else
+                    {
+                        noResults.Visibility = System.Windows.Visibility.Collapsed;
+                        gameList.Visibility = System.Windows.Visibility.Visible;
+                    }
+                });
+            }
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -32,29 +53,31 @@ namespace mmuc_zombie.pages
             //PositionRetriever.startPositionRetrieving(100);            
         }
 
-        public void onDataChange(List<MyParseObject> list)
-        {
-            var parse = new Driver();            
-            foreach (MyParseObject o in list)
-            {
-                string id = o.Id;
-                games.Add((Games)o);               
-            }
 
-            Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                if (!loadGames())
-                {
-                    noResults.Visibility = System.Windows.Visibility.Visible;
-                    gameList.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    noResults.Visibility = System.Windows.Visibility.Collapsed;
-                    gameList.Visibility = System.Windows.Visibility.Visible;
-                }
-            });
-        }
+        //Code cleanup: We now use direct callbacks instead of listeners for better readable and less widespread code
+        //public void onDataChange(List<MyParseObject> list)
+        //{
+        //    var parse = new Driver();            
+        //    foreach (MyParseObject o in list)
+        //    {
+        //        string id = o.Id;
+        //        games.Add((Games)o);               
+        //    }
+
+        //    Deployment.Current.Dispatcher.BeginInvoke(() =>
+        //    {
+        //        if (!loadGames())
+        //        {
+        //            noResults.Visibility = System.Windows.Visibility.Visible;
+        //            gameList.Visibility = System.Windows.Visibility.Collapsed;
+        //        }
+        //        else
+        //        {
+        //            noResults.Visibility = System.Windows.Visibility.Collapsed;
+        //            gameList.Visibility = System.Windows.Visibility.Visible;
+        //        }
+        //    });
+        //}
 
         private bool loadGames()
         {            
