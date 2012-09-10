@@ -22,16 +22,15 @@ public class Game : MyParseObject
     //pending = 0, waiting = 1, active = 2, finshed = 3
     public int state { get; set; }
     public int players { get; set; }
-    public bool privateGame { get; set; }
-    public string name { get; set; }
+    public Boolean privateGame { get; set; }
+    public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    //public DateTime? startTime { get; set; }
-    //public DateTime? endTime { get; set; }
+    public DateTime? startTime { get; set; }
+    public DateTime? endTime { get; set; }
     public string locationId { get; set; }
     public string description { get; set; }
     public string ownerId { get; set; }
-    public string hostId { get; set; }
 
     public Game() { }
     public void update(Action<Response<DateTime>> callback)
@@ -44,20 +43,48 @@ public class Game : MyParseObject
                Set(u => u.name, name).
                Set(u => u.radius, radius).
                Set(u => u.zombiesCount, zombiesCount).
-               //Set(u => u.startTime, startTime).
-               //Set(u => u.endTime, endTime).
+               Set(u => u.startTime, startTime).
+               Set(u => u.endTime, endTime).
                Set(u => u.description, description).
                Set(u => u.ownerId, ownerId).
-               Set(u => u.hostId,hostId). 
                Execute(callback);
     }
 
+    public new void update()
+    {
+        var parse = new Driver();
+        parse.Objects.Update<Game>(this.Id).
+            Set(u => u.state, state).
+            Set(u => u.players, players).
+            Set(u => u.privateGame, privateGame).
+            Set(u => u.name, name).
+            Set(u => u.radius, radius).
+            Set(u => u.zombiesCount, zombiesCount).
+            Set(u => u.startTime, startTime).
+            Set(u => u.endTime, endTime).
+            Set(u => u.locationId, locationId).
+            Set(u => u.description, description).
+            Set(u => u.ownerId,ownerId).
+            Execute(r =>
+            {
+                if (r.Success)
+                {
+                    Debug.WriteLine("Game : " + Id + " successfull updated");
+                }
+                //else
+                //{
+                //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
+                //}
+
+            });
+
+    }
 
     public Game(string name, DateTime start, DateTime end, string ownerId, string description) 
     {
         this.name = name;
-        //this.startTime = startTime;
-        //this.endTime = endTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.ownerId = ownerId;
         this.description = description;
     }
