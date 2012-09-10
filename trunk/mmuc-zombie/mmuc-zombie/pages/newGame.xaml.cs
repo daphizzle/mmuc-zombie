@@ -55,7 +55,11 @@ namespace mmuc_zombie.pages
                                 List<Friend> friends = (List<Friend>)r2.Data.Results;
                                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                                 {
-                                    MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(loc.latitude, loc.longitude), 0.5, 0.5));
+                                    Pushpin p = new Pushpin();
+                                    p.Location=new System.Device.Location.GeoCoordinate(loc.latitude, loc.longitude);
+                                    p.Template=this.Resources["playerpin"] as ControlTemplate;
+                                    MapWithPolygon.Center = p.Location;
+                                    mapLayer.Children.Add(p);
                                     MapWithPolygon.ZoomLevel = 13;
                                     if (!loadUsers(friends))
                                     {            

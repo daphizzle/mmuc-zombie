@@ -15,7 +15,28 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True" Loaded="PhoneApplicationPage_Loaded">
-
+    <phone:PhoneApplicationPage.Resources>
+    <ControlTemplate x:Key="playerpin" TargetType="m:Pushpin">
+        <Grid x:Name="ContentGrid" Width="36" Height="36" >
+            <StackPanel Orientation="Vertical" >
+                <Grid MinHeight="31" MinWidth="29" Margin="0">
+                    <Ellipse Fill="Green"
+                       Margin="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Width="30"
+                       Height="30"
+                       Stroke="White"
+                       StrokeThickness="0"/>
+                    <ContentPresenter HorizontalAlignment="Center"
+                                           Content="{TemplateBinding Content}"
+                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                           Margin="0"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ControlTemplate>
+    </phone:PhoneApplicationPage.Resources>
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
@@ -93,7 +114,9 @@
                                Height="400" VerticalAlignment="Top">
                         <m:MapLayer x:Name="NewPolygonLayer">
                         </m:MapLayer>
-                        </m:Map>
+                        <m:MapLayer x:Name="mapLayer">
+                        </m:MapLayer>
+                    </m:Map>
                     <Button Name="btnCreatePolygon" Tag="false" Click="btnCreatePolygon_Click"
                                     Margin="0,400,0,0"
                                     Height="100">

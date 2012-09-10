@@ -155,10 +155,25 @@ namespace mmuc_zombie.pages
                 p.MouseEnter += new System.Windows.Input.MouseEventHandler(polygonClick);
                 p.Name =loc.gameId;
                 p.Content = loc.gameId;
-                NewPolygonLayer.Children.Add(p);
+                mapLayer.Children.Add(p);
             }
-            MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(middlePoints[0].latitude, middlePoints[0].longitude), 0.5, 0.5));
-            MapWithPolygon.ZoomLevel = 13;
+         
+            String locationId = User.getFromState().locationId;
+            Query.getLocation(locationId, r =>
+            {
+                if (r.Success)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        Pushpin p = new Pushpin();
+                        p.Location = r.Data.toGeoCoordinate();
+                        p.Template = this.Resources["playerpin"] as ControlTemplate;
+                        MapWithPolygon.Center = p.Location;
+                        mapLayer.Children.Add(p);
+                        MapWithPolygon.ZoomLevel = 13;
+                    });
+                }
+            });
         }
 
         private void polygonClick(Object sender,MouseEventArgs e)

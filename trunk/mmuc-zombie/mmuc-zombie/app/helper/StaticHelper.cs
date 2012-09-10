@@ -79,8 +79,26 @@ namespace mmuc_zombie.app.helper
             return points;
     
         }
-    
 
+         public static MyPolygon inGameArea(List<MyLocation> list)
+         {
+
+             MyPolygon newPolygon = new MyPolygon();
+             // Defines the polygon fill details
+             newPolygon.Locations = new LocationCollection();
+             newPolygon.Fill = new SolidColorBrush(Colors.White);
+             newPolygon.Stroke = new SolidColorBrush(Colors.Red);
+             newPolygon.StrokeThickness = 6;
+             newPolygon.Opacity = 0.2;
+             var newlist = list.OrderBy(x => x.number).ToList();
+             foreach (MyLocation l in newlist)
+             {
+                 newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude, l.longitude));
+             }
+             return newPolygon;
+         }
+
+        
 
 
         public static void userJoin(string p)
