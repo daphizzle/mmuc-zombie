@@ -65,7 +65,7 @@ namespace mmuc_zombie.pages
         {
              if (!painting){
                  painting = true;
-                 Debug.WriteLine("loadData");
+                 //Debug.WriteLine("loadData");
                  loadUsers();
              }
         }
@@ -79,7 +79,7 @@ namespace mmuc_zombie.pages
                      Deployment.Current.Dispatcher.BeginInvoke(() =>
                      {
                         userList = (List<User>)r.Data.Results;
-                        Debug.WriteLine("got Users");
+                        //Debug.WriteLine("got Users");
                         locationList=new List<MyLocation>();
                         loadLocations();    
                      });
@@ -94,7 +94,7 @@ namespace mmuc_zombie.pages
                 {
                     if (r.Success)
                     {
-                        Debug.WriteLine("got Location "+ r.Data.Id+" is equal userlocation "+userList[i].locationId+ "  "+r.Data.latitude+","+r.Data.longitude);
+                        //Debug.WriteLine("got Location "+ r.Data.Id+" is equal userlocation "+userList[i].locationId+ "  "+r.Data.latitude+","+r.Data.longitude);
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                            locationList.Add(r.Data);
@@ -117,7 +117,7 @@ namespace mmuc_zombie.pages
                 {   
                     if (r.Success)
                     {
-                        Debug.WriteLine("got Role " + r.Data.Id + " is equal userRole " + userList[i].activeRole);
+                        //Debug.WriteLine("got Role " + r.Data.Id + " is equal userRole " + userList[i].activeRole);
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                             roleList.Add(r.Data);
@@ -129,9 +129,57 @@ namespace mmuc_zombie.pages
             else
             {
                 i=0;
-                drawPins();
+                doIngameStuff();
             }
         }
+
+        private void updateRoles()
+        {
+            if (i < roleList.Count)
+            {
+                roleList[i].update(r =>
+                    {
+                        if (r.Success)
+                        {
+                            Deployment.Current.Dispatcher.BeginInvoke(()=>
+                                {
+                                    Debug.WriteLine("Updated role " + roleList[i].Id);
+                                    i++;
+                                    updateRoles();
+                                });
+                        }
+                    });
+            }
+            else
+            {
+                i = 0;
+                updateUser();
+            }
+        }
+
+        private void updateUser()
+        {
+            if (i < userList.Count)
+            {
+                userList[i].update(r =>
+                {
+                    if (r.Success)
+                    {
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            Debug.WriteLine("Updated user " + userList[i].Id);
+                            i++;
+                            updateUser();
+                        });
+                    }
+                });
+            }
+            else
+            {
+                i = 0;
+            }
+        }
+
         private void doIngameStuff()
         {
             if (user==null){
@@ -139,7 +187,9 @@ namespace mmuc_zombie.pages
                 user = (User)service.State["user"];
              }
             drawPins();
-            if(user.Id == game.ownerId){
+            if (user.Id == game.ownerId)
+            {
+                Debug.WriteLine("Starting infection");
                 infectSurvivors();
             }
         }
@@ -149,41 +199,47 @@ namespace mmuc_zombie.pages
         {
             for (int i = 0; i < locationList.Count; i++)
             {
-                if (userList[i].activeRole.Equals("Survivor"))
+                if (roleList[i].roleType.Equals("Survivor"))
                 {
                     //check how many zombies are near this survivor
                     int infectionPlus = amountOfZombiesNearSurvivor(i);
                     if (infectionPlus > 0)
                     {
                         //there are zombies near survivor
+                        Debug.WriteLine(String.Format("There are {0} zombies near user {1}", infectionPlus,userList[i].UserName));
                         if (roleList[i].infectionCount + infectionPlus > 5)
                         {
+
+                            Debug.WriteLine(String.Format("User {0} is about to die", userList[i].UserName));
                             //survivor got infected and died
                             roleList[i].alive = false;
                             userList[i].activeGame = "";
                             userList[i].status = 0;
-                            roleList[i].update();
-                            userList[i].update();
                         }
                         else
                         {
+
                             //survivor is getting infected but still alive
                             roleList[i].infectionCount += infectionPlus;
-                            roleList[i].update();
+                            Debug.WriteLine(String.Format("User {0} is currently getting infected, progress = {1}", userList[i].UserName, roleList[i].infectionCount));
+
                         }
                     }
                     else
                     {
                         //there are no zombies near the survivor
+                        Debug.WriteLine(String.Format("There are {0} zombies near user {1}", infectionPlus, userList[i].UserName));
                         if (roleList[i].infectionCount > 0)
                         {
                             //this means that the user managed to escape the zombies while they were infecting him
+                            Debug.WriteLine(String.Format("User {0} got savely away",  userList[i].UserName));
                             roleList[i].infectionCount = 0;
-                            roleList[i].update();
                         }
                     }
                 }
             }
+            this.i = 0;
+            updateRoles();
         }
 
         private int amountOfZombiesNearSurvivor(int i)
@@ -191,8 +247,9 @@ namespace mmuc_zombie.pages
             int zombies = 0;
             for (int j = 0; j < userList.Count; j++)
             {
-                if(userList[j].activeRole.Equals("Zombie")&&
-                    (locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate())<25))
+                double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
+                bool near = (distance)<2500;
+                if(roleList[j].roleType.Equals("Zombie")&&near)
                 {
                     ++zombies;
                 }
@@ -202,21 +259,21 @@ namespace mmuc_zombie.pages
         
         private void drawPins()
         {
-            Debug.WriteLine("Start Drawing Users");
+            //Debug.WriteLine("Start Drawing Users");
             debug.Text = "";
             mapLayer.Children.Clear();
             int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
-                Debug.WriteLine("-----------------------------------");
-                Debug.WriteLine("User" + userList[i].Id);
+                //Debug.WriteLine("-----------------------------------");
+                //Debug.WriteLine("User" + userList[i].Id);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
                 debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
-                Debug.WriteLine("location "+locationList[i].Id); 
+                //Debug.WriteLine("location "+locationList[i].Id); 
                 if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
            
@@ -267,33 +324,6 @@ namespace mmuc_zombie.pages
                 game = r.Data;
             }
         }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
