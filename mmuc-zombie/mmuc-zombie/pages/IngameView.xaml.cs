@@ -205,6 +205,7 @@ namespace mmuc_zombie.pages
             Debug.WriteLine("Start Drawing Users");
             debug.Text = "";
             mapLayer.Children.Clear();
+            int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
@@ -218,27 +219,42 @@ namespace mmuc_zombie.pages
                 Debug.WriteLine("location "+locationList[i].Id); 
                 if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
-
+           
                 if (roleList[i].roleType.Equals("Zombie"))
                 {
                   //  p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
                  //   Debug.WriteLine("Zombiestyle");
-                    p.Background = new SolidColorBrush(Colors.Red);
-                    p.Content = "Zombie: " + userList[i].UserName;
+                    if (user.Id.Equals(userList[i].Id))
+                    {
+                        playerPosition = i;
+                        p.Template = this.Resources["playerzombiepin"] as ControlTemplate;
+                    }
+                    else
+                        p.Template = this.Resources["zombiepin"] as ControlTemplate;
+                   
+                 
                 }
                 else
                 {
                  //   p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
-                  //  Debug.WriteLine("Survivorstyle");
-                    p.Background = new SolidColorBrush(Colors.Green);
-                    p.Content = "Survivor: " + userList[i].UserName;
+                    Debug.WriteLine("Survivorstyle");
+                    if (user.Id.Equals(userList[i].Id))
+                    {
+                        playerPosition = i;
+                        p.Template = this.Resources["playersurvivorpin"] as ControlTemplate;
+                    }
+                    else
+                        p.Template = this.Resources["survivorpin"] as ControlTemplate;
+                    
+                  
                 }
-                MyLocation fu=new MyLocation();
-                fu.fromGeoCoordinate(p.Location);
-               // StaticHelper.drawEllipse(fu, Colors.Red);
+            
                 mapLayer.Children.Add(p);
-                painting = false;
             }
+                map.Center=locationList[playerPosition].toGeoCoordinate();
+                map.ZoomLevel = 14;
+                painting = false;
+            
 
         }
         
@@ -288,64 +304,7 @@ namespace mmuc_zombie.pages
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         var list = (List<MyLocation>)r.Data.Results;
-                        double west = int.MaxValue;
-                        double east = int.MinValue;
-                        double north = int.MinValue;
-                        double south = int.MaxValue;
-                        foreach (MyLocation l in list)
-                        {
-                            if (l.latitude < west)
-                                west = l.latitude;
-                            if (l.latitude > east)
-                                east = l.latitude;
-                            if (l.longitude < south)
-                                south = l.longitude;
-                            if (l.longitude > north)
-                                north = l.longitude;
-                        }
-                        var mid = new GeoCoordinate();
-                        double lat = 0;
-                        double lon = 0;
-                        foreach (MyLocation g in list)
-                        {
-                            lat += g.latitude;
-                            lon += g.longitude;
-                        }
-                        mid.Latitude = lat / list.Count;
-                        mid.Longitude = lon / list.Count;
-                        double widthE = east - mid.Latitude;
-                        double widthW = mid.Latitude - west;
-                        double heightN = north - mid.Longitude;
-                        double heightS = mid.Longitude - south;
-                        double width = 0;
-                        double height = 0;
-                        if (widthE > widthW)
-                        {
-                            width = widthE;
-                        }
-                        else
-                        {
-                            width = widthW;
-                        }
-                        if (heightN > heightS)
-                        {
-                            height = heightN;
-                        }
-                        else
-                        {
-                            height = heightS;
-                        }
-                        if (height > width)
-                        {
-                            width = height;
-                        }
-                        else
-                        {
-                            height = width;
-                        }
-
-                        map.SetView(new LocationRect(mid,height,width));
-                        gameAreaLayer.Children.Add(StaticHelper.drawPolygon(list, Colors.Yellow));
+                        gameAreaLayer.Children.Add(StaticHelper.inGameArea(list));
 
                     });
             }

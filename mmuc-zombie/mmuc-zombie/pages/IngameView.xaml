@@ -16,9 +16,69 @@
     shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:System.Device.Location;assembly=System.Device" 
     BackKeyPress="PhoneApplicationPage_BackKeyPress"
     Loaded="PhoneApplicationPage_Loaded">
-	
+    <phone:PhoneApplicationPage.Resources>
+        <ControlTemplate x:Key="zombiepin"
+                                 TargetType="m:Pushpin">
+    <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/zombie1.jpg" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="survivorpin"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/survivor1.jpg" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
 
-    <!--LayoutRoot is the root grid where all page content is placed-->
+        <ControlTemplate x:Key="playersurvivorpin" TargetType="m:Pushpin">
+  <Grid x:Name="ContentGrid" Width="36" Height="36" >
+            <StackPanel Orientation="Vertical" >
+                <Grid MinHeight="31" MinWidth="29" Margin="0">
+                    <Ellipse Fill="Green"
+                       Margin="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Width="30"
+                       Height="30"
+                       Stroke="White"
+                       StrokeThickness="0"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                           Content="{TemplateBinding Content}"
+                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                           Margin="0"/>
+      </Grid>
+    </StackPanel>
+  </Grid>
+</ControlTemplate>
+        <ControlTemplate x:Key="playerzombiepin" TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid" Width="36" Height="36" >
+                <StackPanel Orientation="Vertical" >
+                    <Grid MinHeight="31" MinWidth="29" Margin="0">
+                        <Ellipse Fill="Red"
+                       Margin="1"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Width="30"
+                       Height="30"
+                       Stroke="White"
+                       StrokeThickness="0"/>
+                        <ContentPresenter HorizontalAlignment="Center"
+                                           Content="{TemplateBinding Content}"
+                                           ContentTemplate="{TemplateBinding ContentTemplate}"
+                                           Margin="0"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </ControlTemplate>
+    </phone:PhoneApplicationPage.Resources>
+
+            <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
        <!--ContentPanel<G - place additional content here-->
         <controls:Pivot Title="Zombie Outbreak">

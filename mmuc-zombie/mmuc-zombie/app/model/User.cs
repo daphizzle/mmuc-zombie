@@ -61,7 +61,11 @@ public class User :  MyParseObject
         PhoneApplicationService service = PhoneApplicationService.Current;
         service.State["user"] = user;        
     }
-
+    public static User getFromState()
+    {
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        return (User)service.State["user"];
+    }
     public static User get()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;

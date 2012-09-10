@@ -8,32 +8,7 @@
 
     <!--Application Resources-->
     <Application.Resources>
-        <Style TargetType="m:Pushpin" x:Key="PushpinStyle">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="m:Pushpin">
-                        <Image Height="50" Source="/mmuc-zombie;component/ext/img/survivor1.jpg" Stretch="Fill" Width="5s0"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="Red" />
-            <Setter Property="FontSize" Value="18" />
-        </Style>
-        <Style TargetType="m:Pushpin" x:Key="PushpinStyle2">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="m:Pushpin">
-                        <Image Height="50" Source="/mmuc-zombie;component/ext/img/zombie1.jpg" Stretch="Fill" Width="50"/>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="Background" Value="Black" />
-            <Setter Property="Foreground" Value="Green" />
-            <Setter Property="FontSize" Value="18" />
-        </Style>
-
-
+     
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>
