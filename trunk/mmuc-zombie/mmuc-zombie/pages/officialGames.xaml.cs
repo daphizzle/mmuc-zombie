@@ -17,14 +17,16 @@ using Parse;
 using System.Diagnostics;
 using System.Device.Location;
 using mmuc_zombie.app.helper;
+using Microsoft.Phone.Shell;
 
 namespace mmuc_zombie.pages
 {
-    public partial class OfficialGames : PhoneApplicationPage,MyListener
+    public partial class OfficialGames : PhoneApplicationPage
     {
 
         List<MyLocation> middlePoints = new List<MyLocation>();
         List<Game> games = new List<Game>();
+        List<Game> gamesInRange = new List<Game>();
         public OfficialGames()
         {
             InitializeComponent();
@@ -48,8 +50,11 @@ namespace mmuc_zombie.pages
                         if (r2.Success)
                         {
                             Deployment.Current.Dispatcher.BeginInvoke(() =>
-                            {
-                                drawPolygons((List<MyLocation>)r2.Data.Results);
+                            {   
+                                var list=(List<MyLocation>)r2.Data.Results;
+                                drawPolygons(list);
+                                if (inZoneRange(list))
+                                    gamesInRange.Add(g);
                                 gameCounter++;
                                 if (gameCounter == games.Count)
                                 {
@@ -72,47 +77,14 @@ namespace mmuc_zombie.pages
             }
         }
 
-        public void onDataChange(List<MyParseObject>  list)
-        {
-            var parse=new Driver();
-            int gameCounter = 0;
-            foreach (MyParseObject o in list)
-            {
-                 string id=o.Id;
-                 games.Add((Game)o);
-                 
-                 parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
-                     {
-                         if (r.Success)
-                         {
-                             Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                 {
-                                     
-                                     drawPolygons((List<MyLocation>)r.Data.Results);
-                                     gameCounter++;
-                                     if (gameCounter == list.Count)
-                                     {
-                                         drawPushPins();
-                                         if (!loadGames())
-                                         {
-                                             noResults.Visibility = System.Windows.Visibility.Visible;
-                                             gameList.Visibility = System.Windows.Visibility.Collapsed;
-                                         }
-                                         else
-                                         {
-                                             noResults.Visibility = System.Windows.Visibility.Collapsed;
-                                             gameList.Visibility = System.Windows.Visibility.Visible;
-                                         }
-                                     }
-                                 });
-                         }
-                     });  
-             }
-          
-           
-        }
 
-        
+
+        private bool inZoneRange(List<MyLocation> list)
+        {
+            PhoneApplicationService service = PhoneApplicationService.Current;
+            MyLocation loc=(MyLocation)service.State["location"];
+            return StaticHelper.pointInPolygon(list, loc);
+        }
 
         private void drawPolygons(List<MyLocation> list)
         {
@@ -142,7 +114,9 @@ namespace mmuc_zombie.pages
             
             var tempLoc = new MyLocation(newPolygon.middlePoint().Latitude,newPolygon.middlePoint().Longitude);
             tempLoc.gameId = list[0].gameId;
-            middlePoints.Add(tempLoc);
+         
+            if (inZoneRange(list))
+                middlePoints.Add(tempLoc);
         
         }
 
@@ -196,7 +170,7 @@ namespace mmuc_zombie.pages
         {
             mmuc_zombie.components.officialGame tmpUI;
          
-            foreach (Game tmp in games)
+            foreach (Game tmp in gamesInRange)
             {                
                 tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameId = tmp.Id;

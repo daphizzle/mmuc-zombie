@@ -80,6 +80,21 @@ namespace mmuc_zombie.app.helper
     
         }
 
+         public static bool pointInPolygon(List<MyLocation> list, MyLocation loc)
+        
+        //     public static bool pnpoly(int nvert, double[] vertx, double[] verty, double testx, double testy)
+        {
+            int i, j;
+            bool c = false;
+            for (i = 0, j = list.Count-1; i < list.Count; j = i++)
+            {
+                if (((list[i].longitude > loc.longitude) != (list[j].longitude > loc.longitude)) &&
+                 (loc.latitude < (list[j].latitude - list[i].latitude) * (loc.longitude - list[i].longitude) / (list[j].longitude - list[i].longitude) + list[i].latitude))
+                    c = !c;
+            }
+            return c;
+        
+         }
          public static MyPolygon inGameArea(List<MyLocation> list)
          {
 

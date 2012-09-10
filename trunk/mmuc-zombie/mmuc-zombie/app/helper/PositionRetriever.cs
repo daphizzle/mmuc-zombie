@@ -44,6 +44,7 @@ namespace mmuc_zombie.app.helper
         {
             Debug.WriteLine("should update Location now!");
             PhoneApplicationService service = PhoneApplicationService.Current;
+         
             User user = (User)service.State["user"];
             if (!user.locationId.Equals(""))
             {
@@ -54,6 +55,10 @@ namespace mmuc_zombie.app.helper
                     {
                       
                             Debug.WriteLine("Location updated to Lat: " + lat + ", Long: " + lon);
+                            MyLocation loc=new  MyLocation();
+                            loc.latitude = lat;
+                            loc.longitude = lon;
+                            service.State["location"] =loc;
                     });
 
             }
@@ -64,6 +69,7 @@ namespace mmuc_zombie.app.helper
                 {
                     if (r.Success)
                     {
+                        service.State["location"] =loc;
                         user.locationId = r.Data.Id;
                         Debug.WriteLine("Location with Lat: " + e.Position.Location.Latitude + ", Long: " + e.Position.Location.Longitude + " created");
                         user.update(r2=>
