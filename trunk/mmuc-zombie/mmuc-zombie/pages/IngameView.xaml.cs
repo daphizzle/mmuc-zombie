@@ -215,6 +215,7 @@ namespace mmuc_zombie.pages
                             roleList[i].alive = false;
                             userList[i].activeGame = "";
                             userList[i].status = 0;
+                            userList[i].activeRole = "";
                         }
                         else
                         {
