@@ -26,10 +26,10 @@ public class Query
         parse.Objects.Query<Roles>().Where(c => c.gameId == gameId && c.alive==true).Execute(callback);
     }
 
-    static public void getGame(string gameId, Action<Response<Games>> callback)
+    static public void getGame(string gameId, Action<Response<Game>> callback)
     {
         var parse = new Driver();
-        parse.Objects.Get<Games>(gameId, callback);
+        parse.Objects.Get<Game>(gameId, callback);
 
     }
     static public void getGameArea(string gameId, Action<Response<ResultsResponse<MyLocation>>> callback)

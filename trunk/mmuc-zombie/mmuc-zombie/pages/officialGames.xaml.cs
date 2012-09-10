@@ -24,23 +24,23 @@ namespace mmuc_zombie.pages
     {
 
         List<MyLocation> middlePoints = new List<MyLocation>();
-        List<Games> games = new List<Games>();
+        List<Game> games = new List<Game>();
         public OfficialGames()
         {
             InitializeComponent();
             //Games.findPendingGames(this);
-            Games.findPendingGames(displayPendingGamesCallback);
+            Game.findPendingGames(displayPendingGamesCallback);
             
         }
 
-        public void displayPendingGamesCallback(Response<ResultsResponse<Games>> r)
+        public void displayPendingGamesCallback(Response<ResultsResponse<Game>> r)
         {
             if (r.Success)
             {
-                games = (List<Games>)r.Data.Results;
+                games = (List<Game>)r.Data.Results;
                 int gameCounter = 0;
                 var parse = new Driver();
-                foreach (Games g in games)
+                foreach (Game g in games)
                 {
                     string id = g.Id;
                     parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r2 =>
@@ -79,7 +79,7 @@ namespace mmuc_zombie.pages
             foreach (MyParseObject o in list)
             {
                  string id=o.Id;
-                 games.Add((Games)o);
+                 games.Add((Game)o);
                  
                  parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
                      {
@@ -196,7 +196,7 @@ namespace mmuc_zombie.pages
         {
             mmuc_zombie.components.officialGame tmpUI;
          
-            foreach (Games tmp in games)
+            foreach (Game tmp in games)
             {                
                 tmpUI = new mmuc_zombie.components.officialGame();
                 tmpUI.gameId = tmp.Id;

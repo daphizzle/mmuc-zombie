@@ -135,7 +135,7 @@
     <Compile Include="pages\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
-    <Compile Include="app\model\Games.cs" />
+    <Compile Include="app\model\Game.cs" />
     <Compile Include="app\model\ImmunityMode.cs" />
     <Compile Include="app\model\ModesPerGame.cs" />
     <Compile Include="app\model\QuarantineMode.cs" />

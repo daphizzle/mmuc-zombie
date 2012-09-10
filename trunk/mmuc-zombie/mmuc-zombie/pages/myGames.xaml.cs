@@ -19,19 +19,19 @@ namespace mmuc_zombie.pages
     public partial class MyGames : PhoneApplicationPage
     {
 
-        List<Games> games = new List<Games>();
+        List<Game> games = new List<Game>();
 
         public MyGames()
         {
             InitializeComponent();
-            Games.findMyGames(displayGamesCallback);
+            Game.findMyGames(displayGamesCallback);
         }
 
-        private void displayGamesCallback(Response<ResultsResponse<Games>> r)
+        private void displayGamesCallback(Response<ResultsResponse<Game>> r)
         {
             if (r.Success)
             {
-                games = (List<Games>)r.Data.Results;
+                games = (List<Game>)r.Data.Results;
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     if (!loadGames())
@@ -82,7 +82,7 @@ namespace mmuc_zombie.pages
         private bool loadGames()
         {            
             mmuc_zombie.components.myGameAvailable tmpUI;            
-            foreach (Games tmp in games)
+            foreach (Game tmp in games)
             {                                
                 tmpUI = new mmuc_zombie.components.myGameAvailable();
                 //tmpUI.edit.Visibility = tmp.ownerId.Equals(User.get().Id) ? Visibility.Visible : Visibility.Collapsed;                   

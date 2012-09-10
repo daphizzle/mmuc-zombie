@@ -27,7 +27,7 @@ namespace mmuc_zombie.pages
         List<MyLocation> locationList  = new List<MyLocation>(); 
         List<Roles>roleList = new List<Roles>();
         User user;
-        Games game; 
+        Game game; 
         Roles role;
         MyLocation myLocation;
         Boolean painting=false;
@@ -42,7 +42,7 @@ namespace mmuc_zombie.pages
         }
 
         //constructor used for testing only
-        public IngameView(List<User> uList, List<MyLocation> locList, List<Roles> rList, User user, Games game, Roles role, MyLocation myLoc)
+        public IngameView(List<User> uList, List<MyLocation> locList, List<Roles> rList, User user, Game game, Roles role, MyLocation myLoc)
         {
             userList = uList;
             locationList = locList;
@@ -66,8 +66,45 @@ namespace mmuc_zombie.pages
              if (!painting){
                  painting = true;
                  //Debug.WriteLine("loadData");
-                 loadUsers();
+                 loadGame();
              }
+        }
+
+        private void loadGame()
+        {
+            Query.getGame(user.activeGame, r =>
+                {
+                    if (r.Success)
+                    {
+                        game = r.Data;
+                        if (game.state == 3)
+                        {
+                            //our game is now finished
+                            gameFinished();
+                        }
+                        else
+                        {
+                            loadUsers();
+                        }
+                    }
+                });
+        }
+
+        private void gameFinished()
+        {
+            //game has finished, set data for user
+            user.activeGame = "";
+            user.activeRole = "";
+            user.status = 0;
+            user.update(r =>
+                {
+                    //display a message, that the game has now ended
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            MessageBoxResult mb = MessageBox.Show("Congratulations, there are no Survivors left. Zombies win!", "Alert", MessageBoxButton.OK);
+                            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+                        });
+                });
         }
 
         private void loadUsers()
@@ -139,8 +176,6 @@ namespace mmuc_zombie.pages
             {
                 roleList[i].update(r =>
                     {
-                      
-                        
                             Deployment.Current.Dispatcher.BeginInvoke(() =>
                                 {
                                     Debug.WriteLine("Updated role " + roleList[i].Id);
@@ -189,16 +224,33 @@ namespace mmuc_zombie.pages
           
             if (user.Id == game.ownerId)
             {
-                Debug.WriteLine("Starting infection");
-                infectSurvivors();
+                if (noSurvivorsLeft())
+                {
+                    game.state = 3;
+                    game.update(r =>
+                        {
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                {
+                                    Debug.WriteLine("updated game " + game.Id);
+                                    drawPins();
+                                });
+                        });
+
+                }
+                else
+                {
+                    Debug.WriteLine("Starting infection");
+                    infectSurvivors();
+                }
             }
             else
                 drawPins();
         }
 
-        //set public for testing purpose
-        public void infectSurvivors()
+        
+        private void infectSurvivors()
         {
+            bool hostDied = false;
             for (int i = 0; i < locationList.Count; i++)
             {
                 if (roleList[i].roleType.Equals("Survivor"))
@@ -209,7 +261,7 @@ namespace mmuc_zombie.pages
                     {
                         //there are zombies near survivor
                         Debug.WriteLine(String.Format("There are {0} zombies near user {1}", infectionPlus,userList[i].UserName));
-                        if (roleList[i].infectionCount + infectionPlus > 5)
+                        if (roleList[i].infectionCount + infectionPlus > 1)
                         {
 
                             Debug.WriteLine(String.Format("User {0} is about to die", userList[i].UserName));
@@ -218,6 +270,19 @@ namespace mmuc_zombie.pages
                             userList[i].activeGame = "";
                             userList[i].status = 0;
                             userList[i].activeRole = "";
+                            if (userList[i].Id == game.hostId)
+                            {
+                                //current host died, we need a new one
+                                hostDied = true;
+                                foreach (User u in userList)
+                                {
+                                    if (u.bot || u.Id == game.hostId)
+                                    {
+                                        continue;
+                                    }
+                                    game.hostId = u.Id;
+                                }
+                            }
                         }
                         else
                         {
@@ -242,7 +307,36 @@ namespace mmuc_zombie.pages
                 }
             }
             this.i = 0;
-            updateRoles();
+            if (hostDied)
+            {
+                updateGame();
+            }
+            else
+            {
+                updateRoles();
+            }
+        }
+
+        private bool noSurvivorsLeft()
+        {
+            bool noSurvivors = true;
+            foreach(Roles r in roleList)
+            {
+                if (r.roleType == "Survivor")
+                {
+                    noSurvivors = false;
+                }
+            }
+            return noSurvivors;
+        }
+
+        private void updateGame()
+        {
+            game.update(r =>
+                {
+                    Debug.WriteLine("Updated game: " + game.Id);
+                    updateRoles();
+                });
         }
 
         private int amountOfZombiesNearSurvivor(int i)
@@ -320,7 +414,7 @@ namespace mmuc_zombie.pages
         
 
 
-        public void getGameCallback(Response<Games> r)
+        public void getGameCallback(Response<Game> r)
         {
             if (r.Success)
             {

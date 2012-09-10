@@ -17,82 +17,55 @@ using Microsoft.Phone.Controls;
 using mmuc_zombie.app.helper;
 
 
-public class Games : MyParseObject
+public class Game : MyParseObject
 {
     //pending = 0, waiting = 1, active = 2, finshed = 3
     public int state { get; set; }
     public int players { get; set; }
-    public Boolean privateGame { get; set; }
-    public String name { get; set; }
+    public bool privateGame { get; set; }
+    public string name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    public DateTime? startTime { get; set; }
-    public DateTime? endTime { get; set; }
+    //public DateTime? startTime { get; set; }
+    //public DateTime? endTime { get; set; }
     public string locationId { get; set; }
     public string description { get; set; }
     public string ownerId { get; set; }
+    public string hostId { get; set; }
 
-    public Games() { }
+    public Game() { }
     public void update(Action<Response<DateTime>> callback)
     {
         var parse = new Driver();
-        parse.Objects.Update<Games>(this.Id).
+        parse.Objects.Update<Game>(this.Id).
                Set(u => u.state, state).
                Set(u => u.players, players).
                Set(u => u.privateGame, privateGame).
                Set(u => u.name, name).
                Set(u => u.radius, radius).
                Set(u => u.zombiesCount, zombiesCount).
-               Set(u => u.startTime, startTime).
-               Set(u => u.endTime, endTime).
+               //Set(u => u.startTime, startTime).
+               //Set(u => u.endTime, endTime).
                Set(u => u.description, description).
                Set(u => u.ownerId, ownerId).
+               Set(u => u.hostId,hostId). 
                Execute(callback);
     }
 
-    public new void update()
-    {
-        var parse = new Driver();
-        parse.Objects.Update<Games>(this.Id).
-            Set(u => u.state, state).
-            Set(u => u.players, players).
-            Set(u => u.privateGame, privateGame).
-            Set(u => u.name, name).
-            Set(u => u.radius, radius).
-            Set(u => u.zombiesCount, zombiesCount).
-            Set(u => u.startTime, startTime).
-            Set(u => u.endTime, endTime).
-            Set(u => u.locationId, locationId).
-            Set(u => u.description, description).
-            Set(u => u.ownerId,ownerId).
-            Execute(r =>
-            {
-                if (r.Success)
-                {
-                    Debug.WriteLine("Game : " + Id + " successfull updated");
-                }
-                //else
-                //{
-                //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
-                //}
 
-            });
-
-    }
-
-    public Games(string name, DateTime start, DateTime end, string ownerId, string description) 
+    public Game(string name, DateTime start, DateTime end, string ownerId, string description) 
     {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        //this.startTime = startTime;
+        //this.endTime = endTime;
         this.ownerId = ownerId;
         this.description = description;
     }
 
-    static public void findPendingGames(Action<Response<ResultsResponse<Games>>> callback)
+    static public void findPendingGames(Action<Response<ResultsResponse<Game>>> callback)
     {
         var parse = new Driver();
-        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(callback);
+        parse.Objects.Query<Game>().Where(c => c.state == 0).Execute(callback);
     }
 
     public void create(List<MyLocation> list, List<Invite> invites)
@@ -160,7 +133,7 @@ public class Games : MyParseObject
     static public void findById(string gameId, MyListener listener)
     {
         var parse = new Driver();
-        parse.Objects.Get<Games>(gameId,(r=>
+        parse.Objects.Get<Game>(gameId,(r=>
             {
                 if(r.Success)
                 {
@@ -175,14 +148,14 @@ public class Games : MyParseObject
             }));
     }
 
-    static public void findMyGames(Action<Response<ResultsResponse<Games>>> callback)
+    static public void findMyGames(Action<Response<ResultsResponse<Game>>> callback)
     {
         var parse = new Driver();
         PhoneApplicationService service = PhoneApplicationService.Current;
         User user = (User)service.State["user"];
         string userId = user.Id;
         List<MyParseObject> list = new List<MyParseObject>();
-        parse.Objects.Query<Games>().Where(c => c.ownerId == userId).Execute(callback);
+        parse.Objects.Query<Game>().Where(c => c.ownerId == userId).Execute(callback);
     }
 
 
@@ -198,13 +171,13 @@ public class Games : MyParseObject
         User user = (User)service.State["user"];
         string userId = user.Id;
         List<MyParseObject> list = new List<MyParseObject>();
-        parse.Objects.Query<Games>().Where(c => c.ownerId == ownerId).Execute(r =>
+        parse.Objects.Query<Game>().Where(c => c.ownerId == ownerId).Execute(r =>
         {
             if (r.Success)
             {
-                List<Games> games = (List<Games>)r.Data.Results;
+                List<Game> games = (List<Game>)r.Data.Results;
                 //int counter = 0;
-                foreach (Games g in games)
+                foreach (Game g in games)
                 {
                     list.Add(g);
                     if (list.Count == games.Count)
@@ -233,12 +206,12 @@ public class Games : MyParseObject
                 int counter = 0;
                 foreach (Invite i in invites)
                 {
-                    parse.Objects.Get<Games>(i.gameId, r2 =>
+                    parse.Objects.Get<Game>(i.gameId, r2 =>
                     {
                         if (r2.Success)
                         {
                             counter++;
-                            Games game = (Games)r2.Data;
+                            Game game = (Game)r2.Data;
                             list.Add(game);
                             if (counter == invites.Count)
                             {
@@ -255,13 +228,13 @@ public class Games : MyParseObject
 	static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();
-        parse.Objects.Query<Games>().Where(c => c.state == 0).Execute(r =>
+        parse.Objects.Query<Game>().Where(c => c.state == 0).Execute(r =>
             {
                 if (r.Success)
                 {
-                    List<Games> found = (List<Games>)r.Data.Results;
+                    List<Game> found = (List<Game>)r.Data.Results;
                     List<MyParseObject> list = new List<MyParseObject>();
-                    foreach (Games g in found)
+                    foreach (Game g in found)
                     {
                         list.Add(g);
                     }

@@ -249,21 +249,21 @@ namespace mmuc_zombie.pages
 
         private void loadHistory()
         {
-            List<Games> games = new List<Games>(4);
+            List<Game> games = new List<Game>(4);
 
-            games.Add(new Games("Game 1",DateTime.Now,DateTime.Now,"1","..."));
-            games.Add(new Games("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
-            games.Add(new Games("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
-            games.Add(new Games("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
+            games.Add(new Game("Game 1",DateTime.Now,DateTime.Now,"1","..."));
+            games.Add(new Game("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
+            games.Add(new Game("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
+            games.Add(new Game("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
 
             mmuc_zombie.components.gamePlayed tmpUI;
-            foreach (Games game in games)
+            foreach (Game game in games)
             {
                 tmpUI = new mmuc_zombie.components.gamePlayed();
                 tmpUI.gameName.Text = game.name;
                 tmpUI.gameId = game.Id;
-                tmpUI.startTime.Text = game.startTime.ToString();
-                tmpUI.endTime.Text = game.endTime.ToString();
+                //tmpUI.startTime.Text = game.startTime.ToString();
+                //tmpUI.endTime.Text = game.endTime.ToString();
                 //tmpUI.owner.Text = User.find(game.ownerId, null);
                 tmpUI.owner.Text = game.ownerId;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);
@@ -304,13 +304,13 @@ namespace mmuc_zombie.pages
                 });
 
             //delete all Games
-            parse.Objects.Query<Games>().Where(c => c.Id == c.Id).Execute(r =>
+            parse.Objects.Query<Game>().Where(c => c.Id == c.Id).Execute(r =>
             {
                 if (r.Success)
                 {
-                    List<Games> games = (List<Games>)r.Data.Results;
-                    foreach (Games u in games)
-                        parse.Objects.Delete<Games>(u);
+                    List<Game> games = (List<Game>)r.Data.Results;
+                    foreach (Game u in games)
+                        parse.Objects.Delete<Game>(u);
                 }
             });
 
