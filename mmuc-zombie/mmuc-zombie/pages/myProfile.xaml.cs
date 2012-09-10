@@ -289,9 +289,11 @@ namespace mmuc_zombie.pages
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            string userId = user.Id;
+            string locId = user.locationId;
             var parse = new Driver();
-            //delete all User
-            parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(r =>
+            //delete all User except me
+            parse.Objects.Query<User>().Where(c => c.Id != userId).Execute(r =>
                 {
                     if (r.Success)
                     {
@@ -312,8 +314,8 @@ namespace mmuc_zombie.pages
                 }
             });
 
-            //delete all Locations
-            parse.Objects.Query<MyLocation>().Where(c => c.Id == c.Id).Execute(r =>
+            //delete all Locations except my Location
+            parse.Objects.Query<MyLocation>().Where(c => c.Id != locId).Execute(r =>
             {
                 if (r.Success)
                 {

@@ -103,7 +103,7 @@ private  List<User> userList;
                 Roles role = new Roles();
                 role.gameId = userList[i].activeGame;
                 role.userId = userList[i].Id;
-                role.startTime = DateTime.Now;
+                //role.startTime = DateTime.Now;
                 role.alive = true;
                 if (ifZombie(i))
                 {

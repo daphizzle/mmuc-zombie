@@ -17,12 +17,13 @@ public class Roles : MyParseObject
     {
         public string userId { get; set; } 
         public string gameId { get; set; }
-        public DateTime? endTime { get; set; }
-        public DateTime? startTime { get; set; }
+        //public DateTime? endTime { get; set; }
+        //public DateTime? startTime { get; set; }
         public int rank { get; set; }
         public int infectionCount { get; set; }
         public string roleType { get; set; }
-        public Boolean alive { get; set; }
+        public bool alive { get; set; }
+
         public new void update()
         {
 
@@ -30,8 +31,8 @@ public class Roles : MyParseObject
             parse.Objects.Update<Roles>(this.Id).
                 Set(u => u.userId, userId).
                 Set(u => u.gameId, gameId).
-                Set(u => u.endTime, endTime).
-                Set(u => u.startTime, startTime).
+                //Set(u => u.endTime, endTime).
+                //Set(u => u.startTime, startTime).
                 Set(u => u.infectionCount,infectionCount).
                 Set(u => u.roleType, roleType).
                 Set(u => u.alive, alive).
@@ -43,6 +44,23 @@ public class Roles : MyParseObject
                 });
 
         }
+
+        public void update(Action<Response<DateTime>> callback)
+        {
+
+            var parse = new Driver();
+            parse.Objects.Update<Roles>(this.Id).
+                Set(u => u.userId, userId).
+                Set(u => u.gameId, gameId).
+                //Set(u => u.endTime, endTime).
+                //Set(u => u.startTime, startTime).
+                Set(u => u.infectionCount, infectionCount).
+                Set(u => u.roleType, roleType).
+                Set(u => u.alive, alive).
+                Execute(callback);
+
+        }
+
         public new void create()
         {
             PhoneApplicationService service = PhoneApplicationService.Current;
