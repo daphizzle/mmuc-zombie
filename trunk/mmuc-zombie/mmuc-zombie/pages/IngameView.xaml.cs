@@ -139,15 +139,15 @@ namespace mmuc_zombie.pages
             {
                 roleList[i].update(r =>
                     {
-                        if (r.Success)
-                        {
-                            Deployment.Current.Dispatcher.BeginInvoke(()=>
+                      
+                        
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>
                                 {
                                     Debug.WriteLine("Updated role " + roleList[i].Id);
                                     i++;
                                     updateRoles();
                                 });
-                        }
+                      
                     });
             }
             else
@@ -163,20 +163,20 @@ namespace mmuc_zombie.pages
             {
                 userList[i].update(r =>
                 {
-                    if (r.Success)
-                    {
+             
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
                             Debug.WriteLine("Updated user " + userList[i].Id);
                             i++;
                             updateUser();
                         });
-                    }
+                    
                 });
             }
             else
             {
                 i = 0;
+                drawPins();
             }
         }
 
@@ -186,12 +186,14 @@ namespace mmuc_zombie.pages
                 PhoneApplicationService service = PhoneApplicationService.Current;
                 user = (User)service.State["user"];
              }
-            drawPins();
+          
             if (user.Id == game.ownerId)
             {
                 Debug.WriteLine("Starting infection");
                 infectSurvivors();
             }
+            else
+                drawPins();
         }
 
         //set public for testing purpose
