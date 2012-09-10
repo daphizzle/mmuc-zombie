@@ -24,12 +24,12 @@ namespace mmuc_zombie.pages
     {
 
         List<MyLocation> middlePoints = new List<MyLocation>();
-        List<Games> games = new List<Games>();
+        List<Game> games = new List<Game>();
         public CustomGames()
         {
             InitializeComponent();
             //Games.findCustomGames(this);
-            Games.findCustomGames(displayCustomGames);
+            Game.findCustomGames(displayCustomGames);
 
         }
 
@@ -41,18 +41,18 @@ namespace mmuc_zombie.pages
                 List<Invite> invites = (List<Invite>)r.Data.Results;
                 foreach (Invite i in invites)
                 {
-                    parse.Objects.Get<Games>(i.gameId, r2 =>
+                    parse.Objects.Get<Game>(i.gameId, r2 =>
                     {
                         if (r2.Success)
                         {
-                            Games game = (Games)r2.Data;
+                            Game game = (Game)r2.Data;
                             games.Add(game);
 
 
                             if (games.Count == invites.Count)
                             {
                                 int gameCounter = 0;
-                                foreach(Games g in games)
+                                foreach(Game g in games)
                                 {
                                     string id = g.Id;
                                     parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r3 =>
@@ -201,7 +201,7 @@ namespace mmuc_zombie.pages
 
             mmuc_zombie.components.officialGame tmpUI;
            
-            foreach (Games tmp in games)
+            foreach (Game tmp in games)
             {
            
                 tmpUI = new mmuc_zombie.components.officialGame();

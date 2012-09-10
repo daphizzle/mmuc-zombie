@@ -21,7 +21,7 @@ namespace mmuc_zombie.pages
 {
     public partial class GameStart : PhoneApplicationPage
     {
-        private Games game;
+        private Game game;
         private User user;
         PhoneApplicationService service;
         private int botCounter;
@@ -42,16 +42,16 @@ private  List<User> userList;
                 getGame(gameId,getGameCallback);
         }
 
-        private void getGame(String gameId,Action<Response<Games>> callback)
+        private void getGame(String gameId,Action<Response<Game>> callback)
         {
             var parse = new Driver();
-            parse.Objects.Get<Games>(gameId, callback);
+            parse.Objects.Get<Game>(gameId, callback);
         }
-        public void getGameCallback(Response<Games> r)
+        public void getGameCallback(Response<Game> r)
         {
             if (r.Success)
             {
-                game = (Games)r.Data;
+                game = (Game)r.Data;
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                 {
                     gameName.Text = game.name;
@@ -80,7 +80,7 @@ private  List<User> userList;
             if (game.ownerId.Equals(user.Id))
             {
                 
-                parse.Objects.Update<Games>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
+                parse.Objects.Update<Game>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
             }
             else
             {

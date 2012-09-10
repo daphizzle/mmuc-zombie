@@ -119,10 +119,11 @@ namespace mmuc_zombie.pages
                     locs.Add(loc);
                 }
 
-                var game = new Games();
+                var game = new Game();
                 PhoneApplicationService service = PhoneApplicationService.Current;
                 var user = (User)service.State["user"];
                 game.ownerId = user.Id;
+                game.hostId = user.Id;
                 game.name = nameTextfield.Text;
                 game.state = 0;
                 game.description = descriptionBox.Text;

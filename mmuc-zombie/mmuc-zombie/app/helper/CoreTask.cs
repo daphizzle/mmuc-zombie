@@ -167,7 +167,7 @@ namespace mmuc_zombie.app.helper
                    
         }
 
-         static private void check_GameStarted( Action<Response<Games>> callback)
+         static private void check_GameStarted( Action<Response<Game>> callback)
         {   
                Query.getUser(user.Id, r =>
                 {
@@ -176,13 +176,13 @@ namespace mmuc_zombie.app.helper
                         user.saveToState();    
                         string gameId = user.activeGame;
                         var parse = new Driver();
-                        parse.Objects.Get<Games>(gameId, callback);
+                        parse.Objects.Get<Game>(gameId, callback);
                         
 
                 });
             
         }
-        static public void check_GameStartedCallback(Response<Games> r)
+        static public void check_GameStartedCallback(Response<Game> r)
         {
             if(r.Success)
             {

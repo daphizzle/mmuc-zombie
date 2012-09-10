@@ -34,6 +34,7 @@ public class User :  MyParseObject
     public string NickName { get; set; }
     public string Facebook { get; set; }
     public string DeviceID { get; set; }
+    public bool bot { get; set; }
     //public FBUser _facebook { get; set; }
     //public Device _deviceID { get; set; }
     
@@ -94,6 +95,7 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).
             Set(u => u.NickName, NickName).
+            Set(u => u.bot, bot).
             Execute(r =>
                 {                    
                     if (r.Success)
@@ -122,6 +124,7 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).
             Set(u => u.NickName, NickName).
+            Set(u => u.bot, bot).
             Execute(callback);
 
     }
@@ -145,20 +148,12 @@ public class User :  MyParseObject
 
     }
 
-    //maybe in the future replace usages of the listener kind method with this one
     public static void find(string userId, Action<Response<User>> callback)
     {
         var driver = new Driver();
         driver.Objects.Get<User>(userId,callback);
     }
 
-    public static void find(List<string> userIds, MyListener listener)
-    {
-        foreach (string userId in userIds)
- 
-        {
-        }
-    }
 
 
  
