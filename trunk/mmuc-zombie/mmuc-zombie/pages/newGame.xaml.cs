@@ -110,6 +110,7 @@ namespace mmuc_zombie.pages
         private void saveButtonClick(object sender, EventArgs e)
         {
             if (newPolygon != null)
+            if (newPolygon != null && !_editable)
             {   int i=0;
                 List<MyLocation> locs = new List<MyLocation>();
                 foreach (GeoCoordinate p in newPolygon.Locations)
@@ -131,6 +132,10 @@ namespace mmuc_zombie.pages
                 game.privateGame = privateCheckbox.IsChecked.Value;
                 game.create(locs,invites);
                 
+            }
+            else if (_editable)
+            {
+                MessageBox.Show("EDIT");
             }
       
 

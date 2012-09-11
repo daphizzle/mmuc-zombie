@@ -18,14 +18,11 @@ using mmuc_zombie;
 
 public class User :  MyParseObject
 {
-
-    public string activeGame { get; set; }
-
-
     public int status { get; set; }
     //int=0: "idle mode" he is doing nothing, he ha no pending games; no timertask is running, if he joins a game he switch to status 1
     //int=1: "lobby-mode" user has joined a game , timertask checks if gameowner creates a game. if he does user switch to status 3. user can leave:if he has pending games left he switch to status 1, if not he switch to status 0.
     //int=2: "ingame" mode  many things are checked ...(infection, userlocation ...)if he leaves a game: it is checked if he has pending events if yes he switches to status 1 else 0
+    public string activeGame { get; set; }
     public string activeRole { get; set; }
     public string UserName{get;set;}
     public string Password{get;set;}    
@@ -33,8 +30,11 @@ public class User :  MyParseObject
     public string locationId { get; set; }
     public string NickName { get; set; }
     public string Facebook { get; set; }
-    public string DeviceID { get; set; }
-    public bool bot { get; set; }
+    public string FacebookToken { get; set; }
+    public string DeviceID { get; set; }    
+    public bool bot { get; set; }    
+    public ParseFile avatar { get; set; }
+    public byte[] _avatar { get; set; }    
     //public FBUser _facebook { get; set; }
     //public Device _deviceID { get; set; }
     
@@ -49,18 +49,22 @@ public class User :  MyParseObject
         email = "";
         locationId = "";
         DeviceID = "";
-        NickName = "";      
+        NickName = "";
+        FacebookToken = "";
+        avatar = null;
     }
 
     public void saveToState()
     {
          PhoneApplicationService service = PhoneApplicationService.Current;
          service.State["user"] = this;
+         App.User = this;
     }
     public static void set(User user)
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        service.State["user"] = user;        
+        service.State["user"] = user;
+        App.User = user;
     }
     public static User getFromState()
     {
@@ -70,19 +74,25 @@ public class User :  MyParseObject
     public static User get()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
+        if(service.State.ContainsKey("user"))
         return (User)service.State["user"];
+        return App.User;
     }
 
-    public void updateCurrentUser()
+    public bool updateCurrentUser()
     {
         //PhoneApplicationService service = PhoneApplicationService.Current;
         //service.State["user"] = this;
         set(this);
-        update();
+        return update();
     }
 
-    public new void  update()
-    {        
+    public new bool update()
+    {
+        ParseFile pic = updatePicture();
+        this.avatar = pic;
+
+        bool flag = false;
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
             Set(u => u.status, status).
@@ -95,22 +105,27 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).
             Set(u => u.NickName, NickName).
+            Set(u => u.FacebookToken, FacebookToken).
             Set(u => u.bot, bot).
+            Set(u => u.avatar, avatar).
             Execute(r =>
-                {                    
-                    if (r.Success)
-                    {
-                        Debug.WriteLine("User : " + Id + " successfull updated");
-                    }
-                    //else
-                    //{
-                    //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
-                    //}
-                    
-                });
-        
+            {
+                if (r.Success)
+                {
+                    flag = true;
+                    Debug.WriteLine("User : " + Id + " successfull updated");                    
+                }
+                else
+                {
+                    Debug.WriteLine(r.Error.Message);
+                }
+            });
+             
+            return flag;
     }
-    public new void update( Action<Response<DateTime>> callback)
+
+    //public new void update(Action<Response<DateTime>> callback) 
+    public void update(Action<Response<DateTime>> callback) 
     {
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
@@ -125,8 +140,27 @@ public class User :  MyParseObject
             Set(u => u.DeviceID, DeviceID).
             Set(u => u.NickName, NickName).
             Set(u => u.bot, bot).
+            //Set(u => u.avatar, avatar).
             Execute(callback);
+    }
 
+    private ParseFile updatePicture()
+    {
+        var parse = new Driver();
+        string newname = this.Id + ".png";
+        parse.Files.Save(newname, this._avatar, "image/png", r =>
+        {
+            if (r.Success)
+            {
+                var url = r.Data.Url;
+                var name = r.Data.Name;                
+            }
+            else
+            {
+                Debug.WriteLine(r.Error.Message);
+            }
+        });
+        return new ParseFile(newname);
     }
 
     public static void find(string userId, MyListener listener)

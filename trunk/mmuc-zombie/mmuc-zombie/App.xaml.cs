@@ -28,9 +28,11 @@ namespace mmuc_zombie
     {
         public static Microsoft.Phone.UserData.Contact con;
         private static Device deviceID;
-        private static string m_strAccessToken; // FB
+        private static string m_strAccessToken; // FB        
+        private static User user;
+        private static HttpWebRequest _webRequest;
+        private static CookieContainer _cookieContainer = new CookieContainer();   
         //private static Games currentGame;
-        //private static User user;
 
         public static Device DeviceID 
         {
@@ -44,18 +46,30 @@ namespace mmuc_zombie
             set { m_strAccessToken = value; }
         }
 
+        public static User User
+        {
+            get { return user; }
+            set { user = value; }
+        }
+
+        public static HttpWebRequest WebRequest
+        {
+            get { return _webRequest; }
+            set { _webRequest = value; }
+        }
+
+        public static CookieContainer CookiesContainer
+        {
+            get { return _cookieContainer; }
+            set { _cookieContainer = value; }
+        }
+
         //public static Games CurrentGame
         //{
         //    get { return currentGame; }
         //    set { currentGame = value; }
         //}
-
-        //public static User User
-        //{
-        //    get { return user; }
-        //    set { user = value; }
-        //}
-
+       
         //IsolatedtStorage for file saving
         private IsolatedStorageFile store = IsolatedStorageFile.GetUserStoreForApplication();
 
@@ -130,8 +144,8 @@ namespace mmuc_zombie
                     User user = new User();
                     user.UserName = "Dizzle";
                     user.DeviceID = App.DeviceID.toString(); 
-                    user.create(new StartupListener());
-                   // User.set(user);
+                    user.create(new StartupListener());                   
+                    
                 }
             }
             else

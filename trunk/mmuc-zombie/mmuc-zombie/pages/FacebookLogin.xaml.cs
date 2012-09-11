@@ -21,10 +21,13 @@ namespace mmuc_zombie.pages
         {
             InitializeComponent();
         }
-
+        
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            wbLogin.Navigate(FacebookURIs.GetLoginUri());
+            Uri uri = FacebookURIs.GetLoginUri();
+            App.WebRequest = (HttpWebRequest)HttpWebRequest.Create(uri);
+            App.WebRequest.CookieContainer = App.CookiesContainer;
+            wbLogin.Navigate(uri);
         }
 
         private void wbLogin_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
@@ -47,7 +50,10 @@ namespace mmuc_zombie.pages
                 string strPart = strTest.Substring(nPos + key.Count());
                 nPos = strPart.IndexOf("&");
                 strPart = strPart.Substring(0, nPos);
-                App.AccessToken = strPart;                
+                App.AccessToken = strPart;
+                    User u = User.get();
+                    u.FacebookToken = App.AccessToken;
+                    u.updateCurrentUser();
                 NavigationService.GoBack();
                 return;
             }

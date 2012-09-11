@@ -62,7 +62,8 @@ public class Roles : MyParseObject
 
         }
 
-        public new void create()
+        //public new void create()
+        public void create()
         {
             PhoneApplicationService service = PhoneApplicationService.Current;
             var user = (User)service.State["user"];
