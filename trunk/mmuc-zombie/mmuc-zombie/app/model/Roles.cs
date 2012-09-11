@@ -23,28 +23,9 @@ public class Roles : MyParseObject
         public int infectionCount { get; set; }
         public string roleType { get; set; }
         public bool alive { get; set; }
+        public int questCount { get; set; }
+        public int killCount { get; set; }
         public int maxLife { get; set; }
-
-        public new void update()
-        {
-
-            var parse = new Driver();
-            parse.Objects.Update<Roles>(this.Id).
-                Set(u => u.userId, userId).
-                Set(u => u.gameId, gameId).
-                //Set(u => u.endTime, endTime).
-                //Set(u => u.startTime, startTime).
-                Set(u => u.infectionCount,infectionCount).
-                Set(u => u.roleType, roleType).
-                Set(u => u.alive, alive).
-                Execute(r =>
-                {
-                    if (r.Success)
-                        Debug.WriteLine("Role : " + Id + " successfull updated");
-
-                });
-
-        }
 
         public void update(Action<Response<DateTime>> callback)
         {
@@ -58,6 +39,9 @@ public class Roles : MyParseObject
                 Set(u => u.infectionCount, infectionCount).
                 Set(u => u.roleType, roleType).
                 Set(u => u.alive, alive).
+                Set(u => u.questCount,questCount).
+                Set(u => u.killCount,killCount).
+                Set(u=>u.maxLife,maxLife).
                 Execute(callback);
 
         }
@@ -68,6 +52,7 @@ public class Roles : MyParseObject
             PhoneApplicationService service = PhoneApplicationService.Current;
             var user = (User)service.State["user"];
             var parse = new Driver();
+            maxLife = 5;
             parse.Objects.Save(this, r =>
             {
                 if (r.Success)

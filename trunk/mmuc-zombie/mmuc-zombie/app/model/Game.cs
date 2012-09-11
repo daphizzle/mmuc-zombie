@@ -19,7 +19,7 @@ using mmuc_zombie.app.helper;
 
 public class Game : MyParseObject
 {
-    //pending = 0, waiting = 1, active = 2, finshed = 3
+    //pending = 0, active = 1, finshed = 2
     public int state { get; set; }
     public int players { get; set; }
     public Boolean privateGame { get; set; }

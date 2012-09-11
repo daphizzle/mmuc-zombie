@@ -113,7 +113,7 @@ private  List<User> userList;
                 else
                 {
                     role.roleType = "Survivor";
-
+                    role.maxLife = 5;
                 }
                
                 parse.Objects.Save(role, r1 =>
