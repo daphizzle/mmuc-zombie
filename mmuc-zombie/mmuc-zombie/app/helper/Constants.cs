@@ -17,8 +17,8 @@ namespace mmuc_zombie.app.helper
         public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";        
 
         public enum USERGAMEMODES : int { INIT = 0, IDLE, LOBBY, INGAME };
-        public enum GAMEMODES : int { PENDING = 0, WAITING, ACTIVE, FINISHED };
-
+        public enum GAMEMODES : int { PENDING = 0, ACTIVE, FINISHED };
+        
         public const string ROLE_ZOMBIE = "Zombie";
         public const string ROLE_SURVIVOR = "Survivor";
         public const string ROLE_OBSERVER = "Observer";

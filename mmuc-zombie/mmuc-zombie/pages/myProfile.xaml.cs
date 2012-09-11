@@ -30,23 +30,18 @@ namespace mmuc_zombie.pages
         private WebClient m_wcFacebookFriends;
         private static FBUser m_CurFacebookUser;
         private CameraCaptureTask cameraTask;
-        private PhoneApplicationService service = PhoneApplicationService.Current;
+        //private PhoneApplicationService service = PhoneApplicationService.Current;
 
         public MyProfile()
         {
             InitializeComponent();
-            user = (User)service.State["user"];
+            user = User.get();
             InitializeOtherComponents();
             
             //PhoneApplicationService service = PhoneApplicationService.Current;
             //user = App.User;
             //user = (User)service.State["user"];
-            
-            if (user != null)
-            {
-                loadFriends();
-            }
-       }
+        }
 
 
 
@@ -61,8 +56,9 @@ namespace mmuc_zombie.pages
         {
             /* SOCIAL - ADD FRIENDS */
 
-            mmuc_zombie.components.friendsView tmpUI;            
-            
+            mmuc_zombie.components.friendsView tmpUI;
+            userStackPanel.Children.Clear();
+
             foreach (User tmp in users)
             {                
                 tmpUI = new mmuc_zombie.components.friendsView();
@@ -70,13 +66,12 @@ namespace mmuc_zombie.pages
                 {
                     if (tmp.Id.Equals(friend.friend))
                     {
-                        tmpUI.isFriend = true;
-                        tmpUI.textBlock1.Text = "friend";
+                        tmpUI.isFriend = true;                        
+                        tmpUI.tmpTextBlock.Text = "friend";
                     }
-                }  
-                tmpUI.nameTextBlock.Text = tmp.Id;                
-                tmpUI.nameTextBlock.Text = tmp.Id;
-
+                }
+                tmpUI.nameTextBlock.Text = tmp.UserName;
+                tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getPicture() : tmp.Facebook, UriKind.Absolute));
                 tmpUI.userId = user.Id;
                 tmpUI.friendId = tmp.Id;
                 userStackPanel.Children.Add(tmpUI);
@@ -129,15 +124,14 @@ namespace mmuc_zombie.pages
             validateUI();
         }
 
-        private void updateUser()
+        private void updateUser(Boolean feedback)
         {
-            //User tmp = User.get();            
+            //User tmp = User.get();        
             user.Facebook = m_CurFacebookUser == null ? user.Facebook : m_CurFacebookUser.Picture.PictureUrl.Url;
-            user.UserName = nickname.Text.Equals(Constants.NONICKNAME) ? user.UserName : nickname.Text;            
-            if (user.updateCurrentUser())
-                MessageBox.Show("Your profile has been updated successfully");
-            else
-                MessageBox.Show("Your profile has not been updated");            
+            user.UserName = nickname.Text.Equals(Constants.NONICKNAME) ? user.UserName : nickname.Text;
+            user.updateCurrentUser();
+                if(feedback)
+                MessageBox.Show("Your profile has been updated successfully");           
         }
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
@@ -146,7 +140,7 @@ namespace mmuc_zombie.pages
             initializeFacebookFriends();
 
             validateUI();
-            loadFriends();
+            loadUsers();
             loadHistory();
         }
 
@@ -159,6 +153,7 @@ namespace mmuc_zombie.pages
                 genderText.Visibility = Visibility.Collapsed;
                 hometownText.Visibility = Visibility.Collapsed;
                 facebookLabel.Visibility = Visibility.Collapsed;
+                offline.Visibility = Visibility.Visible;
                 //if (appbar_facebook != null) appbar_facebook.IsEnabled = true;
             }
             else if (!((FBUser)fbUserGrid.DataContext).Picture.PictureUrl.Url.Equals(Constants.AVATARPATH))
@@ -167,6 +162,7 @@ namespace mmuc_zombie.pages
                 genderText.Visibility = Visibility.Visible;
                 hometownText.Visibility = Visibility.Visible;
                 facebookLabel.Visibility = Visibility.Visible;
+                offline.Visibility = Visibility.Collapsed;
                 //if (appbar_facebook != null) appbar_facebook.IsEnabled = false;
             }
         }
@@ -222,12 +218,12 @@ namespace mmuc_zombie.pages
             }
         }
 
-        private void loadFriends()
+        private void loadUsers()
         {
-            loadLocalFriends();            
+            loadLocalUsers();            
         }
         
-        private void loadLocalFriends()
+        private void loadLocalUsers()
         {
             if (user != null)
             {
@@ -287,23 +283,27 @@ namespace mmuc_zombie.pages
 
         private void appbar_save_Click(object sender, EventArgs e)
         {
-            updateUser();
+            updateUser(true);
         }
 
         private void appbar_facebook_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/pages/FacebookLogin.xaml", UriKind.Relative));
+            updateUser(false);
         }
 
         private void appbar_facebook_logout_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/pages/FacebookLogout.xaml", UriKind.Relative));
+            updateUser(false);
         }       
 
         private void nickname_GotFocus(object sender, RoutedEventArgs e)
         {
             if (nickname.Text.Trim().Equals(Constants.NONICKNAME))
                 nickname.Text = "";
+            else
+                nickname.SelectAll();
         }
 
         //private void nickname_LostFocus(object sender, RoutedEventArgs e)

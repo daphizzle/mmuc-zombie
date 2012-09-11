@@ -46,22 +46,22 @@
                         <Image Height="32" Name="facebookLabel" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
                     </Canvas>
                     <TextBlock DataContext="{Binding}" Height="55" Name="genderText" Text="{Binding Path=Gender}" TextAlignment="Center" TextWrapping="Wrap" Margin="16,344,14,112" />
-                    <TextBlock DataContext="{Binding}" Height="55" Margin="17,410,13,46" Name="hometownText" Text="{Binding Path=HomeTown}" TextAlignment="Center" TextWrapping="Wrap" />
+                    <TextBlock DataContext="{Binding}" Height="55" Margin="17,410,13,46" Name="hometownText" Text="{Binding Path=HomeTown.Name}" TextAlignment="Center" TextWrapping="Wrap" />
                 </Grid>
             </controls:PivotItem>
 
             <!--Pivot item two-->
             <controls:PivotItem >            	
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="social" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>                                       
+            		<TextBlock FontSize="54" Text="add friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>                                       
             	</controls:PivotItem.Header>
 
                 <Grid>
-                    <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,100,0,0">
+                    <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="6,100,0,0" Width="450">
                         <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="userStackPanel" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                         </StackPanel>
                     </ListBox>
-                    <TextBox Height="78" HorizontalAlignment="Left" Margin="33,20,0,0" Name="friendSearchtextBox" Text="" VerticalAlignment="Top" Width="394" />
+                    <TextBox Height="78" Margin="17,20,18,0" Name="friendSearchtextBox" Text="" VerticalAlignment="Top" />
                 </Grid>
 
             </controls:PivotItem>
@@ -69,7 +69,7 @@
             <!--Pivot item two-->
             <controls:PivotItem >
                 <controls:PivotItem.Header>
-                    <TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                    <TextBlock FontSize="54" Text="facebook" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
                 </controls:PivotItem.Header>
 
                 <Grid x:Name="ContentGrid" Grid.Row="1">
@@ -84,7 +84,8 @@
                                         Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
                                         Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                         </StackPanel>
-                    </ListBox>                    
+                    </ListBox>
+                    <TextBlock Height="30" HorizontalAlignment="Left" Margin="5,3,0,0" Name="offline" Text="Please connect to Facebook." VerticalAlignment="Top" Width="447" Visibility="Collapsed" />
                 </Grid>
 
             </controls:PivotItem>
