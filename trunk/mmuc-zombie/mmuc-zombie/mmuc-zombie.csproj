@@ -95,6 +95,9 @@
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
     <Compile Include="app\model\PendingGames.cs" />
+    <Compile Include="components\gameAvailable.xaml.cs">
+      <DependentUpon>gameAvailable.xaml</DependentUpon>
+    </Compile>
     <Compile Include="components\gamePlayed.xaml.cs">
       <DependentUpon>gamePlayed.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,9 @@
       <DependentUpon>playerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\ActiveGame.cs" />
+    <Compile Include="pages\RunningGames.xaml.cs">
+      <DependentUpon>RunningGames.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\FacebookLogout.xaml.cs">
       <DependentUpon>FacebookLogout.xaml</DependentUpon>
     </Compile>
@@ -194,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\gameAvailable.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="components\gamePlayed.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +231,10 @@
     <Page Include="components\playerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\RunningGames.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\FacebookLogout.xaml">
       <Generator>MSBuild:Compile</Generator>

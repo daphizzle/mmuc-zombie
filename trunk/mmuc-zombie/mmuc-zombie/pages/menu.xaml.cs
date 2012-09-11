@@ -31,9 +31,9 @@ namespace mmuc_zombie.pages
             NavigationService.Navigate(new Uri("/pages/HallFame.xaml", UriKind.Relative));
         }
 
-        private void myGames_Click(object sender, RoutedEventArgs e)
+        private void runningGame_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/pages/MyGames.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/RunningGames.xaml", UriKind.Relative));
         }
 
         private void newGame_Click(object sender, RoutedEventArgs e)

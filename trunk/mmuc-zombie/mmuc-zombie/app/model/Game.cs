@@ -258,7 +258,7 @@ public class Game : MyParseObject
 	static public void findPendingGames(MyListener listener)
     {
         var parse = new Driver();
-        parse.Objects.Query<Game>().Where(c => c.state == 0).Execute(r =>
+        parse.Objects.Query<Game>().Where(c => c.state == (int)Constants.GAMEMODES.PENDING).Execute(r =>
             {
                 if (r.Success)
                 {
@@ -271,6 +271,12 @@ public class Game : MyParseObject
                     listener.onDataChange(list);
                 }
             });
+    }
+
+    static public void findRunningGames(Action<Response<ResultsResponse<Game>>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Query<Game>().Where(c => c.state == (int)Constants.GAMEMODES.ACTIVE).Execute(callback);
     }
 
 }

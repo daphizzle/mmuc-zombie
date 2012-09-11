@@ -29,12 +29,13 @@ namespace mmuc_zombie.pages
         private WebClient m_wcFacebookProfile;
         private WebClient m_wcFacebookFriends;
         private static FBUser m_CurFacebookUser;
-        private CameraCaptureTask cameraTask;        
+        private CameraCaptureTask cameraTask;
+        private PhoneApplicationService service = PhoneApplicationService.Current;
 
         public MyProfile()
         {
             InitializeComponent();
-            user = User.get();
+            user = (User)service.State["user"];
             InitializeOtherComponents();
             
             //PhoneApplicationService service = PhoneApplicationService.Current;
@@ -51,7 +52,7 @@ namespace mmuc_zombie.pages
 
         private void InitializeOtherComponents()
         {
-            nickname.Text =  ( (user==null) || String.IsNullOrWhiteSpace(user.NickName) ) ? Constants.NONICKNAME : user.NickName;
+            nickname.Text =  ( (user==null) || String.IsNullOrWhiteSpace(user.UserName) ) ? Constants.NONICKNAME : user.UserName;
             cameraTask = new CameraCaptureTask();
             cameraTask.Completed += cameraTask_Completed;            
         }
@@ -73,7 +74,9 @@ namespace mmuc_zombie.pages
                         tmpUI.textBlock1.Text = "friend";
                     }
                 }  
+                tmpUI.nameTextBlock.Text = tmp.Id;                
                 tmpUI.nameTextBlock.Text = tmp.Id;
+
                 tmpUI.userId = user.Id;
                 tmpUI.friendId = tmp.Id;
                 userStackPanel.Children.Add(tmpUI);
@@ -130,7 +133,7 @@ namespace mmuc_zombie.pages
         {
             //User tmp = User.get();            
             user.Facebook = m_CurFacebookUser == null ? user.Facebook : m_CurFacebookUser.Picture.PictureUrl.Url;
-            user.NickName = nickname.Text.Equals(Constants.NONICKNAME) ? user.NickName : nickname.Text;            
+            user.UserName = nickname.Text.Equals(Constants.NONICKNAME) ? user.UserName : nickname.Text;            
             if (user.updateCurrentUser())
                 MessageBox.Show("Your profile has been updated successfully");
             else
@@ -152,13 +155,17 @@ namespace mmuc_zombie.pages
             if (fbUserGrid.DataContext == null)
             {
                 fbUserGrid.DataContext = new FBUser(Constants.AVATARPATH);
-                name.Visibility = Visibility.Collapsed;
+                nameText.Visibility = Visibility.Collapsed;
+                genderText.Visibility = Visibility.Collapsed;
+                hometownText.Visibility = Visibility.Collapsed;
                 facebookLabel.Visibility = Visibility.Collapsed;
                 //if (appbar_facebook != null) appbar_facebook.IsEnabled = true;
             }
             else if (!((FBUser)fbUserGrid.DataContext).Picture.PictureUrl.Url.Equals(Constants.AVATARPATH))
             {                
-                name.Visibility = Visibility.Visible;
+                nameText.Visibility = Visibility.Visible;
+                genderText.Visibility = Visibility.Visible;
+                hometownText.Visibility = Visibility.Visible;
                 facebookLabel.Visibility = Visibility.Visible;
                 //if (appbar_facebook != null) appbar_facebook.IsEnabled = false;
             }
@@ -326,7 +333,7 @@ namespace mmuc_zombie.pages
                 if (pr.ChosenPhoto != null)
                 {
                     imgLocal = new byte[(int)pr.ChosenPhoto.Length];
-                    user._avatar = imgLocal;
+                    user.avatarBytes = imgLocal;
                     pr.ChosenPhoto.Read(imgLocal, 0, imgLocal.Length);
                     pr.ChosenPhoto.Seek(0, System.IO.SeekOrigin.Begin);
                     var bitmapImage = PictureDecoder.DecodeJpeg(pr.ChosenPhoto);

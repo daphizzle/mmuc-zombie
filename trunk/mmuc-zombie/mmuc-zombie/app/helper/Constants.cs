@@ -17,7 +17,16 @@ namespace mmuc_zombie.app.helper
         public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";        
 
         public enum USERGAMEMODES : int { INIT = 0, IDLE, LOBBY, INGAME };
+        public enum GAMEMODES : int { PENDING = 0, WAITING, ACTIVE, FINISHED };
 
+        public const string ROLE_ZOMBIE = "Zombie";
+        public const string ROLE_SURVIVOR = "Survivor";
+        public const string ROLE_OBSERVER = "Observer";
+        
+        //game modes
+        //pending = 0, waiting = 1, active = 2, finshed = 3
+
+        //user-game modes
         //int=0: "idle mode" he is doing nothing, he ha no pending games; no timertask is running, if he joins a game he switch to status 1
         //int=1: "lobby-mode" user has joined a game , timertask checks if gameowner creates a game. if he does user switch to status 3. user can leave:if he has pending games left he switch to status 1, if not he switch to status 0.
         //int=2: "ingame" mode  many things are checked ...(infection, userlocation ...)if he leaves a game: it is checked if he has pending events if yes he switches to status 1 else 0

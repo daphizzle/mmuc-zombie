@@ -29,7 +29,7 @@ namespace mmuc_zombie
         public static Microsoft.Phone.UserData.Contact con;
         private static Device deviceID;
         private static string m_strAccessToken; // FB        
-        private static User user;
+        //private static User user;
         private static HttpWebRequest _webRequest;
         private static CookieContainer _cookieContainer = new CookieContainer();   
         //private static Games currentGame;
@@ -46,11 +46,11 @@ namespace mmuc_zombie
             set { m_strAccessToken = value; }
         }
 
-        public static User User
-        {
-            get { return user; }
-            set { user = value; }
-        }
+        //public static User User
+        //{
+        //    get { return user; }
+        //    set { user = value; }
+        //}
 
         public static HttpWebRequest WebRequest
         {
@@ -144,8 +144,7 @@ namespace mmuc_zombie
                     User user = new User();
                     user.UserName = "Dizzle";
                     user.DeviceID = App.DeviceID.toString(); 
-                    user.create(new StartupListener());                   
-                    
+                    user.create(new StartupListener());                                       
                 }
             }
             else

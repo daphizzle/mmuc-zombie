@@ -26,12 +26,18 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            clearCookies(FacebookURIs.GetLoginUri());
             wbLogout.Navigate(FacebookURIs.GetLogoutUri(App.AccessToken));
-
-
-
         }
 
+        private void clearCookies(Uri uri)
+        {
+            var cookies = App.CookiesContainer.GetCookies(uri);
+            foreach(Cookie c in cookies){
+                c.Discard = true;
+                c.Expired = true;
+            }
+        }
         private void wbLogout_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {            
 			string strLoweredAddress = e.Uri.OriginalString.ToLower();
@@ -57,7 +63,7 @@ namespace mmuc_zombie.pages
                 //txtStatus.Text = "Logged out";
                 //txtError.Text = "OK";
 				App.AccessToken = "";
-				App.User.Facebook = null;
+				//App.User.Facebook = null;
 				//wndLogoutConfirmed.IsOpen = true;
                 NavigationService.GoBack();
 				return;

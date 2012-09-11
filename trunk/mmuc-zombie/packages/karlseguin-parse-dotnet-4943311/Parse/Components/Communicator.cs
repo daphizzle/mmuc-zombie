@@ -95,9 +95,12 @@ namespace Parse
          var state = (RequestState<T>)result.AsyncState;
          using (var requestStream = state.Request.EndGetRequestStream(result))
          {
-            requestStream.Write(state.Payload, 0, state.Payload.Length);
-            requestStream.Flush();
-            requestStream.Close();
+             if (state.Payload != null)
+             {
+                 requestStream.Write(state.Payload, 0, state.Payload.Length);
+                 requestStream.Flush();
+                 requestStream.Close();
+             }
          }
          state.Request.BeginGetResponse(GetResponseStream<T>, state);
       }

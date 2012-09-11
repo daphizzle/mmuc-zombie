@@ -65,7 +65,7 @@
                         <!-- ROW #1 -->
                         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Margin="5">
                             <!--<TextBlock Text="My Games" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="myGames" TextSlidesFrom="Top" Text="My Games" LongText="Look into your games" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op1.png" Click="myGames_Click"/>
+                            <ScottIsAFool_Controls:TileSlider Name="runningGames" TextSlidesFrom="Top" Text="Running Games" LongText="Join a current game" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op1.png" Click="runningGame_Click"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1" Margin="5">
                             <!--<TextBlock Text="New Game" Style="{StaticResource PhoneTextNormalStyle}"/>-->

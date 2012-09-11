@@ -25,8 +25,8 @@ namespace mmuc_zombie
         {
             Debug.WriteLine("Logged in as" + ((User)list[0]).UserName);
             //there is only one MyParseObject            
-            User.set((User)list[0]);
-            //service.State["user"] = (User)list[0];
+            //User.set((User)list[0]);
+            service.State["user"] = (User)list[0];
             PositionRetriever.startPositionRetrieving(100);
             
         }

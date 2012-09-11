@@ -32,8 +32,8 @@ namespace mmuc_zombie
                 User user = (User)o[0];
                 writer.Write(user.Id);
                 Debug.WriteLine("Writing user id into Isolated Store"+user.Id);
-                //service.State["user"] = user;
-                User.set(user);                
+                service.State["user"] = user;
+                //User.set(user);                
                 PositionRetriever.startPositionRetrieving(100);
             }
         }

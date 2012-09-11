@@ -253,7 +253,7 @@ namespace mmuc_zombie.pages
             bool hostDied = false;
             for (int i = 0; i < locationList.Count; i++)
             {
-                if (roleList[i].roleType.Equals("Survivor"))
+                if (roleList[i].roleType.Equals(Constants.ROLE_SURVIVOR))
                 {
                     //check how many zombies are near this survivor
                     int infectionPlus = amountOfZombiesNearSurvivor(i);
@@ -322,7 +322,7 @@ namespace mmuc_zombie.pages
             bool noSurvivors = true;
             foreach(Roles r in roleList)
             {
-                if (r.roleType == "Survivor")
+                if (r.roleType == Constants.ROLE_SURVIVOR)
                 {
                     noSurvivors = false;
                 }
@@ -346,7 +346,7 @@ namespace mmuc_zombie.pages
             {
                 double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
                 bool near = (distance)<2500;
-                if(roleList[j].roleType.Equals("Zombie")&&near)
+                if(roleList[j].roleType.Equals(Constants.ROLE_ZOMBIE)&&near)
                 {
                     ++zombies;
                 }
@@ -376,7 +376,7 @@ namespace mmuc_zombie.pages
                 if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
            
-                if (roleList[i].roleType.Equals("Zombie"))
+                if (roleList[i].roleType.Equals(Constants.ROLE_ZOMBIE))
                 {
                   //  p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
                  //   Debug.WriteLine("Zombiestyle");
