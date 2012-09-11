@@ -134,23 +134,23 @@ public class User :  MyParseObject
 
     private ParseFile updatePicture()
     {
-        if(avatarBytes != null){
-            var parse = new Driver();
-            string newname = this.Id + ".png";
-            parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
-            {
-                if (r.Success)
-                {
-                    var url = r.Data.Url;
-                    var name = r.Data.Name;                
-                }
-                else
-                {
-                    Debug.WriteLine(r.Error.Message);
-                }
-            });
-            return new ParseFile(newname);
-        }
+        //if(avatarBytes != null){
+        //    var parse = new Driver();
+        //    string newname = this.Id + ".png";
+        //    parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
+        //    {
+        //        if (r.Success)
+        //        {
+        //            var url = r.Data.Url;
+        //            var name = r.Data.Name;                
+        //        }
+        //        else
+        //        {
+        //            Debug.WriteLine(r.Error.Message);
+        //        }
+        //    });
+        //    return new ParseFile(newname);
+        //}
         return null;
     }
 

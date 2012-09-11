@@ -32,10 +32,16 @@ namespace mmuc_zombie.pages
         MyLocation myLocation;
         bool painting=false;
         private int i;
-        private List<MyLocation> gameArea;
-        private int leftGameCounter;
-        bool questActive = true;
+        bool questActive = false;
+        Quest quest;
         bool hostDied = false;
+        Random rand = new Random();
+        private List<MyLocation> gameArea;
+        Rectangle rect = new Rectangle();
+        TextBlock playerAmount = new TextBlock();
+        TextBlock zombieAmount = new TextBlock();
+        TextBlock killCount = new TextBlock();
+        TextBlock questCount = new TextBlock();
    
         public IngameView()
         {
@@ -43,6 +49,10 @@ namespace mmuc_zombie.pages
             PhoneApplicationService service = PhoneApplicationService.Current;
             user = (User)service.State["user"];
             drawGameBorder();
+            LayoutRoot.Children.Add(playerAmount);
+            LayoutRoot.Children.Add(zombieAmount);
+            LayoutRoot.Children.Add(killCount);
+            LayoutRoot.Children.Add(questCount);
         }
 
         //constructor used for testing only
@@ -60,8 +70,15 @@ namespace mmuc_zombie.pages
         public void drawGameBorder()
         {
             Query.getGame(user.activeGame,getGameCallback);
-            Query.getGameArea(user.activeGame, getGameAreaCallback); 
-                
+            Query.getGameArea(user.activeGame, getGameAreaCallback);
+            quest = new Quest();
+            quest.create(r =>
+                {
+                    if (r.Success)
+                    {
+                        quest = (Quest)r.Data;
+                    }
+                });
         }
 
 
@@ -105,10 +122,8 @@ namespace mmuc_zombie.pages
                     //display a message, that the game has now ended
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
-                            CoreTask.idleMode();
                             MessageBoxResult mb = MessageBox.Show("Congratulations, there are no Survivors left. Zombies win!", "Alert", MessageBoxButton.OK);
                             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
-                            
                         });
                 });
         }
@@ -269,6 +284,7 @@ namespace mmuc_zombie.pages
                 {
                     Debug.WriteLine("Starting infection");
                  //   botsWalk();
+                    doQuestStuff();
                     infectSurvivors();
                     if (hostDied)
                     {
@@ -291,6 +307,51 @@ namespace mmuc_zombie.pages
                     StaticHelper.randomWalk(locationList[i]);
 
         }
+        private void doQuestStuff()
+        {
+            if (questActive)
+            {
+                survivorNearQuest();
+            }
+            else
+            {
+                if (rand.NextDouble() < 0.4)
+                {
+                    quest.healthPlus = 1;
+                }
+                else if (rand.NextDouble() < 0.8)
+                {
+                    quest.healthPlus = 2;
+                }
+                else
+                {
+                    quest.healthPlus = 3;
+                }
+                MyPolygon rectangle = StaticHelper.rectangleInsidePolygon(gameArea);
+                MyLocation questLoc = StaticHelper.randomPointInRectangle(rectangle.Locations[0], rectangle.Locations[2]);
+                quest.latitude = questLoc.latitude;
+                quest.longitude = questLoc.longitude;
+                questActive = true;
+            }
+        }
+
+        private void survivorNearQuest()
+        {
+            GeoCoordinate qLoc = new GeoCoordinate(quest.latitude, quest.longitude);
+            for (int i = 0; i < roleList.Count;i++)
+            {
+                if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
+                {
+                    GeoCoordinate uLoc = locationList[i].toGeoCoordinate();
+                    if (uLoc.GetDistanceTo(qLoc) < 2500)
+                    {
+
+                    }
+                }
+            }
+        }
+
+        
         private void infectSurvivors()
         {
             hostDied = false;
@@ -404,28 +465,9 @@ namespace mmuc_zombie.pages
         
         private void drawPins()
         {
-            
 
             //Debug.WriteLine("Start Drawing Users");
             //debug.Text = "";
-            PhoneApplicationService service = PhoneApplicationService.Current;
-            MyLocation location = (MyLocation)service.State["location"];
-            if (!StaticHelper.pointInPolygon(gameArea, location))
-            {
-                leftGameCounter++;
-                if (leftGameCounter > 5)
-                {
-                    MessageBoxResult mb = MessageBox.Show("You have left the Gaming Area. Do you want to quit the game?", "Alert", MessageBoxButton.OKCancel);
-                    leftGameCounter = 3;
-                    if (mb == MessageBoxResult.OK)
-                    {
-                        leftGameCounter = 0;
-                        (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
-                        CoreTask.idleMode();
-                    }
-                }
-            }
-            else leftGameCounter = 0;
             mapLayer.Children.Clear();
             int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
@@ -471,6 +513,7 @@ namespace mmuc_zombie.pages
             
                 mapLayer.Children.Add(p);
             }
+
             drawInfobox();
             map.Center=locationList[playerPosition].toGeoCoordinate();
             map.ZoomLevel = 14;
@@ -494,13 +537,12 @@ namespace mmuc_zombie.pages
             }
             int marginX = 0;
             int marginY = 35;
-            LayoutRoot.Children.Clear();
             if (role.roleType == "Survivor")
             {
                 //display healthbar
                 for (int i = 0; i < role.maxLife;i++ )
                 {
-                    Rectangle rect = new Rectangle();
+                    rect = new Rectangle();
                     rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                     rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                     rect.Height = 30;
@@ -516,7 +558,6 @@ namespace mmuc_zombie.pages
                 }
             }
             //other gameinfo
-            TextBlock playerAmount = new TextBlock();
             playerAmount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             playerAmount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             playerAmount.Height = 30;
@@ -525,9 +566,8 @@ namespace mmuc_zombie.pages
             playerAmount.Text = "Playercount: " + playerCount;
             marginY += 35;
             playerAmount.SetValue(Grid.RowProperty, 1);
-            LayoutRoot.Children.Add(playerAmount);
 
-            TextBlock zombieAmount = new TextBlock();
+            
             zombieAmount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             zombieAmount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
             zombieAmount.Height = 30;
@@ -536,10 +576,10 @@ namespace mmuc_zombie.pages
             zombieAmount.Text = "Zombiecount: " + zombieCount;
             marginY += 35;
             zombieAmount.SetValue(Grid.RowProperty, 1);
-            LayoutRoot.Children.Add(zombieAmount);
+            
             if (role.roleType == "Zombie")
             {
-                TextBlock killCount = new TextBlock();
+                
                 killCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 killCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 killCount.Height = 30;
@@ -548,11 +588,11 @@ namespace mmuc_zombie.pages
                 killCount.Text = "Killcount: " + role.killCount;
                 marginY += 35;
                 killCount.SetValue(Grid.RowProperty, 1);
-                LayoutRoot.Children.Add(killCount);
+                
             }
             if (role.roleType == "Survivor")
             {
-                TextBlock questCount = new TextBlock();
+                
                 questCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                 questCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                 questCount.Height = 30;
@@ -561,7 +601,7 @@ namespace mmuc_zombie.pages
                 questCount.Text = "Questcount: " + role.questCount;
                 marginY += 35;
                 questCount.SetValue(Grid.RowProperty, 1);
-                LayoutRoot.Children.Add(questCount);
+                
             }
 
         }
