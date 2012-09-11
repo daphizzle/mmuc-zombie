@@ -54,7 +54,11 @@ namespace mmuc_zombie.components
 
         private void edit_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/pages/NewGame.xaml", UriKind.Relative));
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                (
+                   Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/NewGame.xaml?gameId=" + gameID, UriKind.Relative));
+            });            
         } 
     }
 }

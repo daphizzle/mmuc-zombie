@@ -81,6 +81,7 @@
     <Compile Include="app\helper\Device.cs" />
     <Compile Include="app\helper\FacebookURIs.cs" />
     <Compile Include="app\helper\JsonStringSerializer.cs" />
+    <Compile Include="app\helper\Picture.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
     <Compile Include="app\helper\StaticHelper.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
@@ -120,6 +121,9 @@
       <DependentUpon>playerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\ActiveGame.cs" />
+    <Compile Include="pages\FacebookLogout.xaml.cs">
+      <DependentUpon>FacebookLogout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\GameStart.xaml.cs">
       <DependentUpon>GameStart.xaml</DependentUpon>
     </Compile>
@@ -217,6 +221,10 @@
     <Page Include="components\playerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\FacebookLogout.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\GameStart.xaml">
       <SubType>Designer</SubType>

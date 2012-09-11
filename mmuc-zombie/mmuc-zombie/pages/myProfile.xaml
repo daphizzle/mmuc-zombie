@@ -40,10 +40,10 @@
                 <Grid x:Name="fbUserGrid" HorizontalAlignment="Center" Width="413">
                     <TextBlock Height="19" Margin="0,344,13,197" Name="textBlock1" Text="How other users will recognize you" Width="386" TextAlignment="Center" FontSize="15" Foreground="#FF969696" Canvas.Left="53" Canvas.Top="221" HorizontalAlignment="Right" />
                     <Canvas HorizontalAlignment="Left" Margin="13,20,0,0" Name="canvas1" Width="385" Height="317" VerticalAlignment="Top" Background="#FF767676">
-                        <TextBox Name="nickname" Text="" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" DataContext="{Binding}" GotFocus="nickname_GotFocus" LostFocus="nickname_LostFocus" />
-                        <Image Height="144" Name="avatar" Stretch="Fill" Canvas.Left="121" Canvas.Top="94" Source="{Binding Path=Picture.PictureUrl.Url}" Width="146" />
+                        <TextBox Name="nickname" Text="" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" DataContext="{Binding}" GotFocus="nickname_GotFocus" />
+                        <Image Height="144" Name="avatar" Stretch="Fill" Canvas.Left="121" Canvas.Top="94" Source="{Binding Path=Picture.PictureUrl.Url}" Width="146" DoubleTap="avatar_DoubleTap" MouseEnter="avatar_MouseEnter" />
                         <TextBlock Name="name" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                        <Image Height="32" Name="facebook" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
+                        <Image Height="32" Name="facebookLabel" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
                     </Canvas>
                     <Button Content="Clear Database" Height="80" HorizontalAlignment="Left" Margin="89,377,0,0" Name="button1" VerticalAlignment="Top" Width="253" Click="button1_Click" />
                 </Grid>
@@ -52,7 +52,7 @@
             <!--Pivot item two-->
             <controls:PivotItem >            	
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>                                       
+            		<TextBlock FontSize="54" Text="social" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>                                       
             	</controls:PivotItem.Header>
 
                 <Grid>
@@ -68,7 +68,7 @@
             <!--Pivot item two-->
             <controls:PivotItem >
                 <controls:PivotItem.Header>
-                    <TextBlock FontSize="54" Text="social" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                    <TextBlock FontSize="54" Text="friends" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
                 </controls:PivotItem.Header>
 
                 <Grid x:Name="ContentGrid" Grid.Row="1">
@@ -136,10 +136,18 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <!--shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="ext/img/_save.png" Text="Save" Click="appbar_save_Click" /-->
+            <shell:ApplicationBarIconButton x:Name="appbar_save" IconUri="ext/img/_save.png" Text="Save" Click="appbar_save_Click" />
             <!--shell:ApplicationBarIconButton x:Name="appbar_cancel" IconUri="ext/img/_cancel.png" Text="Cancel" Click="appbar_cancel_Click" /-->
-            <shell:ApplicationBarIconButton x:Name="appbar_facebook" IconUri="ext/img/_facebook.png" Text="Facebook Connect" Click="appbar_facebook_Click" />
+            <!--shell:ApplicationBarIconButton x:Name="appbar_facebook" IconUri="ext/img/_facebook.png" Text="Facebook Connect" Click="appbar_facebook_Click" /-->
+
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Connect To Facebook" Click="appbar_facebook_Click" />
+                <shell:ApplicationBarMenuItem Text="Logout Facebook" Click="appbar_facebook_logout_Click" />
+            </shell:ApplicationBar.MenuItems>
+            
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+    
+    
     
 </phone:PhoneApplicationPage>

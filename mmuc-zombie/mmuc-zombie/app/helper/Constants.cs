@@ -14,6 +14,8 @@ namespace mmuc_zombie.app.helper
     public class Constants
     {
         public const string NONICKNAME = "nickname";
+        public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";        
+
         public enum USERGAMEMODES : int { INIT = 0, IDLE, LOBBY, INGAME };
 
         //int=0: "idle mode" he is doing nothing, he ha no pending games; no timertask is running, if he joins a game he switch to status 1

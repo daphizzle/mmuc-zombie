@@ -15,7 +15,7 @@
                 <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/edit.png" Stretch="Fill" />
             </Button.Background>
         </Button>
-        <Button Content="Cancel" Height="72" HorizontalAlignment="Left" Margin="0,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
+        <Button Content="Delete" Height="72" HorizontalAlignment="Left" Margin="0,121,0,0" Name="button1" VerticalAlignment="Top" Width="126" />
         <Button Content="Join" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="join" VerticalAlignment="Top" Width="126" Click="join_Click" />
 
         <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,42,0,0" Name="startTime" Text="start time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />
