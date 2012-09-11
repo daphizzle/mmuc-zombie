@@ -32,8 +32,8 @@ public class User :  MyParseObject
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }    
-    public ParseFile avatar { get; set; }
-    public byte[] avatarBytes { get; set; }    
+    //public ParseFile avatar { get; set; }
+    //public byte[] avatarBytes { get; set; }    
     //public FBUser _facebook { get; set; }
     //public Device _deviceID { get; set; }
     
@@ -49,7 +49,7 @@ public class User :  MyParseObject
         locationId = "";
         DeviceID = "";        
         FacebookToken = "";
-        avatar = null;
+        //avatar = null;
     }
 
     public void saveToState()
@@ -87,8 +87,8 @@ public class User :  MyParseObject
 
     public new bool update()
     {
-        ParseFile pic = updatePicture();
-        this.avatar = pic;
+        //ParseFile pic = updatePicture();
+        //this.avatar = pic;
 
         bool flag = false;
         var parse = new Driver();
@@ -104,7 +104,7 @@ public class User :  MyParseObject
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.FacebookToken, FacebookToken).
             Set(u => u.bot, bot).
-            Set(u => u.avatar, avatar).
+            //Set(u => u.avatar, avatar).
             Execute(r =>
             {
                 if (r.Success)
@@ -136,27 +136,28 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.bot, bot).
-            Set(u => u.avatar, avatar).
+            //Set(u => u.avatar, avatar).
             Execute(callback);
     }
 
     private ParseFile updatePicture()
     {
-        var parse = new Driver();
-        string newname = this.Id + ".png";
-        parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
-        {
-            if (r.Success)
-            {
-                var url = r.Data.Url;
-                var name = r.Data.Name;                
-            }
-            else
-            {
-                Debug.WriteLine(r.Error.Message);
-            }
-        });
-        return new ParseFile(newname);
+        //var parse = new Driver();
+        //string newname = this.Id + ".png";
+        //parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
+        //{
+        //    if (r.Success)
+        //    {
+        //        var url = r.Data.Url;
+        //        var name = r.Data.Name;                
+        //    }
+        //    else
+        //    {
+        //        Debug.WriteLine(r.Error.Message);
+        //    }
+        //});
+        //return new ParseFile(newname);
+        return null;
     }
 
     public static void find(string userId, MyListener listener)

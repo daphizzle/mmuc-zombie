@@ -441,6 +441,7 @@ namespace mmuc_zombie.pages
             }
             int marginX = 0;
             int marginY = 35;
+            LayoutRoot.Children.Clear();
             if (role.roleType == "Survivor")
             {
                 //display healthbar
@@ -557,6 +558,7 @@ namespace mmuc_zombie.pages
                 user.update();
                 if (user.Id == game.hostId)
                 {
+                    bool noHost = true;
                     for (int j = 0; j < userList.Count; j++)
                     {
                         if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
@@ -564,9 +566,19 @@ namespace mmuc_zombie.pages
                             continue;
                         }
                         game.hostId = userList[j].Id;
+                        noHost = false;
                         game.update(r =>
                         {
                             Debug.WriteLine("Updated game: " + game.Id);   
+                        });
+                    }
+                    if (noHost)
+                    {
+                        //there are no players left in the game (possibly there are still bots and observer
+                        game.state = 2;
+                        game.update(r =>
+                        {
+                            Debug.WriteLine("Updated game: " + game.Id);
                         });
                     }
                 }

@@ -333,7 +333,7 @@ namespace mmuc_zombie.pages
                 if (pr.ChosenPhoto != null)
                 {
                     imgLocal = new byte[(int)pr.ChosenPhoto.Length];
-                    user.avatarBytes = imgLocal;
+                    //user.avatarBytes = imgLocal;
                     pr.ChosenPhoto.Read(imgLocal, 0, imgLocal.Length);
                     pr.ChosenPhoto.Seek(0, System.IO.SeekOrigin.Begin);
                     var bitmapImage = PictureDecoder.DecodeJpeg(pr.ChosenPhoto);
