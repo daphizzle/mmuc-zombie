@@ -268,7 +268,7 @@ namespace mmuc_zombie.pages
                 else
                 {
                     Debug.WriteLine("Starting infection");
-                    botsWalk();
+                 //   botsWalk();
                     infectSurvivors();
                     if (hostDied)
                     {

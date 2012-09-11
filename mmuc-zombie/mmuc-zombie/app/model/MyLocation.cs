@@ -23,7 +23,7 @@ using System.Diagnostics;
         {
         }
 
-        public void update(Action<Response<MyLocation>> callback)
+        public void update(Action<Response<DateTime>> callback)
         {
             var parse = new Driver();
             parse.Objects.Update<MyLocation>(this.Id).
@@ -31,18 +31,7 @@ using System.Diagnostics;
                 Set(u => u.longitude, longitude).
                 Set(u => u.gameId, gameId).
                 Set(u => u.number, number).
-                Execute(r =>
-                {
-                    if (r.Success)
-                    {
-                        Debug.WriteLine("MyLocation : " + Id + " successfull updated");
-                    }
-                    //else
-                    //{
-                    //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
-                    //}
-
-                });
+                Execute(callback);
         
         }
 
