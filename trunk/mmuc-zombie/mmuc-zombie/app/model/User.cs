@@ -77,20 +77,19 @@ public class User :  MyParseObject
         //return App.User;
     }
 
-    public bool updateCurrentUser()
+    public void updateCurrentUser()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
         service.State["user"] = this;
         //set(this);
-        return update();
+        update();
     }
 
-    public new bool update()
+    public new void update()
     {
         //ParseFile pic = updatePicture();
         //this.avatar = pic;
-
-        bool flag = false;
+        
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
             Set(u => u.status, status).
@@ -108,17 +107,10 @@ public class User :  MyParseObject
             Execute(r =>
             {
                 if (r.Success)
-                {
-                    flag = true;
+                {                    
                     Debug.WriteLine("User : " + Id + " successfull updated");                    
                 }
-                else
-                {
-                    Debug.WriteLine(r.Error.Message);
-                }
-            });
-             
-            return flag;
+            });             
     }
 
     //public new void update(Action<Response<DateTime>> callback) 
@@ -142,21 +134,23 @@ public class User :  MyParseObject
 
     private ParseFile updatePicture()
     {
-        //var parse = new Driver();
-        //string newname = this.Id + ".png";
-        //parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
-        //{
-        //    if (r.Success)
-        //    {
-        //        var url = r.Data.Url;
-        //        var name = r.Data.Name;                
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine(r.Error.Message);
-        //    }
-        //});
-        //return new ParseFile(newname);
+        if(avatarBytes != null){
+            var parse = new Driver();
+            string newname = this.Id + ".png";
+            parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
+            {
+                if (r.Success)
+                {
+                    var url = r.Data.Url;
+                    var name = r.Data.Name;                
+                }
+                else
+                {
+                    Debug.WriteLine(r.Error.Message);
+                }
+            });
+            return new ParseFile(newname);
+        }
         return null;
     }
 
@@ -185,8 +179,9 @@ public class User :  MyParseObject
         driver.Objects.Get<User>(userId,callback);
     }
 
+    public string getPicture()
+    {
+        return "http://www.cwv.com.ve/wp-content/uploads/2011/12/1603-bill-gates-1.jpg";    
+    }
 
-
- 
-    
 }

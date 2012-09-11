@@ -19,15 +19,12 @@ namespace mmuc_zombie.components
         public string friendId { get; set; }
         public string userId{get;set;}
         public Boolean isFriend=false;
+
         public friendsView()
         {
             InitializeComponent();
-        }
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-
-        }
-        private void join_Click(object sender, RoutedEventArgs e)
+        }       
+        private void add_Click(object sender, RoutedEventArgs e)
         {   
             if (!isFriend){
                 var friend = new Friend();
@@ -38,7 +35,7 @@ namespace mmuc_zombie.components
                     Debug.WriteLine(friendId+" is now a friend of "+userId);
                 });
 
-                textBlock1.Text="friend";
+                tmpTextBlock.Text="friend";
             }
         }
 

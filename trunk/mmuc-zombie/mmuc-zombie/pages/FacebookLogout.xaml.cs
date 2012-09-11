@@ -26,8 +26,8 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            clearCookies(FacebookURIs.GetLoginUri());
-            wbLogout.Navigate(FacebookURIs.GetLogoutUri(App.AccessToken));
+            clearCookies(new Uri("https://www.facebook.com/home.php"));
+            wbLogout.Navigate(FacebookURIs.GetLogoutUri(App.AccessToken));            
         }
 
         private void clearCookies(Uri uri)
@@ -41,7 +41,8 @@ namespace mmuc_zombie.pages
         private void wbLogout_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {            
 			string strLoweredAddress = e.Uri.OriginalString.ToLower();
-			if(strLoweredAddress.Contains("facebook.com/home.php")) {	//could be www.fa... or m.fa...
+            if (strLoweredAddress.Contains("facebook.com/home.php") || strLoweredAddress.Contains("facebook.com/logout.php"))
+            {	//could be www.fa... or m.fa...
 				if(!m_bDidAppLogout) {	//this was app logout - now logout the user itself
 					//txtStatus.Text = "Application logged out";
 					//txtError.Text = "Logging out the user";
@@ -49,8 +50,16 @@ namespace mmuc_zombie.pages
 					//the trick is to use the same host (m or www) and the same parameters
 					//so simply replace home (where we are) with logout
 					//same host - same parameters - but logout page :)
-					string strLogout = strLoweredAddress.Replace("home", "logout");
-					wbLogout.Navigate(new Uri(strLogout, UriKind.Absolute));
+                    strLoweredAddress = strLoweredAddress.Replace("home", "logout");
+
+                    App.AccessToken = "";
+                    User.get().FacebookToken = null;
+                    User.get().Facebook = null;
+
+                    wbLogout.Navigate(new Uri(strLoweredAddress, UriKind.Absolute));
+                    //NavigationService.GoBack();                    
+                    NavigationService.Navigate(new Uri("/pages/MyProfile.xaml", UriKind.Relative));
+
 					return;
 				}
 				else {	//again (after navigation to logout) at home page
@@ -63,6 +72,8 @@ namespace mmuc_zombie.pages
                 //txtStatus.Text = "Logged out";
                 //txtError.Text = "OK";
 				App.AccessToken = "";
+                User.get().FacebookToken = null;
+                User.get().Facebook = null;
 				//App.User.Facebook = null;
 				//wndLogoutConfirmed.IsOpen = true;
                 NavigationService.GoBack();
