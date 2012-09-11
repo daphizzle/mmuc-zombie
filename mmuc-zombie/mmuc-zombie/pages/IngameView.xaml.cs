@@ -222,7 +222,7 @@ namespace mmuc_zombie.pages
                 user = (User)service.State["user"];
              }
           
-            if (user.Id == game.ownerId)
+            if (user.Id == game.hostId)
             {
                 if (noSurvivorsLeft())
                 {
@@ -261,7 +261,7 @@ namespace mmuc_zombie.pages
                     {
                         //there are zombies near survivor
                         Debug.WriteLine(String.Format("There are {0} zombies near user {1}", infectionPlus,userList[i].UserName));
-                        if (roleList[i].infectionCount + infectionPlus > 1)
+                        if (roleList[i].infectionCount + infectionPlus > 5)
                         {
 
                             Debug.WriteLine(String.Format("User {0} is about to die", userList[i].UserName));
@@ -356,8 +356,10 @@ namespace mmuc_zombie.pages
         
         private void drawPins()
         {
+            
+
             //Debug.WriteLine("Start Drawing Users");
-            debug.Text = "";
+            //debug.Text = "";
             mapLayer.Children.Clear();
             int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
@@ -367,7 +369,7 @@ namespace mmuc_zombie.pages
                 //Debug.WriteLine("User" + userList[i].Id);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
-                debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
+                //debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
                 //Debug.WriteLine("location "+locationList[i].Id); 
@@ -405,11 +407,62 @@ namespace mmuc_zombie.pages
             
                 mapLayer.Children.Add(p);
             }
-                map.Center=locationList[playerPosition].toGeoCoordinate();
-                map.ZoomLevel = 14;
-                painting = false;
-            
-
+            //if (role.roleType == "Survivor")
+            //{
+            //    Bar1.Visibility = System.Windows.Visibility.Visible;
+            //    Bar2.Visibility = System.Windows.Visibility.Visible;
+            //    Bar3.Visibility = System.Windows.Visibility.Visible;
+            //    Bar4.Visibility = System.Windows.Visibility.Visible;
+            //    Bar5.Visibility = System.Windows.Visibility.Visible;
+            //    switch (role.infectionCount)
+            //    {
+            //        case 1:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Red);    
+            //            Bar2.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
+            //            break;
+            //        case 2:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
+            //            break;
+            //        case 3:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
+            //            break;
+            //        case 4:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
+            //            break;
+            //        case 5:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Red);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Red);
+            //            break;
+            //        default:
+            //            Bar1.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar2.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
+            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
+            //            break;
+            //    }
+            //}
+            map.Center=locationList[playerPosition].toGeoCoordinate();
+            map.ZoomLevel = 14;
+            painting = false;
         }
         
 

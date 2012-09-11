@@ -26,11 +26,12 @@ public class Game : MyParseObject
     public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    public DateTime? startTime { get; set; }
-    public DateTime? endTime { get; set; }
+    //public DateTime? startTime { get; set; }
+    //public DateTime? endTime { get; set; }
     public string locationId { get; set; }
     public string description { get; set; }
     public string ownerId { get; set; }
+    public string hostId { get; set; }
 
     public Game() { }
     public void update(Action<Response<DateTime>> callback)
@@ -43,10 +44,11 @@ public class Game : MyParseObject
                Set(u => u.name, name).
                Set(u => u.radius, radius).
                Set(u => u.zombiesCount, zombiesCount).
-               Set(u => u.startTime, startTime).
-               Set(u => u.endTime, endTime).
+               //Set(u => u.startTime, startTime).
+               //Set(u => u.endTime, endTime).
                Set(u => u.description, description).
                Set(u => u.ownerId, ownerId).
+               Set(u => u.hostId, hostId).
                Execute(callback);
     }
 
@@ -60,11 +62,12 @@ public class Game : MyParseObject
             Set(u => u.name, name).
             Set(u => u.radius, radius).
             Set(u => u.zombiesCount, zombiesCount).
-            Set(u => u.startTime, startTime).
-            Set(u => u.endTime, endTime).
+            //Set(u => u.startTime, startTime).
+            //Set(u => u.endTime, endTime).
             Set(u => u.locationId, locationId).
             Set(u => u.description, description).
-            Set(u => u.ownerId,ownerId).
+            Set(u => u.ownerId, ownerId).
+            Set(u => u.hostId, hostId).
             Execute(r =>
             {
                 if (r.Success)
@@ -83,8 +86,8 @@ public class Game : MyParseObject
     public Game(string name, DateTime start, DateTime end, string ownerId, string description) 
     {
         this.name = name;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        //this.startTime = startTime;
+        //this.endTime = endTime;
         this.ownerId = ownerId;
         this.description = description;
     }
