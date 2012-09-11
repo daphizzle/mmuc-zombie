@@ -30,8 +30,10 @@ namespace mmuc_zombie.pages
         Game game; 
         Roles role;
         MyLocation myLocation;
-        Boolean painting=false;
+        bool painting=false;
         private int i;
+        bool questActive = true;
+        bool hostDied = false;
    
         public IngameView()
         {
@@ -188,6 +190,28 @@ namespace mmuc_zombie.pages
             else
             {
                 i = 0;
+                updateLocations();
+            }
+        }
+
+        private void updateLocations()
+        {
+            if (i < locationList.Count)
+            {
+                locationList[i].update(r =>
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        Debug.WriteLine("Updated location " + locationList[i].Id);
+                        i++;
+                        updateLocations();
+                    });
+
+                });
+            }
+            else
+            {
+                i = 0;
                 updateUser();
             }
         }
@@ -241,6 +265,14 @@ namespace mmuc_zombie.pages
                 {
                     Debug.WriteLine("Starting infection");
                     infectSurvivors();
+                    if (hostDied)
+                    {
+                        updateGame();
+                    }
+                    else
+                    {
+                        updateRoles();
+                    }
                 }
             }
             else
@@ -250,7 +282,7 @@ namespace mmuc_zombie.pages
         
         private void infectSurvivors()
         {
-            bool hostDied = false;
+            hostDied = false;
             //if a survivor is killed, this list will be filled with the murderers
             List<Roles> killer = new List<Roles>();
             for (int i = 0; i < locationList.Count; i++)
@@ -318,14 +350,6 @@ namespace mmuc_zombie.pages
                 }
             }
             this.i = 0;
-            if (hostDied)
-            {
-                updateGame();
-            }
-            else
-            {
-                updateRoles();
-            }
         }
 
         private bool noSurvivorsLeft()
