@@ -111,6 +111,8 @@ namespace mmuc_zombie.pages
                 newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude,l.longitude));
             }
             NewPolygonLayer.Children.Add(newPolygon);
+            MyPolygon rectangle = StaticHelper.rectangleInsidePolygon(list);
+            NewPolygonLayer.Children.Add(rectangle);
             
             var tempLoc = new MyLocation(newPolygon.middlePoint().Latitude,newPolygon.middlePoint().Longitude);
             tempLoc.gameId = list[0].gameId;

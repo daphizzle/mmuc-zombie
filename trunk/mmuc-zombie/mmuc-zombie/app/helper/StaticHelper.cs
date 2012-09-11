@@ -18,6 +18,7 @@ namespace mmuc_zombie.app.helper
 {
     public class StaticHelper
     {
+        
 
 
         public static T GetParentOfType<T>(DependencyObject item) where T : DependencyObject
@@ -55,7 +56,7 @@ namespace mmuc_zombie.app.helper
       
          public static List<GeoCoordinate> drawCircle(GeoCoordinate origin,int radius)
         {  
-          var earthRadius = 6371;
+          var earthRadius = 6371*1000;
       
           //latitude in radians
             var lat = (double)(origin.Latitude*Math.PI)/180; 
@@ -111,9 +112,62 @@ namespace mmuc_zombie.app.helper
                  newPolygon.Locations.Add(new System.Device.Location.GeoCoordinate(l.latitude, l.longitude));
              }
              return newPolygon;
+             
          }
 
-        
+          public static MyLocation randomPointInRectangle(MyLocation a,MyLocation b)
+          {
+              MyLocation loc = new MyLocation();
+              double randomX = new Random().NextDouble();
+               double randomY = new Random().NextDouble();
+               loc.latitude = a.latitude + (randomX * (b.latitude - a.latitude));
+               loc.longitude = a.longitude + (randomY * (b.longitude - a.longitude));
+               return loc; 
+
+            }
+          public static MyPolygon rectangleInsidePolygon(List<MyLocation> list)
+          {
+             
+              MyLocation mid = middlePoint(list);
+              var minDistance = list[0].toGeoCoordinate().GetDistanceTo(mid.toGeoCoordinate());
+              foreach (MyLocation g in list)
+              {
+                  Double distance = g.toGeoCoordinate().GetDistanceTo(mid.toGeoCoordinate());
+                  if (distance < minDistance)
+                      minDistance = distance;
+              }
+              MyPolygon newPolygon = new MyPolygon();
+              // Defines the polygon fill details
+              newPolygon.Fill = new SolidColorBrush(Colors.Red);
+              newPolygon.Stroke = new SolidColorBrush(Colors.Red);
+              newPolygon.StrokeThickness = 6;
+              newPolygon.Opacity = 0.7;
+              newPolygon.Locations = new LocationCollection();
+              List<GeoCoordinate> help=drawCircle(new GeoCoordinate(mid.latitude , mid.longitude),(int)minDistance);
+              GeoCoordinate lefttop = help[45]; 
+              GeoCoordinate rightbot = help[225];
+              newPolygon.Locations.Add(lefttop);
+              newPolygon.Locations.Add(help[135]);
+              newPolygon.Locations.Add(rightbot);
+              newPolygon.Locations.Add(help[315]);
+              return newPolygon;
+              
+
+          }
+          public static MyLocation middlePoint(List<MyLocation> list)
+          {
+              var mid = new MyLocation();
+              double lat = 0;
+              double lon = 0;
+              foreach (MyLocation g in list)
+              {
+                  lat += g.latitude;
+                  lon += g.longitude;
+              }
+              mid.latitude = lat / list.Count;
+              mid.longitude = lon / list.Count;
+              return mid;
+          }
 
 
         public static void userJoin(string p)
@@ -124,6 +178,14 @@ namespace mmuc_zombie.app.helper
             user.status = 1;
             user.updateCurrentUser();
             CoreTask.start();
+        }
+
+        internal static void randomWalk(MyLocation myLocation)
+        {
+            var list=drawCircle(myLocation.toGeoCoordinate(), 10);
+            var val=new Random().Next(0,360);
+            myLocation.latitude = list[val].Latitude;
+            myLocation.longitude = list[val].Longitude;
         }
     }
 }
