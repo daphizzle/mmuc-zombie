@@ -23,6 +23,7 @@ public class Roles : MyParseObject
         public int infectionCount { get; set; }
         public string roleType { get; set; }
         public bool alive { get; set; }
+        public int maxLife { get; set; }
 
         public new void update()
         {

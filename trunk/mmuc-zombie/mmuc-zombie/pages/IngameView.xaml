@@ -80,8 +80,17 @@
 
             <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock x:Name="ApplicationTitle" Text="Zombie Outbreak" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo"/>
+            <TextBlock x:Name="PageTitle" FontSize="54" Text="Menu" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+        </StackPanel>
        <!--ContentPanel<G - place additional content here-->
-        <controls:Pivot Title="Zombie Outbreak">
+        <!--<controls:Pivot Title="Zombie Outbreak">
             <controls:Pivot.Resources>
                 <DataTemplate x:Key="DataTemplateTitle">
                     <TextBlock x:Name="title" Text="Zombie Outbreak" Margin="0,0,0,0" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Edo" FontSize="20" Width="180" HorizontalAlignment="Left"/>
@@ -89,19 +98,18 @@
             </controls:Pivot.Resources>
             <controls:Pivot.TitleTemplate>
                 <StaticResource ResourceKey="DataTemplateTitle"/>
-            </controls:Pivot.TitleTemplate>
+            </controls:Pivot.TitleTemplate>-->
 
 
             <!--Pivot item one-->
-            <controls:PivotItem>
+            <!--<controls:PivotItem>
 
                 <controls:PivotItem.Header>
                     <TextBlock FontSize="54" Text="Map View" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
-                </controls:PivotItem.Header>
-                <StackPanel>
+                </controls:PivotItem.Header>-->
                 <m:Map x:Name="map" CredentialsProvider="Ag2rNocOeXIpp4DOAU3IBI3ral-cQuLyVaacRxIcSkiDhSoex5SGF_vvNLZVFSbz" 
-                               Mode="Road" Height="500" VerticalAlignment="Stretch" Width="Auto" CopyrightVisibility="Collapsed" ZoomLevel="10" 
-                       LogoVisibility="Collapsed"
+                               Mode="Road" Height="Auto" VerticalAlignment="Stretch" Width="Auto" CopyrightVisibility="Collapsed" ZoomLevel="10" 
+                       LogoVisibility="Collapsed" Grid.Row="1"
                        >
                     <m:Map.Center>
                         <my:GeoCoordinate Altitude="NaN" Course="NaN" HorizontalAccuracy="NaN" Latitude="49" Longitude="5" Speed="NaN" VerticalAccuracy="NaN" />
@@ -110,17 +118,35 @@
                     <m:MapLayer x:Name="mapLayer" Height="Auto" Width="Auto">
                     </m:MapLayer>
                 </m:Map>
-                <TextBlock Name ="debug" Text=""/>
-                </StackPanel>
-            </controls:PivotItem>
+        <Rectangle Name="Infobox" Grid.Row="1" HorizontalAlignment="Left" 
+                   VerticalAlignment="Top" Height="150" Width="200"/>
+        <!-- <Rectangle Name="Bar1" Grid.Row="1" Height="30" Width="90"
+                               Visibility="Collapsed"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Green" />
+                    <Rectangle Name="Bar2" Margin="90,0,0,0" Grid.Row="0" Height="30" Width="90"
+                               HorizontalAlignment="Left" 
+                               Visibility="Collapsed"
+                               VerticalAlignment="Top" Fill="Green" />
+                    <Rectangle Name="Bar3" Margin="180,0,0,0" Grid.Row="0" Height="30" Width="90"
+                               Visibility="Collapsed"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Green" />
+                    <Rectangle Name="Bar4" Margin="270,0,0,0" Grid.Row="0" Height="30" Width="90"
+                               Visibility="Collapsed"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Green" />
+                    <Rectangle Name="Bar5" Margin="360,0,0,0" Grid.Row="0" Height="30" Width="95"
+                               Visibility="Collapsed"
+                               HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Green" />
+                <TextBlock Name ="debug" Grid.Row="1" Text=""/>-->
+               
+        <!--</controls:PivotItem> -->
 
-            <!--Pivot item two-->
-            <controls:PivotItem>
+        <!--Pivot item two-->
+            <!--<controls:PivotItem>
                 <controls:PivotItem.Header>
                     <TextBlock FontSize="54" Text="Statistics" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
                 </controls:PivotItem.Header>
             </controls:PivotItem>
-        </controls:Pivot>
+        </controls:Pivot>-->
         
 
     </Grid>
