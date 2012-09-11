@@ -20,6 +20,12 @@ public class Query
         parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
 
     }
+    static public void getBotsByGame(string gameId, Action<Response<ResultsResponse<User>>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Query<User>().Where(c => c.activeGame == gameId && c.bot == true ).Execute(callback);
+
+    }
     static public void getRolesbyGame(string gameId, Action<Response<ResultsResponse<Roles>>> callback)
     {
         var parse = new Driver();

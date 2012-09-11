@@ -232,6 +232,7 @@ private  List<User> userList;
                     {
                            User b=new User();
                            b.UserName="Bot "+botCounter++;
+                           b.bot = true;
                            b.activeGame=user.activeGame;
                            b.locationId=r2.Data.Id;
                            b.create(r3=>

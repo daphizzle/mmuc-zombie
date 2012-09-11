@@ -32,6 +32,8 @@ namespace mmuc_zombie.pages
         MyLocation myLocation;
         bool painting=false;
         private int i;
+        private List<MyLocation> gameArea;
+        private int leftGameCounter;
         bool questActive = true;
         bool hostDied = false;
    
@@ -103,8 +105,10 @@ namespace mmuc_zombie.pages
                     //display a message, that the game has now ended
                     Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
+                            CoreTask.idleMode();
                             MessageBoxResult mb = MessageBox.Show("Congratulations, there are no Survivors left. Zombies win!", "Alert", MessageBoxButton.OK);
                             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+                            
                         });
                 });
         }
@@ -264,6 +268,7 @@ namespace mmuc_zombie.pages
                 else
                 {
                     Debug.WriteLine("Starting infection");
+                    botsWalk();
                     infectSurvivors();
                     if (hostDied)
                     {
@@ -279,7 +284,13 @@ namespace mmuc_zombie.pages
                 drawPins();
         }
 
-        
+        private void botsWalk()
+        {
+            for (int i = 1; i <= userList.Count; i++)
+                if (userList[i].bot)
+                    StaticHelper.randomWalk(locationList[i]);
+
+        }
         private void infectSurvivors()
         {
             hostDied = false;
@@ -397,6 +408,24 @@ namespace mmuc_zombie.pages
 
             //Debug.WriteLine("Start Drawing Users");
             //debug.Text = "";
+            PhoneApplicationService service = PhoneApplicationService.Current;
+            MyLocation location = (MyLocation)service.State["location"];
+            if (!StaticHelper.pointInPolygon(gameArea, location))
+            {
+                leftGameCounter++;
+                if (leftGameCounter > 5)
+                {
+                    MessageBoxResult mb = MessageBox.Show("You have left the Gaming Area. Do you want to quit the game?", "Alert", MessageBoxButton.OKCancel);
+                    leftGameCounter = 3;
+                    if (mb == MessageBoxResult.OK)
+                    {
+                        leftGameCounter = 0;
+                        (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+                        CoreTask.idleMode();
+                    }
+                }
+            }
+            else leftGameCounter = 0;
             mapLayer.Children.Clear();
             int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
@@ -555,7 +584,7 @@ namespace mmuc_zombie.pages
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
-                        var list = (List<MyLocation>)r.Data.Results;
+                        gameArea = (List<MyLocation>)r.Data.Results;
                         gameAreaLayer.Children.Add(StaticHelper.inGameArea(list));
 
                     });
