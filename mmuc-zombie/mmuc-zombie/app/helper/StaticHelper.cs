@@ -115,13 +115,13 @@ namespace mmuc_zombie.app.helper
              
          }
 
-          public static MyLocation randomPointInRectangle(MyLocation a,MyLocation b)
+          public static MyLocation randomPointInRectangle(GeoCoordinate a,GeoCoordinate b)
           {
               MyLocation loc = new MyLocation();
               double randomX = new Random().NextDouble();
                double randomY = new Random().NextDouble();
-               loc.latitude = a.latitude + (randomX * (b.latitude - a.latitude));
-               loc.longitude = a.longitude + (randomY * (b.longitude - a.longitude));
+               loc.latitude = a.Latitude + (randomX * (b.Latitude - a.Latitude));
+               loc.longitude = a.Longitude + (randomY * (b.Longitude - a.Longitude));
                return loc; 
 
             }

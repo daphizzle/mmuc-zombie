@@ -286,7 +286,7 @@ namespace mmuc_zombie.pages
 
         private void botsWalk()
         {
-            for (int i = 1; i <= userList.Count; i++)
+            for (int i = 0; i < userList.Count; i++)
                 if (userList[i].bot)
                     StaticHelper.randomWalk(locationList[i]);
 
@@ -585,7 +585,7 @@ namespace mmuc_zombie.pages
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
                         gameArea = (List<MyLocation>)r.Data.Results;
-                        gameAreaLayer.Children.Add(StaticHelper.inGameArea(list));
+                        gameAreaLayer.Children.Add(StaticHelper.inGameArea(gameArea));
 
                     });
             }

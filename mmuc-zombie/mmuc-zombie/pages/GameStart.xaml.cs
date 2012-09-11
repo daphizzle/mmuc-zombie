@@ -212,21 +212,19 @@ private  List<User> userList;
 
         private void bots_Click(object sender, RoutedEventArgs e)
         {
-            Query.getLocation(user.locationId,paintBots);
+            Query.getGameArea(game.Id,paintBots);
        
         }
-        private void paintBots(Response<MyLocation> r){
+        private void paintBots(Response<ResultsResponse<MyLocation>> r){
             if (r.Success)
             {
-                var location= r.Data;
-                List<GeoCoordinate> coords=StaticHelper.drawCircle(location.toGeoCoordinate(),1);
-          
-                MyLocation l=new MyLocation();
-                var fu = botCounter * 20 + 35;
-                var fuu = botCounter * 20 + 35;
-                l.latitude=coords[fu].Latitude;
-                l.longitude=coords[fuu].Longitude;  
-                var parse=new Driver();
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    var list = (List<MyLocation>)r.Data.Results;
+                    var polygon = StaticHelper.rectangleInsidePolygon(list);
+                    MyLocation l = StaticHelper.randomPointInRectangle(polygon.Locations[0], polygon.Locations[2]);
+                    var parse = new Driver();
+               
                 parse.Objects.Save(l,r2=>{
                     if(r2.Success)
                     {
@@ -242,7 +240,7 @@ private  List<User> userList;
                            });
                     }
                 });
-            
+                });
             }
         }
   
