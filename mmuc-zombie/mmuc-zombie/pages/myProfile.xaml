@@ -42,10 +42,11 @@
                     <Canvas HorizontalAlignment="Left" Margin="13,20,0,0" Name="canvas1" Width="385" Height="317" VerticalAlignment="Top" Background="#FF767676">
                         <TextBox Name="nickname" Text="" Width="376" TextAlignment="Center" Foreground="#FFC1C1C1" Canvas.Left="3" Canvas.Top="247" FontSize="20" Background="#FF383838" DataContext="{Binding}" GotFocus="nickname_GotFocus" />
                         <Image Height="144" Name="avatar" Stretch="Fill" Canvas.Left="121" Canvas.Top="94" Source="{Binding Path=Picture.PictureUrl.Url}" Width="146" DoubleTap="avatar_DoubleTap" MouseEnter="avatar_MouseEnter" />
-                        <TextBlock Name="name" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock Name="nameText" Text="{Binding Path=Name}" TextAlignment="Center" DataContext="{Binding}" Width="352" TextWrapping="Wrap" Height="74" Canvas.Left="17" Canvas.Top="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
                         <Image Height="32" Name="facebookLabel" Stretch="None" Width="32" Source="/mmuc-zombie;component/ext/img/facebook.png" Canvas.Left="230" Canvas.Top="203" />
                     </Canvas>
-                    <Button Content="Clear Database" Height="80" HorizontalAlignment="Left" Margin="89,377,0,0" Name="button1" VerticalAlignment="Top" Width="253" Click="button1_Click" />
+                    <TextBlock DataContext="{Binding}" Height="55" Name="genderText" Text="{Binding Path=Gender}" TextAlignment="Center" TextWrapping="Wrap" Margin="16,344,14,112" />
+                    <TextBlock DataContext="{Binding}" Height="55" Margin="17,410,13,46" Name="hometownText" Text="{Binding Path=HomeTown}" TextAlignment="Center" TextWrapping="Wrap" />
                 </Grid>
             </controls:PivotItem>
 
@@ -124,6 +125,7 @@
                         <ListBoxItem Content="Played Games" />
                         <ListBoxItem Content="Wins" />
                     </ListBox>
+                    <Button Content="Clear Database" Height="73" HorizontalAlignment="Left" Margin="129,421,0,0" Name="button1" VerticalAlignment="Top" Width="266" Click="button1_Click" />
                 </Grid>
             </controls:PivotItem>
             

@@ -27,14 +27,13 @@ public class User :  MyParseObject
     public string UserName{get;set;}
     public string Password{get;set;}    
     public string email { get; set; }    
-    public string locationId { get; set; }
-    public string NickName { get; set; }
+    public string locationId { get; set; }    
     public string Facebook { get; set; }
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }    
     public ParseFile avatar { get; set; }
-    public byte[] _avatar { get; set; }    
+    public byte[] avatarBytes { get; set; }    
     //public FBUser _facebook { get; set; }
     //public Device _deviceID { get; set; }
     
@@ -48,8 +47,7 @@ public class User :  MyParseObject
         Facebook = "";
         email = "";
         locationId = "";
-        DeviceID = "";
-        NickName = "";
+        DeviceID = "";        
         FacebookToken = "";
         avatar = null;
     }
@@ -58,13 +56,13 @@ public class User :  MyParseObject
     {
          PhoneApplicationService service = PhoneApplicationService.Current;
          service.State["user"] = this;
-         App.User = this;
+         //App.User = this;
     }
     public static void set(User user)
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
         service.State["user"] = user;
-        App.User = user;
+        //App.User = user;
     }
     public static User getFromState()
     {
@@ -74,16 +72,16 @@ public class User :  MyParseObject
     public static User get()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        if(service.State.ContainsKey("user"))
+        //if(service.State.ContainsKey("user"))
         return (User)service.State["user"];
-        return App.User;
+        //return App.User;
     }
 
     public bool updateCurrentUser()
     {
-        //PhoneApplicationService service = PhoneApplicationService.Current;
-        //service.State["user"] = this;
-        set(this);
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        service.State["user"] = this;
+        //set(this);
         return update();
     }
 
@@ -103,8 +101,7 @@ public class User :  MyParseObject
             Set(u => u.Facebook, Facebook).
             Set(u => u.email, email).
             Set(u => u.locationId, locationId).
-            Set(u => u.DeviceID, DeviceID).
-            Set(u => u.NickName, NickName).
+            Set(u => u.DeviceID, DeviceID).            
             Set(u => u.FacebookToken, FacebookToken).
             Set(u => u.bot, bot).
             Set(u => u.avatar, avatar).
@@ -137,10 +134,9 @@ public class User :  MyParseObject
             Set(u => u.Facebook, Facebook).
             Set(u => u.email, email).
             Set(u => u.locationId, locationId).
-            Set(u => u.DeviceID, DeviceID).
-            Set(u => u.NickName, NickName).
+            Set(u => u.DeviceID, DeviceID).            
             Set(u => u.bot, bot).
-            //Set(u => u.avatar, avatar).
+            Set(u => u.avatar, avatar).
             Execute(callback);
     }
 
@@ -148,7 +144,7 @@ public class User :  MyParseObject
     {
         var parse = new Driver();
         string newname = this.Id + ".png";
-        parse.Files.Save(newname, this._avatar, "image/png", r =>
+        parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
         {
             if (r.Success)
             {
