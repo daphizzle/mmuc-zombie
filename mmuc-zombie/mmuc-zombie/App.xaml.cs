@@ -34,6 +34,13 @@ namespace mmuc_zombie
         private static CookieContainer _cookieContainer = new CookieContainer();   
         //private static Games currentGame;
 
+        private class QuitException : Exception { }
+
+        public static void Quit()
+        {
+            throw new QuitException();
+        }
+
         public static Device DeviceID 
         {
             get { return deviceID; }
@@ -183,6 +190,9 @@ namespace mmuc_zombie
         // Code to execute on Unhandled Exceptions
         private void Application_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
+            if (e.ExceptionObject is QuitException)
+                return;
+
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 // An unhandled exception has occurred; break into the debugger
@@ -227,4 +237,6 @@ namespace mmuc_zombie
         #endregion
                 
     }
+
+    
 }

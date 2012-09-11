@@ -77,7 +77,7 @@ namespace mmuc_zombie.pages
                     if (r.Success)
                     {
                         game = r.Data;
-                        if (game.state == 3)
+                        if (game.state == 2)
                         {
                             //our game is now finished
                             gameFinished();
@@ -226,7 +226,7 @@ namespace mmuc_zombie.pages
             {
                 if (noSurvivorsLeft())
                 {
-                    game.state = 3;
+                    game.state = 2;
                     game.update(r =>
                         {
                             Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -251,17 +251,21 @@ namespace mmuc_zombie.pages
         private void infectSurvivors()
         {
             bool hostDied = false;
+            //if a survivor is killed, this list will be filled with the murderers
+            List<Roles> killer = new List<Roles>();
             for (int i = 0; i < locationList.Count; i++)
             {
                 if (roleList[i].roleType.Equals(Constants.ROLE_SURVIVOR))
                 {
-                    //check how many zombies are near this survivor
-                    int infectionPlus = amountOfZombiesNearSurvivor(i);
+                    //clear killer list 
+                    killer.Clear();
+                    //check how many zombies are near this survivor. this method also fills the killer list
+                    int infectionPlus = amountOfZombiesNearSurvivor(i,killer);
                     if (infectionPlus > 0)
                     {
                         //there are zombies near survivor
-                        Debug.WriteLine(String.Format("There are {0} zombies near user {1}", infectionPlus,userList[i].UserName));
-                        if (roleList[i].infectionCount + infectionPlus > 5)
+                        Debug.WriteLine(String.Format("There are {0} zombies near user {1}, maxLife = {2}", infectionPlus, userList[i].UserName, roleList[i].maxLife));
+                        if (roleList[i].infectionCount + infectionPlus > roleList[i].maxLife)
                         {
 
                             Debug.WriteLine(String.Format("User {0} is about to die", userList[i].UserName));
@@ -270,17 +274,24 @@ namespace mmuc_zombie.pages
                             userList[i].activeGame = "";
                             userList[i].status = 0;
                             userList[i].activeRole = "";
+
+                            //increase killCount of all murderers
+                            foreach (Roles r in killer)
+                            {
+                                ++r.killCount;
+                            }
+
                             if (userList[i].Id == game.hostId)
                             {
                                 //current host died, we need a new one
                                 hostDied = true;
-                                foreach (User u in userList)
+                                for (int j = 0; j < userList.Count;j++ )
                                 {
-                                    if (u.bot || u.Id == game.hostId)
+                                    if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
                                     {
                                         continue;
                                     }
-                                    game.hostId = u.Id;
+                                    game.hostId = userList[j].Id;
                                 }
                             }
                         }
@@ -339,16 +350,18 @@ namespace mmuc_zombie.pages
                 });
         }
 
-        private int amountOfZombiesNearSurvivor(int i)
+        private int amountOfZombiesNearSurvivor(int i,List<Roles> killer)
         {
             int zombies = 0;
             for (int j = 0; j < userList.Count; j++)
             {
                 double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
-                bool near = (distance)<2500;
+                // for testing is true
+                bool near = true;
                 if(roleList[j].roleType.Equals(Constants.ROLE_ZOMBIE)&&near)
                 {
                     ++zombies;
+                    killer.Add(roleList[j]);
                 }
             }
             return zombies;    
@@ -390,7 +403,7 @@ namespace mmuc_zombie.pages
                    
                  
                 }
-                else
+                else if (roleList[i].roleType.Equals("Survivor"))
                 {
                  //   p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                     Debug.WriteLine("Survivorstyle");
@@ -401,68 +414,102 @@ namespace mmuc_zombie.pages
                     }
                     else
                         p.Template = this.Resources["survivorpin"] as ControlTemplate;
-                    
-                  
                 }
             
                 mapLayer.Children.Add(p);
             }
-            //if (role.roleType == "Survivor")
-            //{
-            //    Bar1.Visibility = System.Windows.Visibility.Visible;
-            //    Bar2.Visibility = System.Windows.Visibility.Visible;
-            //    Bar3.Visibility = System.Windows.Visibility.Visible;
-            //    Bar4.Visibility = System.Windows.Visibility.Visible;
-            //    Bar5.Visibility = System.Windows.Visibility.Visible;
-            //    switch (role.infectionCount)
-            //    {
-            //        case 1:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Red);    
-            //            Bar2.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
-            //            break;
-            //        case 2:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
-            //            break;
-            //        case 3:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
-            //            break;
-            //        case 4:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
-            //            break;
-            //        case 5:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar2.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Red);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Red);
-            //            break;
-            //        default:
-            //            Bar1.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar2.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar3.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar4.Fill = new SolidColorBrush(Colors.Green);
-            //            Bar5.Fill = new SolidColorBrush(Colors.Green);
-            //            break;
-            //    }
-            //}
+            drawInfobox();
             map.Center=locationList[playerPosition].toGeoCoordinate();
             map.ZoomLevel = 14;
             painting = false;
+        }
+
+        private void drawInfobox()
+        {
+            int playerCount = 0;
+            int zombieCount = 0;
+            foreach(Roles r in roleList)
+            {
+                if(r.roleType=="Zombie")
+                {
+                    ++playerCount;
+                    ++zombieCount;
+                }else if(r.roleType=="Survivor")
+                {
+                    ++playerCount;
+                }
+            }
+            int marginX = 0;
+            int marginY = 35;
+            if (role.roleType == "Survivor")
+            {
+                //display healthbar
+                for (int i = 0; i < role.maxLife;i++ )
+                {
+                    Rectangle rect = new Rectangle();
+                    rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                    rect.Height = 30;
+                    rect.Width = 25;
+                    if (i <= role.infectionCount)
+                        rect.Fill = new SolidColorBrush(Colors.Red);
+                    else
+                        rect.Fill = new SolidColorBrush(Colors.Green);
+                    rect.Margin = new Thickness(marginX, 0, 0, 0);
+                    marginX += 25;
+                    rect.SetValue(Grid.RowProperty, 1);
+                    LayoutRoot.Children.Add(rect);
+                }
+            }
+            //other gameinfo
+            TextBlock playerAmount = new TextBlock();
+            playerAmount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            playerAmount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            playerAmount.Height = 30;
+            playerAmount.Width = 200;
+            playerAmount.Margin = new Thickness(0, marginY, 0, 0);
+            playerAmount.Text = "Playercount: " + playerCount;
+            marginY += 35;
+            playerAmount.SetValue(Grid.RowProperty, 1);
+            LayoutRoot.Children.Add(playerAmount);
+
+            TextBlock zombieAmount = new TextBlock();
+            zombieAmount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            zombieAmount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            zombieAmount.Height = 30;
+            zombieAmount.Width = 200;
+            zombieAmount.Margin = new Thickness(0, marginY, 0, 0);
+            zombieAmount.Text = "Zombiecount: " + zombieCount;
+            marginY += 35;
+            zombieAmount.SetValue(Grid.RowProperty, 1);
+            LayoutRoot.Children.Add(zombieAmount);
+            if (role.roleType == "Zombie")
+            {
+                TextBlock killCount = new TextBlock();
+                killCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                killCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                killCount.Height = 30;
+                killCount.Width = 200;
+                killCount.Margin = new Thickness(0, marginY, 0, 0);
+                killCount.Text = "Killcount: " + role.killCount;
+                marginY += 35;
+                killCount.SetValue(Grid.RowProperty, 1);
+                LayoutRoot.Children.Add(killCount);
+            }
+            if (role.roleType == "Survivor")
+            {
+                TextBlock questCount = new TextBlock();
+                questCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                questCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+                questCount.Height = 30;
+                questCount.Width = 200;
+                questCount.Margin = new Thickness(0, marginY, 0, 0);
+                questCount.Text = "Questcount: " + role.questCount;
+                marginY += 35;
+                questCount.SetValue(Grid.RowProperty, 1);
+                LayoutRoot.Children.Add(questCount);
+            }
+
         }
         
 
@@ -508,114 +555,25 @@ namespace mmuc_zombie.pages
                 user.activeGame = "";
                 user.status = 0;
                 user.update();
+                if (user.Id == game.hostId)
+                {
+                    for (int j = 0; j < userList.Count; j++)
+                    {
+                        if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
+                        {
+                            continue;
+                        }
+                        game.hostId = userList[j].Id;
+                        game.update(r =>
+                        {
+                            Debug.WriteLine("Updated game: " + game.Id);   
+                        });
+                    }
+                }
                 (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
             }
         }
 
-
-
-        
-        //private void map_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
-        //{
-        //    e.Handled = true;
-        
-        //}
-
-
-
-        //private void map_Hold(object sender, System.Windows.Input.GestureEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_MapZoom(object sender, MapZoomEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_MapPan(object sender, MapDragEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_ManipulationCompleted(object sender, ManipulationCompletedEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_ManipulationStarted(object sender, ManipulationStartedEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-
-        //private void map_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_ViewChangeEnd(object sender, MapEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_ViewChangeStart(object sender, MapEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        
-        //private void map_ViewChangeOnFrame(object sender, MapEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_ManipulationDelta(object sender, ManipulationDeltaEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-        //private void map_TargetViewChanged(object sender, MapEventArgs e)
-        //{
-        //    e.Handled = true;
-        //}
-
-
-
-        //private void map_MouseEnter(object sender, MouseEventArgs e)
-        //{
-            
-        //}
-
-        //private void map_MouseLeave(object sender, MouseEventArgs e)
-        //{
-
-        //}
-
-        //private void map_MouseMove(object sender, MouseEventArgs e)
-        //{
-            
-        //}
 
     }
 }

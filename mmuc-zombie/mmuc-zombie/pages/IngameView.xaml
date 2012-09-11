@@ -119,7 +119,8 @@
                     </m:MapLayer>
                 </m:Map>
         <Rectangle Name="Infobox" Grid.Row="1" HorizontalAlignment="Left" 
-                   VerticalAlignment="Top" Height="150" Width="200"/>
+                   VerticalAlignment="Top" Height="150" Width="250"
+                   Fill="Gray" Opacity="0.4"/>
         <!-- <Rectangle Name="Bar1" Grid.Row="1" Height="30" Width="90"
                                Visibility="Collapsed"
                                HorizontalAlignment="Left" VerticalAlignment="Top" Fill="Green" />

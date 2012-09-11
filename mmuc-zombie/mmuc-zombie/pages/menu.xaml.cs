@@ -57,7 +57,18 @@ namespace mmuc_zombie.pages
         }
 
 
-
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult mb = MessageBox.Show("Do you want to leave Zombie Outbreak?", "Alert", MessageBoxButton.OKCancel);
+            if (mb != MessageBoxResult.OK)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                App.Quit();
+            }
+        }
 
     }
 }
