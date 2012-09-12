@@ -14,28 +14,16 @@ namespace mmuc_zombie.app.model
 {
     public class HallOfFame
     {
-        public String Category { get; set; }
-        public DateTime Range { get; set; }
-        public IList<PlayerTmp> Survivors { get; set; }
-        public IList<PlayerTmp> Zombies { get; set; }
+        public int number;
+        public String name;
+        public int achievementCount;
 
-        public HallOfFame(String category, DateTime range)
+        public HallOfFame(int num,String n, int c)
         {
-            this.Category = category;
-            this.Range = range;
+            number = num;
+            name = n;
+            achievementCount = c;
         }
 
-        public bool loadSurvivors(int topk, DateTime start, DateTime end)
-        {
-            Survivors = new List<PlayerTmp>(6);
-            Survivors.Add(new PlayerTmp("dpuschmann"));
-            Survivors.Add(new PlayerTmp("lespin"));
-            Survivors.Add(new PlayerTmp("jlahann"));
-            Survivors.Add(new PlayerTmp("mvidriales"));
-            Survivors.Add(new PlayerTmp("lcampos"));
-            Survivors.Add(new PlayerTmp("mbader"));
-
-            return true;
-        }
     }
 }

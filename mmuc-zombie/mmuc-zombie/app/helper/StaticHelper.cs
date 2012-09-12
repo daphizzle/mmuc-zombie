@@ -115,13 +115,20 @@ namespace mmuc_zombie.app.helper
              
          }
 
-          public static MyLocation randomPointInRectangle(GeoCoordinate a,GeoCoordinate b)
+          public static MyLocation randomPointInRectangle(List<MyLocation> gameArea,GeoCoordinate a,GeoCoordinate b)
           {
               MyLocation loc = new MyLocation();
-              double randomX = new Random().NextDouble();
-               double randomY = new Random().NextDouble();
+              double randomX = Constants.random.NextDouble();
+               double randomY = Constants.random.NextDouble();
                loc.latitude = a.Latitude + (randomX * (b.Latitude - a.Latitude));
                loc.longitude = a.Longitude + (randomY * (b.Longitude - a.Longitude));
+               while (!pointInPolygon(gameArea,loc))
+               {
+                   randomX = Constants.random.NextDouble();
+                   randomY = Constants.random.NextDouble();
+                   loc.latitude = a.Latitude + (randomX * (b.Latitude - a.Latitude));
+                   loc.longitude = a.Longitude + (randomY * (b.Longitude - a.Longitude));
+               }
                return loc; 
 
             }
@@ -180,12 +187,34 @@ namespace mmuc_zombie.app.helper
             CoreTask.start();
         }
 
-        internal static void randomWalk(MyLocation myLocation)
+        internal static void randomWalk(List<MyLocation> gameArea,MyLocation myLocation)
         {
-            var list=drawCircle(myLocation.toGeoCoordinate(), 100);
-            var val=new Random().Next(0,360);
+            var list=drawCircle(myLocation.toGeoCoordinate(), Constants.BOT_MOVEMENT);
+            var val=Constants.random.Next(0,360);
             myLocation.latitude = list[val].Latitude;
             myLocation.longitude = list[val].Longitude;
+            while(!pointInPolygon(gameArea,myLocation))
+            {
+                val=Constants.random.Next(0,360);
+                myLocation.latitude = list[val].Latitude;
+                myLocation.longitude = list[val].Longitude;
+            }
+        }
+
+        internal static void zombieWalk(List<MyLocation> gameArea, MyLocation myLocation,MyLocation nextSurvivor)
+        {
+            var list = drawCircle(myLocation.toGeoCoordinate(), Constants.BOT_MOVEMENT);
+            var distance = myLocation.toGeoCoordinate().GetDistanceTo(nextSurvivor.toGeoCoordinate());
+            var val = Constants.random.Next(0, 360);
+            myLocation.latitude = list[val].Latitude;
+            myLocation.longitude = list[val].Longitude;
+            while (!pointInPolygon(gameArea, myLocation)||
+                (myLocation.toGeoCoordinate().GetDistanceTo(nextSurvivor.toGeoCoordinate())>distance))
+            {
+                val = Constants.random.Next(0, 360);
+                myLocation.latitude = list[val].Latitude;
+                myLocation.longitude = list[val].Longitude;
+            }
         }
     }
 }

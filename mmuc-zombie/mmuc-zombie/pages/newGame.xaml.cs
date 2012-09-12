@@ -130,8 +130,20 @@ namespace mmuc_zombie.pages
                 game.description = descriptionBox.Text;
                 game.players = (int)Math.Round(playerSlider.Value * 10.0);
                 game.privateGame = privateCheckbox.IsChecked.Value;
+                MyPolygon rect = StaticHelper.rectangleInsidePolygon(locs);
+                if ((rect.Locations[0].GetDistanceTo(rect.Locations[3])<Constants.SMALL_GAME_SIZE))
+                {
+                    game.size = (int)Constants.GAMESIZE.SMALL;
+                }
+                else if ((rect.Locations[0].GetDistanceTo(rect.Locations[3]) < Constants.MEDIUM_GAME_SIZE))
+                {
+                    game.size = (int)Constants.GAMESIZE.MEDIUM;
+                }
+                else
+                {
+                    game.size = (int)Constants.GAMESIZE.BIG;
+                }
                 game.create(locs,invites);
-                
             }
             else if (_editable)
             {

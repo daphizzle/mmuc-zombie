@@ -52,20 +52,7 @@ public class Query
         parse.Objects.Get<User>(userId, callback);
 
     }
-    [Obsolete("doesn't work atm")]
-    static public void getLocations(string[] locationIds, Action<Response<ResultsResponse<MyLocation>>> callback)
-    {
-        var parse = new Driver();
-        parse.Objects.Query<MyLocation>().Where(c => locationIds.Contains(c.Id)).Execute(callback);
-
-    }
-   [Obsolete("doesn't work atm")]
-    static public void getRoles(string[] roleIds, Action<Response<ResultsResponse<Roles>>> callback)
-    {
-        var parse = new Driver();
-        parse.Objects.Query<Roles>().Where(c => roleIds.Contains(c.Id)).Execute(callback);
-
-    }
+    
    static public void getRole(string roleId, Action<Response<Roles>> callback)
    {
        var parse = new Driver();
@@ -76,6 +63,46 @@ public class Query
    {
        var parse = new Driver();
        parse.Objects.Get<MyLocation>(locationId, callback);
+   }
+
+   static public void getAllSurvivors(Action<Response<ResultsResponse<Roles>>> callback)
+   {
+       var parse = new Driver();
+       string surv = Constants.ROLE_SURVIVOR;
+       parse.Objects.Query<Roles>().Where(c => c.roleType == surv).Execute(callback);
+   }
+
+   static public void getAllZombies(Action<Response<ResultsResponse<Roles>>> callback)
+   {
+       var parse = new Driver();
+       string zomb = Constants.ROLE_ZOMBIE;
+       parse.Objects.Query<Roles>().Where(c => c.roleType == zomb).Execute(callback);
+   }
+
+   static public void getAllGames(Action<Response<ResultsResponse<Game>>> callback)
+   {
+       var parse = new Driver();
+       parse.Objects.Query<Game>().Where(c => c.Id == c.Id).Execute(callback);
+   }
+
+   static public void getAllUser(Action<Response<ResultsResponse<User>>> callback)
+   {
+       var parse = new Driver();
+       parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(callback);
+   }
+            
+   [Obsolete("doesn't work atm")]
+   static public void getLocations(string[] locationIds, Action<Response<ResultsResponse<MyLocation>>> callback)
+   {
+       var parse = new Driver();
+       parse.Objects.Query<MyLocation>().Where(c => locationIds.Contains(c.Id)).Execute(callback);
+
+   }
+   [Obsolete("doesn't work atm")]
+   static public void getRoles(string[] roleIds, Action<Response<ResultsResponse<Roles>>> callback)
+   {
+       var parse = new Driver();
+       parse.Objects.Query<Roles>().Where(c => roleIds.Contains(c.Id)).Execute(callback);
 
    }
 }

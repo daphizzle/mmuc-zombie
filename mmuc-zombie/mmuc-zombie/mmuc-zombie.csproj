@@ -128,6 +128,9 @@
     <Compile Include="components\playerView.xaml.cs">
       <DependentUpon>playerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="components\hallOfFamePlayer.xaml.cs">
+      <DependentUpon>hallOfFamePlayer.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\ActiveGame.cs" />
     <Compile Include="pages\RunningGames.xaml.cs">
       <DependentUpon>RunningGames.xaml</DependentUpon>
@@ -234,6 +237,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="components\playerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\hallOfFamePlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
