@@ -430,14 +430,26 @@ namespace mmuc_zombie.pages
 
                             if (userList[i].Id == game.hostId)
                             {
-                                //current host died, we need a new one
-                                for (int j = 0; j < userList.Count;j++ )
+                                if (survivorsLeft() - 1 >= 1)
                                 {
-                                    if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
+                                    //current host died, we need a new one
+                                    for (int j = 0; j < userList.Count; j++)
                                     {
-                                        continue;
+                                        if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
+                                        {
+                                            continue;
+                                        }
+                                        game.hostId = userList[j].Id;
                                     }
-                                    game.hostId = userList[j].Id;
+                                }
+                                else
+                                {
+                                    //there are no players left in the game (possibly there are still bots and observer
+                                    game.state = 2;
+                                    game.update(r =>
+                                    {
+                                        Debug.WriteLine("Updated game: " + game.Id);
+                                    });
                                 }
                             }
                             game.events = userList[i].UserName + " has died," + game.events;
