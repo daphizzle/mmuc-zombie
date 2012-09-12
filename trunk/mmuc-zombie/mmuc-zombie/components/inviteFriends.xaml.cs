@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Windows.Media.Imaging;
 
 namespace mmuc_zombie.components
 {
@@ -31,17 +32,22 @@ namespace mmuc_zombie.components
               invite.accepted = false;
           }
 
-        private void join_Click(object sender, RoutedEventArgs e)
-        {
+        private void add_Click(object sender, RoutedEventArgs e)
+            {
             if (!isInvited)
             {
                 invites.Add(invite);
-                textBlock1.Text = "invited";
+                tmpTextBlock.Text = "invited";
+                isInvited = true;
+                addButton.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/del.jpg", UriKind.Relative)) };
+
             }
             else
             {
                 invites.Remove(invite);
-                textBlock1.Text = "";
+                tmpTextBlock.Text = "";
+                isInvited = false;
+                addButton.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/_add.png", UriKind.Relative)) };
             }
         }
     }

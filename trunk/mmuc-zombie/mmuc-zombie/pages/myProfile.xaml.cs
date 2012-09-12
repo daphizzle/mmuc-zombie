@@ -51,8 +51,8 @@ namespace mmuc_zombie.pages
             cameraTask = new CameraCaptureTask();
             cameraTask.Completed += cameraTask_Completed;            
         }
-             
-        private bool loadUsers(List<User> users,List<Friend> friends)
+
+        private bool loadUsers(List<User> users, List<Friend> friends)
         {
             /* SOCIAL - ADD FRIENDS */
 
@@ -60,25 +60,31 @@ namespace mmuc_zombie.pages
             userStackPanel.Children.Clear();
 
             foreach (User tmp in users)
-            {                
-                tmpUI = new mmuc_zombie.components.friendsView();
-                foreach (Friend friend in friends)
+            {
+                if (!tmp.Id.Equals(User.getFromState().Id))
                 {
-                    if (tmp.Id.Equals(friend.friend))
+                    tmpUI = new mmuc_zombie.components.friendsView();
+                    foreach (Friend friend in friends)
                     {
-                        tmpUI.isFriend = true;                        
-                        tmpUI.tmpTextBlock.Text = "friend";
+                        if (tmp.Id.Equals(friend.friend))
+                        {
+                            tmpUI.isFriend = true;
+                            tmpUI.addButton.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/del.jpg", UriKind.Relative)) };
+                            tmpUI.tmpTextBlock.Text = "friend";
+                            tmpUI.friendId = friend.Id;
+                        }
                     }
-                }
-                tmpUI.nameTextBlock.Text = tmp.UserName;
-                tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getPicture() : tmp.Facebook, UriKind.Absolute));
-                tmpUI.userId = user.Id;
-                tmpUI.friendId = tmp.Id;
-                userStackPanel.Children.Add(tmpUI);
-            }
+                    tmpUI.nameTextBlock.Text = tmp.UserName;
+                    tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getPicture() : tmp.Facebook, UriKind.Absolute));
+                    tmpUI.userId = user.Id;
+                    tmpUI.newfriend = tmp.Id;
 
-            return userStackPanel.Children.Count > 0;
-        }
+                    userStackPanel.Children.Add(tmpUI);
+                }
+            }
+                return userStackPanel.Children.Count > 0;
+            }
+        
 
         private void initializeFacebookProfile()
         {
@@ -229,7 +235,7 @@ namespace mmuc_zombie.pages
             {
                 string userId = user.Id;
                 var parse = new Driver();
-                parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(r =>
+                parse.Objects.Query<User>().Where(c => c.Id == c.Id &&c.bot==false).Execute(r =>
                 {
                     if (r.Success)
                     {
@@ -355,6 +361,39 @@ namespace mmuc_zombie.pages
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             string userId = user.Id;
@@ -366,7 +405,7 @@ namespace mmuc_zombie.pages
                     if (r.Success)
                     {
                         List<User> users = (List<User>)r.Data.Results;
-                        foreach(User u in users)
+                        foreach (User u in users)
                             parse.Objects.Delete<User>(u);
                     }
                 });

@@ -57,11 +57,11 @@
             	</controls:PivotItem.Header>
 
                 <Grid>
-                    <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="6,100,0,0" Width="450">
+                    <ListBox Name="userListBox" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="6,0,0,0" Width="450">
                         <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="userStackPanel" Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" Visibility="Visible" HorizontalAlignment="Center" Width="456" >
                         </StackPanel>
                     </ListBox>
-                    <TextBox Height="78" Margin="17,20,18,0" Name="friendSearchtextBox" Text="" VerticalAlignment="Top" />
+                    
                 </Grid>
 
             </controls:PivotItem>

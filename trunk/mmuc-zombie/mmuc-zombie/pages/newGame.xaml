@@ -162,8 +162,7 @@
     <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="saveButton" IconUri="/ext/img/_save.png" Text="Save" Click="saveButtonClick"/>
-            <shell:ApplicationBarIconButton x:Name="cancelButton" IconUri="/ext/img/_cancel.png" Text="Cancel" Click="cancleButtonClick"/>  
+            <shell:ApplicationBarIconButton x:Name="saveButton" IconUri="/ext/img/_save.png" Text="Save" Click="saveButtonClick"/>  
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
     

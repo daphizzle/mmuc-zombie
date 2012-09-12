@@ -71,6 +71,36 @@ namespace mmuc_zombie.pages
        
             
         }
+        private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            MessageBoxResult mb = MessageBox.Show("Do you want to leave the game?", "Alert", MessageBoxButton.OKCancel);
+            if (mb == MessageBoxResult.OK)
+            {
+                PhoneApplicationService service = PhoneApplicationService.Current;
+                user = (User)service.State["user"];
+                var parse = new Driver();
+                if (game.ownerId.Equals(user.Id))
+                {
+
+                    parse.Objects.Update<Game>(game.Id).Set(u => u.state, 3).Execute(ro => { });
+                }
+                else
+                {
+                    user.status = 0;
+                    user.activeGame = "";
+                    service.State["user"] = user;
+                    parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
+                    {
+                    });
+                }
+                CoreTask.idleMode();
+                NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+
+            }
+            else
+                e.Cancel = true;
+         
+        }
 
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
