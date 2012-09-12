@@ -90,6 +90,12 @@ public class Query
        var parse = new Driver();
        parse.Objects.Query<User>().Where(c => c.Id == c.Id).Execute(callback);
    }
+
+   static public void getQuest(String gameId, Action<Response<ResultsResponse<Quest>>> callback)
+   {
+       var parse = new Driver();
+       parse.Objects.Query<Quest>().Where(c => c.gameId == gameId).Execute(callback);
+   }
             
    [Obsolete("doesn't work atm")]
    static public void getLocations(string[] locationIds, Action<Response<ResultsResponse<MyLocation>>> callback)

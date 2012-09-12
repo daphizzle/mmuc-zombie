@@ -32,7 +32,6 @@ namespace mmuc_zombie.pages
         MyLocation myLocation;
         bool painting=false;
         private int i;
-        bool questActive = false;
         Quest quest;
         private List<MyLocation> gameArea;
         Rectangle rect = new Rectangle();
@@ -79,12 +78,11 @@ namespace mmuc_zombie.pages
         {
             Query.getGame(user.activeGame,getGameCallback);
             Query.getGameArea(user.activeGame, getGameAreaCallback);
-            quest = new Quest();
-            quest.create(r =>
+            Query.getQuest(user.activeGame, r =>
                 {
-                    if (r.Success)
+                    if(r.Success)
                     {
-                        quest = (Quest)r.Data;
+                        quest = (Quest)r.Data.Results[0];
                     }
                 });
         }
@@ -113,8 +111,20 @@ namespace mmuc_zombie.pages
                         }
                         else
                         {
-                            loadUsers();
+                            loadQuest();
                         }
+                    }
+                });
+        }
+
+        private void loadQuest()
+        {
+            Query.getQuest(user.activeGame, r =>
+                {
+                    if (r.Success)
+                    {
+                        quest = r.Data.Results[0];
+                        loadUsers();
                     }
                 });
         }
@@ -340,7 +350,7 @@ namespace mmuc_zombie.pages
         }
         private void doQuestStuff()
         {
-            if (questActive)
+            if (quest.active)
             {
                 survivorNearQuest();
             }
@@ -362,7 +372,7 @@ namespace mmuc_zombie.pages
                 MyLocation questLoc = StaticHelper.randomPointInRectangle(gameArea,rectangle.Locations[0], rectangle.Locations[2]);
                 quest.latitude = questLoc.latitude;
                 quest.longitude = questLoc.longitude;
-                questActive = true;
+                quest.active = true;
             }
         }
 
@@ -388,7 +398,7 @@ namespace mmuc_zombie.pages
                             game.events = userList[i].UserName + " gained " + quest.healthPlus + " health," + game.events;
                         }
                         ++roleList[i].questCount;
-                        questActive = false;
+                        quest.active = false;
                     }
                 }
             }
@@ -497,6 +507,15 @@ namespace mmuc_zombie.pages
             game.update(r =>
                 {
                     Debug.WriteLine("Updated game: " + game.Id);
+                    updateQuest();
+                });
+        }
+
+        private void updateQuest()
+        {
+            quest.update(r =>
+                {
+                    Debug.WriteLine("Updated quest: " + game.Id);
                     updateRoles();
                 });
         }
@@ -525,7 +544,7 @@ namespace mmuc_zombie.pages
             mapLayer.Children.Clear();
             int playerPosition = 0;
             int hostCount = 0;
-            if (questActive)
+            if (quest.active)
             {
                 var questPin = new Pushpin();
                 questPin.Location = new GeoCoordinate(quest.latitude, quest.longitude);
@@ -576,15 +595,15 @@ namespace mmuc_zombie.pages
             }
 
             drawInfobox();
-            if (User.getFromState().activeRole.Equals(Constants.ROLE_OBSERVER))
-                map.Center=locationList[hostCount].toGeoCoordinate();
-            else
+            if (!(role.roleType.Equals(Constants.ROLE_OBSERVER)))
                 map.Center = locationList[playerPosition].toGeoCoordinate();
             map.ZoomLevel = zoom;
             if (init)
-            {
+            {    
                 init = false;
                 Progressbar.HideProgressBar();
+                if (role.roleType.Equals(Constants.ROLE_OBSERVER))
+                    map.Center=locationList[hostCount].toGeoCoordinate();
             }
             painting = false;
         }

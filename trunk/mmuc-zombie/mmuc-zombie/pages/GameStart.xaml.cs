@@ -165,8 +165,17 @@ namespace mmuc_zombie.pages
             }
             else
             {
-                i = 0;  
-                startGame();
+                i = 0;
+                Quest quest = new Quest();
+                quest.gameId = game.Id;
+                quest.create(r =>
+                {
+                    if (r.Success)
+                    {
+                        startGame();
+                    }
+                });
+                
             }
 
 
