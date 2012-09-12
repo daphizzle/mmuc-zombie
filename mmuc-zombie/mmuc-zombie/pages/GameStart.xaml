@@ -78,7 +78,7 @@
             <Button Name="startButton" Content="Start Game" 
                     Click="startButton_Click" Margin="279,0,0,2" 
                     Visibility="Collapsed" Height="100" Grid.Row="3" />
-            <Button Content="Bots" Grid.Row="3" Height="72"    Visibility="Visible"  HorizontalAlignment="Left" Margin="176,14,0,0" Name="bots" VerticalAlignment="Top" Width="109" Click="bots_Click" />
+            <Button Content="Bots" Grid.Row="3" Height="72"    Visibility="Collapsed"  HorizontalAlignment="Left" Margin="176,14,0,0" Name="bots" VerticalAlignment="Top" Width="109" Click="bots_Click" />
         </Grid>
     </Grid>
  

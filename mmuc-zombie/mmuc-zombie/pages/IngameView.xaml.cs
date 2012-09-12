@@ -348,9 +348,19 @@ namespace mmuc_zombie.pages
                 if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
                 {
                     GeoCoordinate uLoc = locationList[i].toGeoCoordinate();
-                    if (uLoc.GetDistanceTo(qLoc) < 2500)
+                    if (uLoc.GetDistanceTo(qLoc) < 500000)
                     {
-
+                        //survivor won quest
+                        if (roleList[i].maxLife + quest.healthPlus > 10)
+                        {
+                            roleList[i].maxLife = 10;
+                        }
+                        else
+                        {
+                            roleList[i].maxLife += quest.healthPlus;
+                        }
+                        ++roleList[i].questCount;
+                        questActive = false;
                     }
                 }
             }
@@ -474,6 +484,13 @@ namespace mmuc_zombie.pages
          
             mapLayer.Children.Clear();
             int playerPosition = 0;
+            if (questActive)
+            {
+                var questPin = new Pushpin();
+                questPin.Location = new GeoCoordinate(quest.latitude, quest.longitude);
+                questPin.Template = this.Resources["questpin"] as ControlTemplate;
+                mapLayer.Children.Add(questPin);
+            }
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
@@ -549,7 +566,7 @@ namespace mmuc_zombie.pages
                     rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                     rect.Height = 30;
                     rect.Width = 25;
-                    if (i <= role.infectionCount)
+                    if (i < role.infectionCount)
                         rect.Fill = new SolidColorBrush(Colors.Red);
                     else
                         rect.Fill = new SolidColorBrush(Colors.Green);
