@@ -36,6 +36,7 @@ private  List<User> userList;
      
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+                Progressbar.ShowProgressBar();
                 String gameId = NavigationContext.QueryString["gameId"];
                 service = PhoneApplicationService.Current;
                 user = (User)service.State["user"];
