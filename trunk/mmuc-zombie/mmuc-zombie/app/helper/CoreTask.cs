@@ -91,6 +91,8 @@ namespace mmuc_zombie.app.helper
                         if (currentPage is GameStart)
                         {
                             var mypage = (GameStart)currentPage;
+                            if (mypage.playerList.ItemsSource == null)
+                                Progressbar.HideProgressBar();
                             mypage.playerList.ItemsSource = lobbyUserList;
                         }
                     });
@@ -216,109 +218,6 @@ namespace mmuc_zombie.app.helper
                 }
             }
         }
-
-        static private  T ListFindHelper<T>(DependencyObject parentElement) where T : DependencyObject
-        {
-            var count = VisualTreeHelper.GetChildrenCount(parentElement);
-            if (count == 0)
-                return null;
-
-            for (int i = 0; i < count; i++)
-            {
-                var child = VisualTreeHelper.GetChild(parentElement, i);
-
-                var listboxchild = child;
-
-                if (child != null && child is StackPanel && (child as StackPanel).Name.Equals("panelwithtwo"))
-                {
-                    if (VisualTreeHelper.GetChildrenCount(child) > 1)
-                    {
-                        listboxchild = VisualTreeHelper.GetChild(child, 1);
-                        var nm = (listboxchild as ListBox).Name;
-                        if (listboxchild is ListBox && (listboxchild as ListBox).Name.Equals("recom_list"))
-                        {
-                            (listboxchild as ListBox).ItemsSource = lobbyUserList;
-                            return (T)listboxchild;
-                        }
-                    }
-                }
-                else
-                {
-
-                    var result = ListFindHelper<T>(child);
-                }
-            }
-            return null;
-        }
-
-
-
-
-
-
-
-
-
-
-
-        [Obsolete("new way implemented")]
-        public void check_pendingGameStartedCallback(Response<ResultsResponse<PendingGames>> r)
-        {
-             if (r.Success)
-             {   
-                var pendingGames = (List<PendingGames>)r.Data.Results;
-                if (pendingGames.Count > 0)
-                {
-                    user.status = 2;
-                    user.activeGame=pendingGames[0].gameId;
-                    user.update();
-                    Debug.WriteLine("Status 2-------" + pendingGames[0].gameId);
-                    //open Lobbyview , sollte nur ein game sein.
-                }
-                else check_noPendingGames(check_noPendingGamesCallBack);
-             }
-        }
-
-        [Obsolete("new way implemented")]
-        private void  check_noPendingGamesCallBack(Response<ResultsResponse<PendingGames>> r)
-        {
-             if (r.Success)
-             {
-                 if (r.Data.Results.Count == 0)
-                 {
-                     user.status = 0;
-                     user.update();
-                     //switching to idle mode
-                 }
-             }
-        }
-
-        [Obsolete("new way implemented")]
-        private void check_noPendingGames(Action<Response<ResultsResponse<PendingGames>>> callback)
-        {
-            string userId = user.Id;
-            var parse = new Driver();
-            parse.Objects.Query<PendingGames>().Where(c => c.Id == user.Id).Execute(callback);
-        }
-        [Obsolete("new way implemented")]
-        private void pendingMode()
-        {
-            //default status leaved der user aus einer lobby/game, oder ein game endet oder wird abgebrochen, switchen alle user back in den mode
-            //ein user wird in die pending liste geadded in dem  moment wo er ein game joined. Falls ein game für einen user beendet ist wird er wieder gelöscht. falls er a
-            check_pendingGameStarted(check_pendingGameStartedCallback);
-        }
-       [Obsolete("new way implemented")]
-        private void check_pendingGameStarted(Action<Response<ResultsResponse<PendingGames>>> callback)
-        {
-            string userId = user.Id;
-            var parse = new Driver();
-            DateTime date = DateTime.Now;
-            string dateString = "" + date.Year + date.DayOfYear + date.Hour + date.Minute;
-            int dateInt = int.Parse(dateString);
-            parse.Objects.Query<PendingGames>().Where(c => c.Id == user.Id && dateInt >= c.startTime).Execute(callback);
-
-        }
-
        
     }
  }

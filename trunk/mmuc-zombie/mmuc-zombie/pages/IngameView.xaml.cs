@@ -42,6 +42,7 @@ namespace mmuc_zombie.pages
         TextBlock zombieAmount = new TextBlock();
         TextBlock killCount = new TextBlock();
         TextBlock questCount = new TextBlock();
+        private bool init=true;
    
         public IngameView()
         {
@@ -66,7 +67,11 @@ namespace mmuc_zombie.pages
             this.role = role;
             myLocation = myLoc;
         }
-
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Progressbar.ShowProgressBar();
+            PositionRetriever.startPositionRetrieving(1);
+        }
         public void drawGameBorder()
         {
             Query.getGame(user.activeGame,getGameCallback);
@@ -466,28 +471,20 @@ namespace mmuc_zombie.pages
         private void drawPins()
         {
 
-            //Debug.WriteLine("Start Drawing Users");
-            //debug.Text = "";
+         
             mapLayer.Children.Clear();
             int playerPosition = 0;
             for (int i = 0; i < userList.Count; i++)
             {
                 var p = new Pushpin();
-                //Debug.WriteLine("-----------------------------------");
-                //Debug.WriteLine("User" + userList[i].Id);
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
-                //debug.Text += "User: " + userList[i].Id + "\n Location (" + locationList[i].latitude + "," + locationList[i].longitude + ")\n";
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
-                //Debug.WriteLine("location "+locationList[i].Id); 
                 if (roleList[i].Id.Equals(user.activeRole))
                         role=roleList[i];
-           
                 if (roleList[i].roleType.Equals(Constants.ROLE_ZOMBIE))
                 {
-                  //  p.Style = (Style)(Application.Current.Resources["PushpinStyle2"]);
-                 //   Debug.WriteLine("Zombiestyle");
                     if (user.Id.Equals(userList[i].Id))
                     {
                         playerPosition = i;
@@ -517,6 +514,11 @@ namespace mmuc_zombie.pages
             drawInfobox();
             map.Center=locationList[playerPosition].toGeoCoordinate();
             map.ZoomLevel = 14;
+            if (init)
+            {
+                init = false;
+                Progressbar.HideProgressBar();
+            }
             painting = false;
         }
 
@@ -632,11 +634,7 @@ namespace mmuc_zombie.pages
 
         }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            PositionRetriever.startPositionRetrieving(1);
-        }
-
+    
         private void PhoneApplicationPage_BackKeyPress(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult mb = MessageBox.Show("Do you want to leave the game?", "Alert", MessageBoxButton.OKCancel);

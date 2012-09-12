@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Maps;
 using mmuc_zombie.app.helper;
+using Microsoft.Phone.Shell;
 
 namespace mmuc_zombie.pages
 {
@@ -54,7 +55,9 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            Progressbar.ShowProgressBar();
+            PhoneApplicationService service = PhoneApplicationService.Current;       
+            if (service.State["user"]=="-1")
+                Progressbar.ShowProgressBar();
         }
 
 
