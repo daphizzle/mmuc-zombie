@@ -43,10 +43,15 @@ namespace mmuc_zombie.components
             role.create(r => {
                 if (r.Success)
                 {
-                    user.activeRole = r.Data.Id;                    
-                    user.update(r1=>{
-                        user.saveToState();
-                        CoreTask.start();
+
+                    user.activeRole = r.Data.Id;
+                    user.update(r1 =>
+                    {
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                             user.saveToState();
+                            CoreTask.start();
+                         });
                     });
                 }
             });

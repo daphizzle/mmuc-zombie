@@ -502,7 +502,8 @@ namespace mmuc_zombie.pages
                 mapLayer.Children.Add(questPin);
             }
             for (int i = 0; i < userList.Count; i++)
-            {
+            {   
+
                 var p = new Pushpin();
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
@@ -539,7 +540,8 @@ namespace mmuc_zombie.pages
                         p.Template = this.Resources["survivorpin"] as ControlTemplate;
                 }
             
-                mapLayer.Children.Add(p);
+                if (!roleList[i].roleType.Equals(Constants.ROLE_OBSERVER))
+                    mapLayer.Children.Add(p);
             }
 
             drawInfobox();
