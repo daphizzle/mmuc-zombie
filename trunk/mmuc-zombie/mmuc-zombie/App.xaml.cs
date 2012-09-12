@@ -143,6 +143,8 @@ namespace mmuc_zombie
         //user retrieval
         private void Application_Launched_Activated(object sender)
         {
+            Progressbar.InitGLobalProgressBar();
+           
             ParseConfiguration.Configure("w8I4cwfDTXeMzvPPSzkAiinbnkMWijhZkZ7Jnxwd", "BbL0rdiCCzC2yE0fdtm7da6nKEXdBt2EXDTHEvVT");
             if (!store.FileExists("userId.txt"))
             {

@@ -182,7 +182,7 @@ namespace mmuc_zombie.app.helper
 
         internal static void randomWalk(MyLocation myLocation)
         {
-            var list=drawCircle(myLocation.toGeoCoordinate(), 10);
+            var list=drawCircle(myLocation.toGeoCoordinate(), 100);
             var val=new Random().Next(0,360);
             myLocation.latitude = list[val].Latitude;
             myLocation.longitude = list[val].Longitude;
