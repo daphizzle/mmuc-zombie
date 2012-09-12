@@ -33,6 +33,10 @@ namespace mmuc_zombie
                 writer.Write(user.Id);
                 Debug.WriteLine("Writing user id into Isolated Store"+user.Id);
                 service.State["user"] = user;
+                Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    Progressbar.HideProgressBar();
+                });
                 //User.set(user);                
                 PositionRetriever.startPositionRetrieving(100);
             }

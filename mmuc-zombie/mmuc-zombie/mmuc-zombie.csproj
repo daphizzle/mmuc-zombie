@@ -58,6 +58,9 @@
       <HintPath>..\packages\SilverlightToolkitWP.4.2012.6.25\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Phone.Controls">
+      <HintPath>..\packages\Phone.Controls\Bin\Release\Phone.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="System.Device" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -83,6 +86,7 @@
     <Compile Include="app\helper\JsonStringSerializer.cs" />
     <Compile Include="app\helper\Picture.cs" />
     <Compile Include="app\helper\PositionRetriever.cs" />
+    <Compile Include="app\helper\Progressbar.cs" />
     <Compile Include="app\helper\StaticHelper.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
@@ -388,7 +392,9 @@
       <Name>Parse</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

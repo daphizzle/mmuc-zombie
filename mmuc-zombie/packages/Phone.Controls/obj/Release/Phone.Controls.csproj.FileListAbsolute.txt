@@ -1,0 +1,6 @@
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\Bin\Release\Phone.Controls.dll
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\Bin\Release\Phone.Controls.pdb
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\obj\Release\ResolveAssemblyReference.cache
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\obj\Release\Phone.Controls.g.resources
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\obj\Release\Phone.Controls.dll
+Z:\dev\wp7_seminar\copyme\CopyMe\Phone.Controls\obj\Release\Phone.Controls.pdb

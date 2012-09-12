@@ -283,7 +283,7 @@ namespace mmuc_zombie.pages
                 else
                 {
                     Debug.WriteLine("Starting infection");
-                 //   botsWalk();
+                    botsWalk();
                     doQuestStuff();
                     infectSurvivors();
                     if (hostDied)
@@ -453,7 +453,7 @@ namespace mmuc_zombie.pages
             {
                 double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
                 // for testing is true
-                bool near = true;
+                bool near = distance<20;
                 if(roleList[j].roleType.Equals(Constants.ROLE_ZOMBIE)&&near)
                 {
                     ++zombies;

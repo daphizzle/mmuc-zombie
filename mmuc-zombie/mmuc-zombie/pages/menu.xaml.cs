@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Controls.Maps;
+using mmuc_zombie.app.helper;
 
 namespace mmuc_zombie.pages
 {
@@ -53,7 +54,7 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
-            //Games.findPendingGames(this);
+            Progressbar.ShowProgressBar();
         }
 
 
