@@ -17,6 +17,7 @@ using Parse;
 using mmuc_zombie.app.model;
 using System.Device.Location;
 using mmuc_zombie.app.helper;
+using System.Windows.Media.Imaging;
 
 namespace mmuc_zombie.pages
 {
@@ -88,14 +89,25 @@ namespace mmuc_zombie.pages
                 
                 foreach (Friend friend in friends)
                 {
-                     tmpUI = new mmuc_zombie.components.inviteFriends();
-                     tmpUI.nameTextBlock.Text = friend.friend;
-                     tmpUI.createInvite(friend.friend);
-                     tmpUI.invites = invites;
-                     userStackPanel.Children.Add(tmpUI);
+                     Query.getUser(friend.friend,r=>
+                     {
+                         if (r.Success)
+                         {
+                             Deployment.Current.Dispatcher.BeginInvoke(() =>
+                             {
+                                 User u = r.Data;
+                                 tmpUI = new mmuc_zombie.components.inviteFriends();
+                                 tmpUI.nameTextBlock.Text = u.UserName;
+                                 tmpUI.createInvite(friend.friend);
+                                 tmpUI.invites = invites;
+                                 tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(u.Facebook) ? u.getPicture() : u.Facebook, UriKind.Absolute));
+                                 userStackPanel.Children.Add(tmpUI);
+                             });
+                         }
+                         });
             }
 
-            return userStackPanel.Children.Count > 0;
+            return friends.Count>0;
         }
      
         

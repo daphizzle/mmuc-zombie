@@ -125,7 +125,7 @@
     <Compile Include="components\friendsView.xaml.cs">
       <DependentUpon>friendsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="components\playerView.xaml.cs">
+    <Compile Include="ext\img\playerView.xaml.cs">
       <DependentUpon>playerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="components\hallOfFamePlayer.xaml.cs">
@@ -146,9 +146,6 @@
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="pages\MapTest.xaml.cs">
-      <DependentUpon>MapTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
@@ -236,7 +233,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="components\playerView.xaml">
+    <Page Include="ext\img\playerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,10 +258,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MainPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="pages\MapTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -362,6 +355,9 @@
     <Resource Include="ext\img\zombie6.jpg" />
     <Resource Include="ext\img\facebook.png" />
     <Resource Include="ext\img\quest.png" />
+    <Resource Include="ext\img\del.jpg" />
+    <Resource Include="ext\img\del3.jpg" />
+    <Resource Include="ext\img\del2.jpg" />
     <Content Include="ext\img\_facebook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
