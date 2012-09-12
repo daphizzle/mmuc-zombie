@@ -34,15 +34,17 @@ namespace mmuc_zombie.pages
         private int i;
         bool questActive = false;
         Quest quest;
-        bool hostDied = false;
-        Random rand = new Random();
         private List<MyLocation> gameArea;
         Rectangle rect = new Rectangle();
         TextBlock playerAmount = new TextBlock();
         TextBlock zombieAmount = new TextBlock();
         TextBlock killCount = new TextBlock();
         TextBlock questCount = new TextBlock();
+        TextBlock eventMsg = new TextBlock();
         private bool init=true;
+        int survivors = 0;
+        int range = 0;
+        int zoom = 0;
    
         public IngameView()
         {
@@ -54,6 +56,7 @@ namespace mmuc_zombie.pages
             LayoutRoot.Children.Add(zombieAmount);
             LayoutRoot.Children.Add(killCount);
             LayoutRoot.Children.Add(questCount);
+            LayoutRoot.Children.Add(eventMsg);
         }
 
         //constructor used for testing only
@@ -281,7 +284,8 @@ namespace mmuc_zombie.pages
           
             if (user.Id == game.hostId)
             {
-                if (noSurvivorsLeft())
+                survivors = survivorsLeft();
+                if (survivors == 0)
                 {
                     game.state = 2;
                     game.update(r =>
@@ -300,14 +304,7 @@ namespace mmuc_zombie.pages
                     botsWalk();
                     doQuestStuff();
                     infectSurvivors();
-                    if (hostDied)
-                    {
-                        updateGame();
-                    }
-                    else
-                    {
-                        updateRoles();
-                    }
+                    updateGame();
                 }
             }
             else
@@ -318,8 +315,28 @@ namespace mmuc_zombie.pages
         {
             for (int i = 0; i < userList.Count; i++)
                 if (userList[i].bot)
-                    StaticHelper.randomWalk(locationList[i]);
-
+                {
+                    if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
+                        StaticHelper.randomWalk(gameArea, locationList[i]);
+                    else
+                    {
+                        MyLocation nextSurvivor = new MyLocation();
+                        double distance = double.MaxValue;
+                        for(int j = 0; j<userList.Count;j++)
+                        {
+                            if(roleList[j].roleType==Constants.ROLE_SURVIVOR)
+                            {
+                                double newDistance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
+                                if(newDistance<distance)
+                                {
+                                    distance = newDistance;
+                                    nextSurvivor = locationList[j];
+                                }
+                            }
+                        }
+                        StaticHelper.zombieWalk(gameArea, locationList[i],nextSurvivor);
+                    }
+                }
         }
         private void doQuestStuff()
         {
@@ -329,11 +346,11 @@ namespace mmuc_zombie.pages
             }
             else
             {
-                if (rand.NextDouble() < 0.4)
+                if (Constants.random.NextDouble() < 0.4)
                 {
                     quest.healthPlus = 1;
                 }
-                else if (rand.NextDouble() < 0.8)
+                else if (Constants.random.NextDouble() < 0.8)
                 {
                     quest.healthPlus = 2;
                 }
@@ -342,7 +359,7 @@ namespace mmuc_zombie.pages
                     quest.healthPlus = 3;
                 }
                 MyPolygon rectangle = StaticHelper.rectangleInsidePolygon(gameArea);
-                MyLocation questLoc = StaticHelper.randomPointInRectangle(rectangle.Locations[0], rectangle.Locations[2]);
+                MyLocation questLoc = StaticHelper.randomPointInRectangle(gameArea,rectangle.Locations[0], rectangle.Locations[2]);
                 quest.latitude = questLoc.latitude;
                 quest.longitude = questLoc.longitude;
                 questActive = true;
@@ -357,16 +374,18 @@ namespace mmuc_zombie.pages
                 if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
                 {
                     GeoCoordinate uLoc = locationList[i].toGeoCoordinate();
-                    if (uLoc.GetDistanceTo(qLoc) < 500000)
+                    if (uLoc.GetDistanceTo(qLoc) < range)
                     {
                         //survivor won quest
                         if (roleList[i].maxLife + quest.healthPlus > 10)
                         {
                             roleList[i].maxLife = 10;
+                            game.events = userList[i].UserName + "'s health is maxed out,"+game.events;
                         }
                         else
                         {
                             roleList[i].maxLife += quest.healthPlus;
+                            game.events = userList[i].UserName + " gained " + quest.healthPlus + " health," + game.events;
                         }
                         ++roleList[i].questCount;
                         questActive = false;
@@ -378,13 +397,13 @@ namespace mmuc_zombie.pages
         
         private void infectSurvivors()
         {
-            hostDied = false;
             //if a survivor is killed, this list will be filled with the murderers
             List<Roles> killer = new List<Roles>();
             for (int i = 0; i < locationList.Count; i++)
             {
                 if (roleList[i].roleType.Equals(Constants.ROLE_SURVIVOR))
                 {
+                    roleList[i].rank = survivors;
                     //clear killer list 
                     killer.Clear();
                     //check how many zombies are near this survivor. this method also fills the killer list
@@ -412,7 +431,6 @@ namespace mmuc_zombie.pages
                             if (userList[i].Id == game.hostId)
                             {
                                 //current host died, we need a new one
-                                hostDied = true;
                                 for (int j = 0; j < userList.Count;j++ )
                                 {
                                     if (userList[j].bot || userList[j].Id == game.hostId || roleList[j].roleType == "Observer")
@@ -422,6 +440,7 @@ namespace mmuc_zombie.pages
                                     game.hostId = userList[j].Id;
                                 }
                             }
+                            game.events = userList[i].UserName + " has died," + game.events;
                         }
                         else
                         {
@@ -448,17 +467,17 @@ namespace mmuc_zombie.pages
             this.i = 0;
         }
 
-        private bool noSurvivorsLeft()
+        private int survivorsLeft()
         {
-            bool noSurvivors = true;
+            int survivors = 0;
             foreach(Roles r in roleList)
             {
                 if (r.roleType == Constants.ROLE_SURVIVOR)
                 {
-                    noSurvivors = false;
+                    ++survivors;
                 }
             }
-            return noSurvivors;
+            return survivors;
         }
 
         private void updateGame()
@@ -477,7 +496,7 @@ namespace mmuc_zombie.pages
             {
                 double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
                 // for testing is true
-                bool near = distance<20;
+                bool near = distance<range;
                 if(roleList[j].roleType.Equals(Constants.ROLE_ZOMBIE)&&near)
                 {
                     ++zombies;
@@ -549,7 +568,7 @@ namespace mmuc_zombie.pages
                 map.Center=locationList[hostCount].toGeoCoordinate();
             else
                 map.Center = locationList[playerPosition].toGeoCoordinate();
-            map.ZoomLevel = 14;
+            map.ZoomLevel = zoom;
             if (init)
             {
                 init = false;
@@ -641,6 +660,19 @@ namespace mmuc_zombie.pages
                 questCount.SetValue(Grid.RowProperty, 1);
                 
             }
+            eventMsg.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            eventMsg.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
+            eventMsg.Height = 150;
+            eventMsg.Width = 250;
+            eventMsg.Margin = new Thickness(0, marginY, 0, 0);
+            string evMsg = "";
+            string[] msgArray = game.events.Split(new Char [] {','});
+            for (int i = 0; i < 2 && i < msgArray.Length;i++)
+            {
+                evMsg += msgArray[i]+"\n";
+            }
+            eventMsg.Text = evMsg;
+            eventMsg.SetValue(Grid.RowProperty, 1);
 
         }
         
@@ -651,6 +683,12 @@ namespace mmuc_zombie.pages
             if (r.Success)
             {
                 game = r.Data;
+                switch (game.size)
+                {
+                    case 0: range = Constants.SMALL_GAME_RANGE; zoom = Constants.SMALL_GAME_ZOOMFACTOR; break;
+                    case 1: range = Constants.MEDIUM_GAME_RANGE; zoom = Constants.MEDIUM_GAME_ZOOMFACTOR;break;
+                    case 2: range = Constants.BIG_GAME_RANGE; zoom = Constants.BIG_GAME_ZOOMFACTOR; break;
+                }
             }
         }
 

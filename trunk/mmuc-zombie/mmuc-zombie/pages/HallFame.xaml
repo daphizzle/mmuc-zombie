@@ -89,7 +89,7 @@
             		<TextBlock FontSize="54" Text="survivors" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
                 <Grid>
-                    <ListBox Grid.Row="0" x:Name="listBox">
+                    <ListBox Grid.Row="0" x:Name="survivorListBox">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -121,8 +121,33 @@
 				<controls:PivotItem.Header>
             		<TextBlock FontSize="54" Text="zombies" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
-				<Grid/>
-			</controls:PivotItem>
+                <Grid>
+                    <ListBox Grid.Row="0" x:Name="zombieListBox">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <toolkit:ExpanderView Header="{Binding}"   Expander="{Binding}"
+                                    ItemsSource="{Binding Zombies}"
+                                    NonExpandableHeader="{Binding}"
+                                    IsNonExpandable="{Binding HasNoOptions}" 
+                                    IsExpanded="{Binding IsExpanded, Mode=TwoWay}"
+                                    HeaderTemplate="{StaticResource CustomHeaderTemplate}" ExpanderTemplate="{StaticResource CustomExpanderTemplate}"
+                                    ItemTemplate="{StaticResource CustomItemTemplate}"
+                                    NonExpandableHeaderTemplate="{StaticResource CustomNonExpandableHeaderTemplate}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
 		</controls:Pivot>
 	</Grid>
 </phone:PhoneApplicationPage>

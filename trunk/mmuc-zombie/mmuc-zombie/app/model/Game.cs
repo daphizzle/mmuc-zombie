@@ -32,8 +32,13 @@ public class Game : MyParseObject
     public string description { get; set; }
     public string ownerId { get; set; }
     public string hostId { get; set; }
+    public string events { get; set; }
+    //small = 0, medium = 1, big = 2
+    public int size { get; set; }
 
-    public Game() { }
+    public Game() {
+        events = "";
+    }
     public void update(Action<Response<DateTime>> callback)
     {
         var parse = new Driver();
@@ -48,6 +53,7 @@ public class Game : MyParseObject
                Set(u => u.description, description).
                Set(u => u.ownerId, ownerId).
                Set(u => u.hostId, hostId).
+               Set(u => u.events, events).
                Execute(callback);
     }
 

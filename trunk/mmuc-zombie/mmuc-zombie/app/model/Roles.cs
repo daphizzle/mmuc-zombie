@@ -17,8 +17,6 @@ public class Roles : MyParseObject
     {
         public string userId { get; set; } 
         public string gameId { get; set; }
-        //public DateTime? endTime { get; set; }
-        //public DateTime? startTime { get; set; }
         public int rank { get; set; }
         public int infectionCount { get; set; }
         public string roleType { get; set; }
@@ -34,14 +32,13 @@ public class Roles : MyParseObject
             parse.Objects.Update<Roles>(this.Id).
                 Set(u => u.userId, userId).
                 Set(u => u.gameId, gameId).
-                //Set(u => u.endTime, endTime).
-                //Set(u => u.startTime, startTime).
                 Set(u => u.infectionCount, infectionCount).
                 Set(u => u.roleType, roleType).
                 Set(u => u.alive, alive).
+                Set(u => u.rank, rank).
                 Set(u => u.questCount,questCount).
                 Set(u => u.killCount,killCount).
-                Set(u=>u.maxLife,maxLife).
+                Set(u => u.maxLife,maxLife).
                 Execute(callback);
 
         }

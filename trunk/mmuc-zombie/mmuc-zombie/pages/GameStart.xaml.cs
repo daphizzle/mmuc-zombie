@@ -106,7 +106,7 @@ namespace mmuc_zombie.pages
                 role.userId = userList[i].Id;
                 //role.startTime = DateTime.Now;
                 role.alive = true;
-                if (userList[i].bot)
+                if (userList[i].bot && ifZombie(i))
                 {
                     role.roleType = "Zombie";
 
@@ -223,7 +223,7 @@ namespace mmuc_zombie.pages
                 {
                     var list = (List<MyLocation>)r.Data.Results;
                     var polygon = StaticHelper.rectangleInsidePolygon(list);
-                    MyLocation l = StaticHelper.randomPointInRectangle(polygon.Locations[0], polygon.Locations[2]);
+                    MyLocation l = StaticHelper.randomPointInRectangle(list,polygon.Locations[0], polygon.Locations[2]);
                     var parse = new Driver();
                
                 parse.Objects.Save(l,r2=>{
