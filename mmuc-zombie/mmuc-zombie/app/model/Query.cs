@@ -11,13 +11,15 @@ using System.Windows.Shapes;
 using Parse;
 using mmuc_zombie.app.model;
 using System.Linq;
+using mmuc_zombie.app.helper;
 
 public class Query
 {
     static public void getUsersByGame(string gameId, Action<Response<ResultsResponse<User>>> callback)
     {
         var parse = new Driver();
-        parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
+        String role=Constants.ROLE_OBSERVER;
+        parse.Objects.Query<User>().Where(c => c.activeGame == gameId && c.activeRole != role).Execute(callback);
 
     }
     static public void getBotsByGame(string gameId, Action<Response<ResultsResponse<User>>> callback)

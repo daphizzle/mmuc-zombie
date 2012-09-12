@@ -222,16 +222,25 @@ namespace mmuc_zombie.pages
         {
             if (i < locationList.Count)
             {
-                locationList[i].update(r =>
+                if (userList[i].bot)
                 {
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    locationList[i].update(r =>
                     {
-                        Debug.WriteLine("Updated location " + locationList[i].Id);
-                        i++;
-                        updateLocations();
-                    });
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            Debug.WriteLine("Updated location " + locationList[i].Id);
+                            i++;
+                            updateLocations();
+                        });
 
-                });
+                    });
+                }
+                else
+                {
+                    i++;
+                    updateLocations();
+                }
+
             }
             else
             {
@@ -484,6 +493,7 @@ namespace mmuc_zombie.pages
          
             mapLayer.Children.Clear();
             int playerPosition = 0;
+            int hostCount = 0;
             if (questActive)
             {
                 var questPin = new Pushpin();
@@ -496,6 +506,9 @@ namespace mmuc_zombie.pages
                 var p = new Pushpin();
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
+                
+                if (user.Id.Equals(game.hostId))
+                    hostCount = i;
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
                 if (roleList[i].Id.Equals(user.activeRole))
@@ -516,6 +529,7 @@ namespace mmuc_zombie.pages
                 {
                  //   p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                     Debug.WriteLine("Survivorstyle");
+                   
                     if (user.Id.Equals(userList[i].Id))
                     {
                         playerPosition = i;
@@ -529,7 +543,10 @@ namespace mmuc_zombie.pages
             }
 
             drawInfobox();
-            map.Center=locationList[playerPosition].toGeoCoordinate();
+            if (User.getFromState().activeRole.Equals(Constants.ROLE_OBSERVER))
+                map.Center=locationList[hostCount].toGeoCoordinate();
+            else
+                map.Center = locationList[playerPosition].toGeoCoordinate();
             map.ZoomLevel = 14;
             if (init)
             {

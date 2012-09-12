@@ -35,20 +35,18 @@ namespace mmuc_zombie.components
             var parse = new Driver();
             Roles role = new Roles();
             role.roleType = Constants.ROLE_OBSERVER;
-            
+            role.alive = true;
             User user = User.get();
-            user.status = 1;
+            user.status = 2;
             user.activeGame = gameID;
 
             role.create(r => {
                 if (r.Success)
                 {
                     user.activeRole = r.Data.Id;                    
-                    user.updateCurrentUser();
-
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    {(
-                           Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
+                    user.update(r1=>{
+                        user.saveToState();
+                        CoreTask.start();
                     });
                 }
             });
