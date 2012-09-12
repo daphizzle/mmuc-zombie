@@ -26,8 +26,8 @@ public class Game : MyParseObject
     public String name { get; set; }
     public int radius { get; set; }
     public int zombiesCount { get; set; }
-    //public DateTime? startTime { get; set; }
-    //public DateTime? endTime { get; set; }
+    // Format: DD.MM.YY
+    public string startDate { get; set; }
     public string locationId { get; set; }
     public string description { get; set; }
     public string ownerId { get; set; }
@@ -44,53 +44,14 @@ public class Game : MyParseObject
                Set(u => u.name, name).
                Set(u => u.radius, radius).
                Set(u => u.zombiesCount, zombiesCount).
-               //Set(u => u.startTime, startTime).
-               //Set(u => u.endTime, endTime).
+               Set(u => u.startDate, startDate).
                Set(u => u.description, description).
                Set(u => u.ownerId, ownerId).
                Set(u => u.hostId, hostId).
                Execute(callback);
     }
 
-    public new void update()
-    {
-        var parse = new Driver();
-        parse.Objects.Update<Game>(this.Id).
-            Set(u => u.state, state).
-            Set(u => u.players, players).
-            Set(u => u.privateGame, privateGame).
-            Set(u => u.name, name).
-            Set(u => u.radius, radius).
-            Set(u => u.zombiesCount, zombiesCount).
-            //Set(u => u.startTime, startTime).
-            //Set(u => u.endTime, endTime).
-            Set(u => u.locationId, locationId).
-            Set(u => u.description, description).
-            Set(u => u.ownerId, ownerId).
-            Set(u => u.hostId, hostId).
-            Execute(r =>
-            {
-                if (r.Success)
-                {
-                    Debug.WriteLine("Game : " + Id + " successfull updated");
-                }
-                //else
-                //{
-                //    Debug.WriteLine("User : " + Id + " error while updating. " + r.Error.Message);
-                //}
 
-            });
-
-    }
-
-    public Game(string name, DateTime start, DateTime end, string ownerId, string description) 
-    {
-        this.name = name;
-        //this.startTime = startTime;
-        //this.endTime = endTime;
-        this.ownerId = ownerId;
-        this.description = description;
-    }
 
     static public void findPendingGames(Action<Response<ResultsResponse<Game>>> callback)
     {
@@ -160,23 +121,6 @@ public class Game : MyParseObject
     }
 
 
-    static public void findById(string gameId, MyListener listener)
-    {
-        var parse = new Driver();
-        parse.Objects.Get<Game>(gameId,(r=>
-            {
-                if(r.Success)
-                {
-                    var game = r.Data;
-                    List<MyParseObject> l = new List<MyParseObject>();
-                    l.Add(game);
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            listener.onDataChange(l);
-                        });
-                }
-            }));
-    }
 
     static public void findMyGames(Action<Response<ResultsResponse<Game>>> callback)
     {
@@ -188,6 +132,12 @@ public class Game : MyParseObject
         parse.Objects.Query<Game>().Where(c => c.ownerId == userId).Execute(callback);
     }
 
+
+    static public void findRunningGames(Action<Response<ResultsResponse<Game>>> callback)
+    {
+        var parse = new Driver();
+        parse.Objects.Query<Game>().Where(c => c.state == (int)Constants.GAMEMODES.ACTIVE).Execute(callback);
+    }
 
     /*
      * Obsolete methods -- Be warned -- Do not use these
@@ -273,10 +223,5 @@ public class Game : MyParseObject
             });
     }
 
-    static public void findRunningGames(Action<Response<ResultsResponse<Game>>> callback)
-    {
-        var parse = new Driver();
-        parse.Objects.Query<Game>().Where(c => c.state == (int)Constants.GAMEMODES.ACTIVE).Execute(callback);
-    }
 
 }

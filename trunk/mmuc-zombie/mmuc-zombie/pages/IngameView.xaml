@@ -35,7 +35,15 @@
                 <Image Source="/mmuc-zombie;component/ext/img/survivor1.jpg" Stretch="Fill"/>
             </Grid>
         </ControlTemplate>
-
+        <ControlTemplate x:Key="questpin"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/quest.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
         <ControlTemplate x:Key="playersurvivorpin" TargetType="m:Pushpin">
   <Grid x:Name="ContentGrid" Width="36" Height="36" >
             <StackPanel Orientation="Vertical" >

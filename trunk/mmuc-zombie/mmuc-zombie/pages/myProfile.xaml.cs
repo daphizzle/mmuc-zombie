@@ -261,10 +261,10 @@ namespace mmuc_zombie.pages
         {
             List<Game> games = new List<Game>(4);
 
-            games.Add(new Game("Game 1",DateTime.Now,DateTime.Now,"1","..."));
-            games.Add(new Game("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
-            games.Add(new Game("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
-            games.Add(new Game("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
+            //games.Add(new Game("Game 1",DateTime.Now,DateTime.Now,"1","..."));
+            //games.Add(new Game("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
+            //games.Add(new Game("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
+            //games.Add(new Game("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
 
             mmuc_zombie.components.gamePlayed tmpUI;
             foreach (Game game in games)

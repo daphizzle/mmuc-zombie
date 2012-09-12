@@ -98,7 +98,7 @@ namespace mmuc_zombie.app.helper
                     });
             }
         }
-        static private void reload_LobbyUserList(Action<Response<ResultsResponse<User>>> callback)
+        static public void reload_LobbyUserList(Action<Response<ResultsResponse<User>>> callback)
         {
             string gameId = user.activeGame;
             var parse = new Driver();

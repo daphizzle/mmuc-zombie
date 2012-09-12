@@ -26,7 +26,7 @@ namespace mmuc_zombie.pages
         PhoneApplicationService service;
         private int botCounter;
         private int i;
-private  List<User> userList;
+        private  List<User> userList;
 
         public GameStart()
         {
@@ -40,7 +40,7 @@ private  List<User> userList;
                 String gameId = NavigationContext.QueryString["gameId"];
                 service = PhoneApplicationService.Current;
                 user = (User)service.State["user"];
-                getGame(gameId,getGameCallback);
+                getGame(gameId, getGameCallback);
         }
 
         private void getGame(String gameId,Action<Response<Game>> callback)
@@ -106,7 +106,7 @@ private  List<User> userList;
                 role.userId = userList[i].Id;
                 //role.startTime = DateTime.Now;
                 role.alive = true;
-                if (ifZombie(i))
+                if (userList[i].bot)
                 {
                     role.roleType = "Zombie";
 
