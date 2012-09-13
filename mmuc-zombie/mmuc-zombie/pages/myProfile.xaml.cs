@@ -19,6 +19,7 @@ using Microsoft.Phone.Info;
 using mmuc_zombie.app.model;
 using Microsoft.Phone.Tasks;
 using Microsoft.Phone;
+using System.Diagnostics;
 
 namespace mmuc_zombie.pages
 {
@@ -124,8 +125,8 @@ namespace mmuc_zombie.pages
             catch (Exception eX)
             {
                 m_CurFacebookUser = null;
-                Console.Out.WriteLine(eX.Message);
-                Console.Out.WriteLine("Error parsing user data");
+                Debug.WriteLine(eX.Message);
+                Debug.WriteLine("Error parsing user data");
             }
             validateUI();
         }
@@ -147,7 +148,7 @@ namespace mmuc_zombie.pages
 
             validateUI();
             loadUsers();
-            loadHistory();
+            //loadHistory();
         }
 
         private void validateUI() 
@@ -186,8 +187,8 @@ namespace mmuc_zombie.pages
             }
             catch (Exception eX)
             {
-                Console.WriteLine(eX.Message);
-                Console.WriteLine("Error start load friends");
+                Debug.WriteLine(eX.Message);
+                Debug.WriteLine("Error start load fb friends");
             }
         }
 
@@ -195,8 +196,8 @@ namespace mmuc_zombie.pages
         {
             if (e.Error != null)
             {
-                Console.WriteLine(e.Error.Message);
-                Console.WriteLine("Error loading friends");
+                Debug.WriteLine(e.Error.Message);
+                Debug.WriteLine("Error loading fb friends");
                 return;
             }
             try
@@ -210,6 +211,7 @@ namespace mmuc_zombie.pages
                 foreach (FBUser tmp in friends.Friends)
                 {
                     tmpUI = new mmuc_zombie.components.facebookFriendView();
+                    tmpUI.fbUserId = tmp.ID;
                     tmpUI.name.Text = tmp.Name;
                     tmpUI.image.Source = new BitmapImage(new Uri(tmp.PicLink, UriKind.Absolute));
                     tmpUI.Margin = new Thickness(0, 5, 0, 5);
@@ -263,29 +265,7 @@ namespace mmuc_zombie.pages
             }
         }
 
-        private void loadHistory()
-        {
-            List<Game> games = new List<Game>(4);
-
-            //games.Add(new Game("Game 1",DateTime.Now,DateTime.Now,"1","..."));
-            //games.Add(new Game("Game 2", DateTime.Now, DateTime.Now, "1", "..."));
-            //games.Add(new Game("Game 3", DateTime.Now, DateTime.Now, "2", "..."));
-            //games.Add(new Game("Game 4", DateTime.Now, DateTime.Now, "3", "..."));
-
-            mmuc_zombie.components.gamePlayed tmpUI;
-            foreach (Game game in games)
-            {
-                tmpUI = new mmuc_zombie.components.gamePlayed();
-                tmpUI.gameName.Text = game.name;
-                tmpUI.gameId = game.Id;
-                //tmpUI.startTime.Text = game.startTime.ToString();
-                //tmpUI.endTime.Text = game.endTime.ToString();
-                //tmpUI.owner.Text = User.find(game.ownerId, null);
-                tmpUI.owner.Text = game.ownerId;
-                tmpUI.Margin = new Thickness(0, 5, 0, 5);
-                historyStack.Children.Add(tmpUI);
-            }
-        }
+        
 
         private void appbar_save_Click(object sender, EventArgs e)
         {
@@ -332,28 +312,21 @@ namespace mmuc_zombie.pages
             if (pr.TaskResult == TaskResult.OK)
             {
                 byte[] imgLocal;
-                //avatar.DataContext = e.ChosenPhoto;
-                //MessageBox.Show(e.ChosenPhoto);
-                //MediaLibrary medialibrary = new MediaLibrary();
-                //medialibrary.SavePicture("givenameofimage", e.ChosenPhoto);                
+                Picture pic = new Picture(user);
                 if (pr.ChosenPhoto != null)
                 {
                     imgLocal = new byte[(int)pr.ChosenPhoto.Length];
-                    //user.avatarBytes = imgLocal;
+                    pic.avatarBytes = imgLocal;
                     pr.ChosenPhoto.Read(imgLocal, 0, imgLocal.Length);
                     pr.ChosenPhoto.Seek(0, System.IO.SeekOrigin.Begin);
                     var bitmapImage = PictureDecoder.DecodeJpeg(pr.ChosenPhoto);
                     this.avatar.Source = bitmapImage;
+                    pic.savePicture();
                 }
                
             }
         }
- 
-        //private void btnShowCamera_Click(object sender, RoutedEventArgs e)
-        //{
-        //    cameraTask.Show();         
-        //}
-
+         
         private void avatar_MouseEnter(object sender, MouseEventArgs e)
         {
             takePicture();
@@ -361,124 +334,6 @@ namespace mmuc_zombie.pages
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            string userId = user.Id;
-            string locId = user.locationId;
-            var parse = new Driver();
-            //delete all User except me
-            parse.Objects.Query<User>().Where(c => c.Id != userId).Execute(r =>
-                {
-                    if (r.Success)
-                    {
-                        List<User> users = (List<User>)r.Data.Results;
-                        foreach (User u in users)
-                            parse.Objects.Delete<User>(u);
-                    }
-                });
-
-            //delete all Games
-            parse.Objects.Query<Game>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Game> games = (List<Game>)r.Data.Results;
-                    foreach (Game u in games)
-                        parse.Objects.Delete<Game>(u);
-                }
-            });
-
-            //delete all Locations except my Location
-            parse.Objects.Query<MyLocation>().Where(c => c.Id != locId).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<MyLocation> users = (List<MyLocation>)r.Data.Results;
-                    foreach (MyLocation u in users)
-                        parse.Objects.Delete<MyLocation>(u);
-                }
-            });
-
-
-            //delete all Roles
-            parse.Objects.Query<Roles>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Roles> users = (List<Roles>)r.Data.Results;
-                    foreach (Roles u in users)
-                        parse.Objects.Delete<Roles>(u);
-                }
-            });
-
-
-            //delete all Invites
-            parse.Objects.Query<Invite>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Invite> users = (List<Invite>)r.Data.Results;
-                    foreach (Invite u in users)
-                        parse.Objects.Delete<Invite>(u);
-                }
-            });
-
-
-            //delete all Message
-            parse.Objects.Query<Message>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Message> users = (List<Message>)r.Data.Results;
-                    foreach (Message u in users)
-                        parse.Objects.Delete<Message>(u);
-                }
-            });
-
-            //delete all Friends
-            parse.Objects.Query<Friend>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Friend> users = (List<Friend>)r.Data.Results;
-                    foreach (Friend u in users)
-                        parse.Objects.Delete<Friend>(u);
-                }
-            });
-
-        }
+        
     }
 }

@@ -17,6 +17,8 @@ using Parse;
 using mmuc_zombie.app.model;
 using System.Device.Location;
 using mmuc_zombie.app.helper;
+using System.Diagnostics;
+using mmuc_zombie.app.facebook;
 using System.Windows.Media.Imaging;
 
 namespace mmuc_zombie.pages
@@ -156,14 +158,19 @@ namespace mmuc_zombie.pages
                     game.size = (int)Constants.GAMESIZE.BIG;
                 }
                 game.create(locs,invites);
+
+                sendToFacebook();
+                
             }
             else if (_editable)
             {
-                MessageBox.Show("EDIT");
+                //MessageBox.Show("EDIT");
             }
       
 
         }
+
+        
 
         private void cancleButtonClick(object sender, EventArgs e)
         {
@@ -262,8 +269,43 @@ namespace mmuc_zombie.pages
             }
         }
 
-        
 
+        private void sendToFacebook()
+        {
+            WebClient m_wcPostMessage;            
+            FBWallPost m_fbPost = new FBWallPost(true);
+            
+            m_wcPostMessage = new WebClient();
+            m_wcPostMessage.UploadStringCompleted += new UploadStringCompletedEventHandler(m_wcPostMessage_UploadStringCompleted);
+            
+            try
+            {
+                m_fbPost.TheMessage = "I just created a new game " + this.nameTextfield.Text + ". Join me! \n" + m_fbPost.TheMessage;
+                m_wcPostMessage.UploadStringAsync(FacebookURIs.GetPostMessageUri(), "POST", m_fbPost.GetPostParameters(App.AccessToken));
+            }
+            catch (Exception eX)
+            {
+                MessageBox.Show("Post to wall failed.");
+                Debug.WriteLine("error: " + eX.Message);
+            }
+        }
+
+        void m_wcPostMessage_UploadStringCompleted(object sender, UploadStringCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                Debug.WriteLine("Error posting message: " + e.Error.Message);                
+                return;
+            }
+            try
+            {
+                Debug.WriteLine("Post done: " + e.Result);                
+            }
+            catch (Exception eX)
+            {
+                Debug.WriteLine("Error handling post result: " + eX.Message);                
+            }
+        }
 
        
 

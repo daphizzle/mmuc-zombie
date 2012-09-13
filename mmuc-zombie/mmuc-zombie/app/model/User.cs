@@ -30,14 +30,10 @@ public class User :  MyParseObject
     public string locationId { get; set; }    
     public string Facebook { get; set; }
     public string FacebookToken { get; set; }
-    public string DeviceID { get; set; }
-    public string picture { get; set; }
+    public string DeviceID { get; set; }    
     public bool bot { get; set; }
-    //public ParseFile avatar { get; set; }
-    //public byte[] avatarBytes { get; set; }    
-    //public FBUser _facebook { get; set; }
-    //public Device _deviceID { get; set; }
-    
+    public string picture { get; set; }
+
 
     public User()
     {
@@ -73,9 +69,9 @@ public class User :  MyParseObject
     public static User get()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        //if(service.State.ContainsKey("user"))
+        if(service.State.ContainsKey("user"))
         return (User)service.State["user"];
-        //return App.User;
+        return new User();
     }
 
     public void updateCurrentUser()
@@ -134,28 +130,6 @@ public class User :  MyParseObject
             Execute(callback);
     }
 
-    private ParseFile updatePicture()
-    {
-        //if(avatarBytes != null){
-        //    var parse = new Driver();
-        //    string newname = this.Id + ".png";
-        //    parse.Files.Save(newname, this.avatarBytes, "image/png", r =>
-        //    {
-        //        if (r.Success)
-        //        {
-        //            var url = r.Data.Url;
-        //            var name = r.Data.Name;                
-        //        }
-        //        else
-        //        {
-        //            Debug.WriteLine(r.Error.Message);
-        //        }
-        //    });
-        //    return new ParseFile(newname);
-        //}
-        return null;
-    }
-
     public static void find(string userId, MyListener listener)
     {
         var driver = new Driver();
@@ -167,9 +141,7 @@ public class User :  MyParseObject
                 Debug.WriteLine("Logged in as user" + user.UserName);
                 List<MyParseObject> list = new List<MyParseObject>();
                 list.Add(user);
-                listener.onDataChange(list);
-               
-                                   
+                listener.onDataChange(list);               
             }
         });
 

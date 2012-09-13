@@ -11,9 +11,9 @@
     <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
         <TextBlock Height="57" Margin="76,12,83,0" Name="name" Text="{Binding NickName}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Left" />
         <Image Source="/mmuc-zombie;component/ext/img/avatar.png" Name="image" Margin="12,12,0,0" Width="57" Height="57" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Button BorderThickness="2" FlowDirection="LeftToRight" Height="77" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="add" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Width="86" Margin="0,2,0,0">
+        <Button BorderThickness="2" FlowDirection="LeftToRight" Height="77" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="comment" VerticalAlignment="Top" VerticalContentAlignment="Bottom" Width="86" Margin="0,2,0,0" Click="comment_Click">
             <Button.Background>
-                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/_add.png" Stretch="None" />
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/_next.png" Stretch="None" />
             </Button.Background>
         </Button>
     </Grid>

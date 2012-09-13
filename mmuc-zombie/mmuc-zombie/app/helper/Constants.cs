@@ -14,7 +14,8 @@ namespace mmuc_zombie.app.helper
     public class Constants
     {
         public const string NONICKNAME = "nickname";
-        public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";        
+        public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";
+        public const string FBCOMMENT = "Write your comment here...";
 
         public enum USERGAMEMODES : int { INIT = 0, IDLE, LOBBY, INGAME };
         public enum GAMEMODES : int { PENDING = 0, ACTIVE, FINISHED };
@@ -23,6 +24,9 @@ namespace mmuc_zombie.app.helper
         public const string ROLE_ZOMBIE = "Zombie";
         public const string ROLE_SURVIVOR = "Survivor";
         public const string ROLE_OBSERVER = "Observer";
+
+        public const int TOPK = 6;
+
 
         public const int SMALL_GAME_SIZE = 500;
         public const int MEDIUM_GAME_SIZE = 2000;
@@ -45,6 +49,8 @@ namespace mmuc_zombie.app.helper
         public const int BIG_GAME_INFECTION_RANGE_INC = 20;
 
         public static Random random= new Random();
+        
+
         
     }
 }
