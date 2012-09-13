@@ -209,12 +209,14 @@ namespace mmuc_zombie.app.helper
             var list = drawCircle(myLocation.toGeoCoordinate(), Constants.BOT_MOVEMENT);
             var distance = myLocation.toGeoCoordinate().GetDistanceTo(nextSurvivor.toGeoCoordinate());
             var val = Constants.random.Next(0, 360);
-            if (pointInPolygon(gameArea, myLocation)&&
-                (new GeoCoordinate(list[val].Latitude,list[val].Longitude).GetDistanceTo(nextSurvivor.toGeoCoordinate())<=distance))
-            {
-                myLocation.latitude = list[val].Latitude;
-                myLocation.longitude = list[val].Longitude;
-            }
+            for (int k = 0; k < 10;k++ )
+                if (pointInPolygon(gameArea, myLocation) &&
+                    (new GeoCoordinate(list[val].Latitude, list[val].Longitude).GetDistanceTo(nextSurvivor.toGeoCoordinate()) <= distance))
+                {                    
+                    myLocation.latitude = list[val].Latitude;
+                    myLocation.longitude = list[val].Longitude;
+                    break;
+                }
         }
     }
 }

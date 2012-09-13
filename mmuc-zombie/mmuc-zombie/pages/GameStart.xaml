@@ -48,11 +48,7 @@
                             <TextBlock Height="30" Margin="110,25,12,0" Text="{Binding name}"  VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
                             <Image Source="{Binding picture}" Name="userImage"
                                   HorizontalAlignment="Left" Margin="15,-60,0,0" Stretch="Fill" Height="75" Width="70"/>
-                             <Button HorizontalAlignment="Center" Margin="260,-70,0,0" Name="addButton" Width="70" BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="70" VerticalAlignment="Top" Click="add_Click">
-                                    <Button.Background>
-                                        <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/del.jpg" />
-                                    </Button.Background>
-                                </Button>
+                             
                             
                         </StackPanel>
                     </DataTemplate>

@@ -50,6 +50,7 @@ namespace mmuc_zombie.pages
         private bool init=true;
         int survivors = 0;
         int range = 0;
+        int hostCount = 0;
         int zoom = 0;
         private int increment;
         private Button targetButton = new Button();
@@ -569,7 +570,6 @@ namespace mmuc_zombie.pages
          
             mapLayer.Children.Clear();
             int playerPosition = 0;
-            int hostCount = 0;
             if (quest.active)
             {
                 var questPin = new Pushpin();
@@ -583,8 +583,10 @@ namespace mmuc_zombie.pages
                 var p = new Pushpin();
                 p.Location = new GeoCoordinate(locationList[i].latitude, locationList[i].longitude);
                 p.Name = userList[i].Id;
+                p.Height = 36;
+                p.Width = 36;
                 
-                if (user.Id.Equals(game.hostId))
+                if (userList[i].Id.Equals(game.hostId))
                     hostCount = i;
                 if (locationList[i].Id.Equals(user.locationId))
                         myLocation=locationList[i];
@@ -659,16 +661,9 @@ namespace mmuc_zombie.pages
                 LayoutRoot.Children.Remove(r);
             }
             targetHealthBar.Clear();
-            int marginX = 150;
-            int marginY = 0;
-            targetPlayerName.Text = userList[i].UserName;
-            targetPlayerName.VerticalAlignment = System.Windows.VerticalAlignment.Top;
-            targetPlayerName.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
-            targetPlayerName.Height = 30;
-            targetPlayerName.Width = 200;
-            targetPlayerName.Margin = new Thickness(0, marginY, 0, 0);
-            marginY += 35;
-            targetPlayerName.SetValue(Grid.RowProperty, 1);
+            int marginX = 160;
+            int marginY = 5;
+
             if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
             {
                 //display healthbar
@@ -689,31 +684,42 @@ namespace mmuc_zombie.pages
                     targetHealthBar.Add(rect);
                     LayoutRoot.Children.Add(rect);
                 }
+                marginY += 35;
             }
+
+            targetPlayerName.Text = userList[i].UserName;
+            targetPlayerName.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            targetPlayerName.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            targetPlayerName.Height = 30;
+            targetPlayerName.Width = 170;
+            targetPlayerName.Margin = new Thickness(0, marginY, 0, 0);
+            targetPlayerName.SetValue(Grid.RowProperty, 1);
+            marginY += 35;
+            
+
             if (roleList[i].roleType == Constants.ROLE_ZOMBIE)
                 targetAchievementCount.Text = "Survivors killed: " + roleList[i].killCount;
             else
             {
-                targetAchievementCount.Text = "Quests done: " + roleList[i].questCount;
-                marginY += 35;
+                targetAchievementCount.Text = "Quests done: " + roleList[i].questCount;   
             }
             targetAchievementCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             targetAchievementCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             targetAchievementCount.Height = 30;
-            targetAchievementCount.Width = 200;
+            targetAchievementCount.Width = 170;
             targetAchievementCount.Margin = new Thickness(0, marginY, 0, 0);
             marginY += 35;
             targetAchievementCount.SetValue(Grid.RowProperty, 1);
 
-            targetButton.Content = "Hide";
+            
             targetButton.VerticalAlignment = System.Windows.VerticalAlignment.Top;
             targetButton.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
             targetButton.Height = 70;
-            targetButton.Width = 180;
-            targetButton.Margin = new Thickness(0, marginY, 0, 0);
+            targetButton.Width = 70;
+            targetButton.Margin = new Thickness(0, 110, 110, 0);
             targetButton.Click += new RoutedEventHandler(targetButton_Click);
-            marginY += 35;
             targetButton.Visibility = System.Windows.Visibility.Visible;
+            targetButton.Background = new ImageBrush { ImageSource = new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/del.jpg", UriKind.Relative)) };
             targetButton.SetValue(Grid.RowProperty, 1);
         }
 
@@ -735,7 +741,7 @@ namespace mmuc_zombie.pages
                     LayoutRoot.Children.Remove(r);
                 }
                 targetHealthBar.Clear();
-                int marginX = 180;
+                int marginX = 160;
                 for (int j = 0; j < targetRole.maxLife; j++)
                 {
                     rect = new Rectangle();
@@ -747,7 +753,7 @@ namespace mmuc_zombie.pages
                         rect.Fill = new SolidColorBrush(Colors.Red);
                     else
                         rect.Fill = new SolidColorBrush(Colors.Green);
-                    rect.Margin = new Thickness(0, 35, marginX, 0);
+                    rect.Margin = new Thickness(0, 5, marginX, 0);
                     marginX -= 15;
                     rect.SetValue(Grid.RowProperty, 1);
                     targetHealthBar.Add(rect);
@@ -793,7 +799,7 @@ namespace mmuc_zombie.pages
                 }
             }
             int marginX = 0;
-            int marginY = 35;
+            int marginY = 40;
             if (role.roleType == "Survivor")
             {
                 //display healthbar
@@ -808,7 +814,7 @@ namespace mmuc_zombie.pages
                         rect.Fill = new SolidColorBrush(Colors.Red);
                     else
                         rect.Fill = new SolidColorBrush(Colors.Green);
-                    rect.Margin = new Thickness(marginX, 0, 0, 0);
+                    rect.Margin = new Thickness(marginX, 5, 0, 0);
                     marginX += 15;
                     rect.SetValue(Grid.RowProperty, 1);
                     LayoutRoot.Children.Add(rect);
@@ -949,6 +955,11 @@ namespace mmuc_zombie.pages
                 }
                 (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
             }
+        }
+
+        private void PhoneApplicationPage_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = true;
         }
 
 

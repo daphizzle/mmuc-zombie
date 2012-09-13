@@ -67,6 +67,7 @@ namespace mmuc_zombie.pages
         }
         private void startButton_Click(object sender, RoutedEventArgs e)
         {
+            Progressbar.ShowProgressBar("Starting game...");
             Query.getUsersByGame(user.activeGame, getUsersPerGame);
        
             
@@ -285,10 +286,7 @@ namespace mmuc_zombie.pages
             }
         }
 
-        private void add_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+ 
   
       
       

@@ -15,6 +15,7 @@ using Microsoft.Phone.Shell;
 using mmuc_zombie.app.facebook;
 using mmuc_zombie.app.helper;
 using mmuc_zombie;
+using System.Windows.Media.Imaging;
 
 public class User :  MyParseObject
 {
@@ -153,9 +154,22 @@ public class User :  MyParseObject
         driver.Objects.Get<User>(userId,callback);
     }
 
-    public string getPicture()
+    public  BitmapImage getPicture()
     {
-        return "http://www.cwv.com.ve/wp-content/uploads/2011/12/1603-bill-gates-1.jpg";    
+        if (bot)
+            return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/bot.png", UriKind.Relative));
+        if (String.IsNullOrWhiteSpace(Facebook))
+            return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/avatar.png",UriKind.Relative));
+        else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
     }
 
+
+    internal string getPictureString()
+    {
+        if (bot)
+            return "/mmuc-zombie;component/ext/img/bot.png";
+        if (String.IsNullOrWhiteSpace(Facebook))
+            return "/mmuc-zombie;component/ext/img/avatar.png";
+        else return Facebook;
+    }
 }

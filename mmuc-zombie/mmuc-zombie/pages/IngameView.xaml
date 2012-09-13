@@ -15,13 +15,14 @@
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True" xmlns:my="clr-namespace:System.Device.Location;assembly=System.Device" 
     BackKeyPress="PhoneApplicationPage_BackKeyPress"
-    Loaded="PhoneApplicationPage_Loaded">
+    Loaded="PhoneApplicationPage_Loaded"
+    DoubleTap="PhoneApplicationPage_DoubleTap">
     <phone:PhoneApplicationPage.Resources>
         <ControlTemplate x:Key="zombiepin1"
                                  TargetType="m:Pushpin">
             <Grid x:Name="ContentGrid"
-               Width="36"
-               Height="36"
+               Width="50"
+               Height="50"
                Margin="0">
                 <Image  Source="/mmuc-zombie;component/ext/img/z1.png" Stretch="Fill"/>
             </Grid>
@@ -38,8 +39,8 @@
         <ControlTemplate x:Key="zombiepin3"
                                  TargetType="m:Pushpin">
             <Grid x:Name="ContentGrid"
-               Width="36"
-               Height="36"
+               Width="50"
+               Height="50"
                Margin="0">
                 <Image  Source="/mmuc-zombie;component/ext/img/z3.png" Stretch="Fill"/>
             </Grid>
@@ -56,8 +57,8 @@
         <ControlTemplate x:Key="zombiepin5"
                                  TargetType="m:Pushpin">
             <Grid x:Name="ContentGrid"
-               Width="36"
-               Height="36"
+               Width="50"
+               Height="50"
                Margin="0">
                 <Image  Source="/mmuc-zombie;component/ext/img/z5.png" Stretch="Fill"/>
             </Grid>
@@ -181,11 +182,11 @@
             </m:MapLayer>
         </m:Map>
         <Rectangle Name="Infobox" Grid.Row="1" HorizontalAlignment="Left" 
-                   VerticalAlignment="Top" Height="200" Width="222"
+                   VerticalAlignment="Top" Height="200" Width="180"
                    Fill="Gray" Opacity="0.7"/>
 
         <Rectangle Name="TargetInfobox" Grid.Row="1" HorizontalAlignment="Right" 
-                   VerticalAlignment="Top" Height="200" Width="224" Visibility="Collapsed"
+                   VerticalAlignment="Top" Height="180" Width="180" Visibility="Collapsed"
                    Fill="Gray" Opacity="0.7"/>
     </Grid>
 
