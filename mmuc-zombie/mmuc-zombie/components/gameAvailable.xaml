@@ -7,16 +7,20 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="187" d:DesignWidth="357">
-    
-    <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto">
-        <TextBlock Height="30" HorizontalAlignment="Left" Margin="12,10,0,0" Name="gameName" Text="Name of the Game" VerticalAlignment="Top" Width="309" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <Button Content="Watch it!" Height="72" HorizontalAlignment="Right" Margin="0,120,0,0" Name="join" VerticalAlignment="Top" Width="161" Click="join_Click" />
 
-        <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,42,0,0" Name="startTime" Text="start time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />
-        <TextBlock FontSize="16" HorizontalAlignment="Left" Margin="13,42,0,86" Name="textBlock4" Text="Start:" FontWeight="Bold" />
-        
-        <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="60,59,0,0" Name="endTime" Text="end time" VerticalAlignment="Top" Foreground="#FFD8D8D8" Width="249" />        
-        <TextBlock FontSize="16" Height="18" HorizontalAlignment="Left" Margin="13,59,0,0" Name="textBlock5" Text="End:" VerticalAlignment="Top" FontWeight="Bold" Width="39" />
-        <TextBlock FontSize="15" Height="35" HorizontalAlignment="Left" Margin="13,83,0,0" Name="textBlock1" Text="Description..." TextTrimming="None" VerticalAlignment="Top" Width="332" />
+    <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="Auto" Height="82">
+        <TextBlock Height="30" VerticalAlignment="Top" 
+                   HorizontalAlignment="Left" Margin="10,5,0,0"
+                   Name="gameName" Text="Name of the Game"  TextTrimming="None" FontSize="22" FontWeight="Bold" />
+        <TextBlock FontSize="15"  Name="description" Text="Description..." 
+                   TextTrimming="None" Height="35" 
+                   Margin="10,30,0,0" />
+        <Button Height="76" HorizontalAlignment="Right"  Name="join" VerticalAlignment="Top" Width="105" 
+                BorderThickness="2" FlowDirection="LeftToRight" HorizontalContentAlignment="Center" 
+                VerticalContentAlignment="Bottom" Click="join_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/mmuc-zombie;component/ext/img/_next.png" Stretch="None" />
+            </Button.Background>
+        </Button>
     </Grid>
 </UserControl>

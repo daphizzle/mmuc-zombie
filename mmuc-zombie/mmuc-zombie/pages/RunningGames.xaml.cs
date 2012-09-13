@@ -49,36 +49,8 @@ namespace mmuc_zombie.pages
             }
         }
 
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            //PositionRetriever.startPositionRetrieving(100);            
-        }
 
 
-        //Code cleanup: We now use direct callbacks instead of listeners for better readable and less widespread code
-        //public void onDataChange(List<MyParseObject> list)
-        //{
-        //    var parse = new Driver();            
-        //    foreach (MyParseObject o in list)
-        //    {
-        //        string id = o.Id;
-        //        games.Add((Games)o);               
-        //    }
-
-        //    Deployment.Current.Dispatcher.BeginInvoke(() =>
-        //    {
-        //        if (!loadGames())
-        //        {
-        //            noResults.Visibility = System.Windows.Visibility.Visible;
-        //            gameList.Visibility = System.Windows.Visibility.Collapsed;
-        //        }
-        //        else
-        //        {
-        //            noResults.Visibility = System.Windows.Visibility.Collapsed;
-        //            gameList.Visibility = System.Windows.Visibility.Visible;
-        //        }
-        //    });
-        //}
 
         private bool loadRunningGames()
         {
@@ -88,11 +60,9 @@ namespace mmuc_zombie.pages
                 tmpUI = new mmuc_zombie.components.gameAvailable();                
                 tmpUI.gameID = tmp.Id;
                 tmpUI.gameName.Text = tmp.name;
-                tmpUI.startTime.Text = DateTime.Today.ToShortDateString(); // tmp.startTime.Value.ToShortDateString();
-                tmpUI.endTime.Text = DateTime.Today.ToShortDateString(); // tmp.endTime.Value.ToShortDateString();
+                tmpUI.description.Text = tmp.description;
                 tmpUI.Margin = new Thickness(0, 5, 0, 5);              
                 gameStack.Children.Add(tmpUI);
-                //tmpUI.edit.Visibility = tmp.ownerId.Equals(User.get().Id) ? Visibility.Visible : Visibility.Collapsed;                
             }
             return gameStack.Children.Count > 0;
         }

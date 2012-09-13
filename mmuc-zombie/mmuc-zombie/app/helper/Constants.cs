@@ -28,9 +28,9 @@ namespace mmuc_zombie.app.helper
         public const int MEDIUM_GAME_SIZE = 2000;
         public const int BIG_GAME_SIZE = 4000;
 
-        public const int SMALL_GAME_RANGE = 25;
-        public const int MEDIUM_GAME_RANGE = 100;
-        public const int BIG_GAME_RANGE = 200;
+        public const int SMALL_GAME_INFECTION_RANGE = 25;
+        public const int MEDIUM_GAME_INFECTION_RANGE = 100;
+        public const int BIG_GAME_INFECTION_RANGE = 200;
 
 
 
@@ -40,14 +40,11 @@ namespace mmuc_zombie.app.helper
 
         public const int BOT_MOVEMENT = 10;
 
+        public const int SMALL_GAME_INFECTION_RANGE_INC = 5;
+        public const int MEDIUM_GAME_INFECTION_RANGE_INC = 10;
+        public const int BIG_GAME_INFECTION_RANGE_INC = 20;
+
         public static Random random= new Random();
-        //game modes
-        //pending = 0, waiting = 1, active = 2, finshed = 3
-
-        //user-game modes
-        //int=0: "idle mode" he is doing nothing, he ha no pending games; no timertask is running, if he joins a game he switch to status 1
-        //int=1: "lobby-mode" user has joined a game , timertask checks if gameowner creates a game. if he does user switch to status 3. user can leave:if he has pending games left he switch to status 1, if not he switch to status 0.
-        //int=2: "ingame" mode  many things are checked ...(infection, userlocation ...)if he leaves a game: it is checked if he has pending events if yes he switches to status 1 else 0
-
+        
     }
 }

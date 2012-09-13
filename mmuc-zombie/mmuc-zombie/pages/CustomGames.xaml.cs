@@ -89,47 +89,6 @@ namespace mmuc_zombie.pages
             }
         }
 
-        //Code cleanup: We now use direct callbacks instead of listeners for better readable and less widespread code
-        //public void onDataChange(List<MyParseObject> list)
-        //{
-        //    var parse = new Driver();
-        //    int gameCounter = 0;
-        //    foreach (MyParseObject o in list)
-        //    {
-        //        string id = o.Id;
-        //        games.Add((Games)o);
-
-        //        parse.Objects.Query<MyLocation>().Where(c => c.gameId == id).Execute(r =>
-        //        {
-        //            if (r.Success)
-        //            {
-        //                Deployment.Current.Dispatcher.BeginInvoke(() =>
-        //                {
-
-        //                    drawPolygons((List<MyLocation>)r.Data.Results);
-        //                    gameCounter++;
-        //                    if (gameCounter == list.Count)
-        //                    {
-        //                        drawPushPins();
-        //                        if (!loadGames())
-        //                        {
-        //                            noResults.Visibility = System.Windows.Visibility.Visible;
-        //                            gameList.Visibility = System.Windows.Visibility.Collapsed;
-        //                        }
-        //                        else
-        //                        {
-        //                            noResults.Visibility = System.Windows.Visibility.Collapsed;
-        //                            gameList.Visibility = System.Windows.Visibility.Visible;
-        //                        }
-        //                    }
-        //                });
-        //            }
-        //        });
-        //    }
-
-
-        //}
-
 
 
         private void drawPolygons(List<MyLocation> list)
@@ -176,7 +135,7 @@ namespace mmuc_zombie.pages
                 NewPolygonLayer.Children.Add(p);
             }
             MapWithPolygon.SetView(new LocationRect(new System.Device.Location.GeoCoordinate(middlePoints[0].latitude, middlePoints[0].longitude), 0.5, 0.5));
-            MapWithPolygon.ZoomLevel = 13;
+            MapWithPolygon.ZoomLevel = 16;
 
         }
 
@@ -188,12 +147,6 @@ namespace mmuc_zombie.pages
 
         }
 
-
-
-        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            PositionRetriever.startPositionRetrieving(100);
-        }
 
         private bool loadGames()
         {

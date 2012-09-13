@@ -61,7 +61,7 @@ namespace mmuc_zombie.pages
                                     p.Template=this.Resources["playerpin"] as ControlTemplate;
                                     MapWithPolygon.Center = p.Location;
                                     mapLayer.Children.Add(p);
-                                    MapWithPolygon.ZoomLevel = 13;
+                                    MapWithPolygon.ZoomLevel = 16;
                                     if (!loadUsers(friends))
                                     {            
                                         userListBox.Visibility = System.Windows.Visibility.Collapsed;

@@ -29,6 +29,8 @@ namespace mmuc_zombie.pages
         User user;
         Game game; 
         Roles role;
+        Roles targetRole;
+        bool target = false;
         MyLocation myLocation;
         bool painting=false;
         private int i;
@@ -40,10 +42,19 @@ namespace mmuc_zombie.pages
         TextBlock killCount = new TextBlock();
         TextBlock questCount = new TextBlock();
         TextBlock eventMsg = new TextBlock();
+        TextBlock targetPlayerName = new TextBlock();
+        TextBlock targetAchievementCount = new TextBlock();
+        Image targetPicture = new Image(); 
+        List<Rectangle> targetHealthBar = new List<Rectangle>();
+        
         private bool init=true;
         int survivors = 0;
         int range = 0;
         int zoom = 0;
+        private int increment;
+        private Button targetButton = new Button();
+        private List<Roles> fillRoleList;
+        private List<MyLocation> fillLocationList;
    
         public IngameView()
         {
@@ -56,6 +67,10 @@ namespace mmuc_zombie.pages
             LayoutRoot.Children.Add(killCount);
             LayoutRoot.Children.Add(questCount);
             LayoutRoot.Children.Add(eventMsg);
+            LayoutRoot.Children.Add(targetAchievementCount);
+            LayoutRoot.Children.Add(targetPlayerName);
+            LayoutRoot.Children.Add(targetButton);
+
         }
 
         //constructor used for testing only
@@ -156,7 +171,7 @@ namespace mmuc_zombie.pages
                      {
                         userList = (List<User>)r.Data.Results;
                         //Debug.WriteLine("got Users");
-                        locationList=new List<MyLocation>();
+                        fillLocationList=new List<MyLocation>();
                         loadLocations();    
                      });
                 }
@@ -173,7 +188,7 @@ namespace mmuc_zombie.pages
                         //Debug.WriteLine("got Location "+ r.Data.Id+" is equal userlocation "+userList[i].locationId+ "  "+r.Data.latitude+","+r.Data.longitude);
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
-                           locationList.Add(r.Data);
+                           fillLocationList.Add(r.Data);
                            i++;
                            loadLocations(); 
                         });
@@ -182,7 +197,8 @@ namespace mmuc_zombie.pages
              else
              {
                 i=0;
-                roleList = new List<Roles>();
+                locationList = fillLocationList;
+                fillRoleList = new List<Roles>();
                 loadRoles();
              }
         }
@@ -196,7 +212,7 @@ namespace mmuc_zombie.pages
                         //Debug.WriteLine("got Role " + r.Data.Id + " is equal userRole " + userList[i].activeRole);
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
-                            roleList.Add(r.Data);
+                            fillRoleList.Add(r.Data);
                             i++;
                             loadRoles();
                         });
@@ -204,6 +220,7 @@ namespace mmuc_zombie.pages
                 });
             else
             {
+                roleList = fillRoleList;
                 i=0;
                 doIngameStuff();
             }
@@ -527,7 +544,7 @@ namespace mmuc_zombie.pages
             {
                 double distance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
                 // for testing is true
-                bool near = distance<range;
+                bool near = distance<(range+increment*roleList[j].killCount);
                 if(roleList[j].roleType.Equals(Constants.ROLE_ZOMBIE)&&near)
                 {
                     ++zombies;
@@ -598,7 +615,8 @@ namespace mmuc_zombie.pages
                         p.Template = this.Resources[h] as ControlTemplate;
                     }
                     }
-            
+                p.Name = "" + i;
+                p.MouseEnter += new MouseEventHandler(playerClick);
                 if (!roleList[i].roleType.Equals(Constants.ROLE_OBSERVER))
                     mapLayer.Children.Add(p);
             }
@@ -614,7 +632,140 @@ namespace mmuc_zombie.pages
                 if (role.roleType.Equals(Constants.ROLE_OBSERVER))
                     map.Center=locationList[hostCount].toGeoCoordinate();
             }
+            if (target)
+                reloadTargetInfo();
             painting = false;
+        }
+
+
+
+        private void playerClick(Object sender,MouseEventArgs e)
+        {
+            TargetInfobox.Visibility = System.Windows.Visibility.Visible;
+            int i = int.Parse(((Pushpin)sender).Name);
+            target = true;
+            targetRole = roleList[i];
+            foreach (Rectangle r in targetHealthBar)
+            {
+                LayoutRoot.Children.Remove(r);
+            }
+            targetHealthBar.Clear();
+            int marginX = 150;
+            int marginY = 0;
+            targetPlayerName.Text = userList[i].UserName;
+            targetPlayerName.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            targetPlayerName.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            targetPlayerName.Height = 30;
+            targetPlayerName.Width = 200;
+            targetPlayerName.Margin = new Thickness(0, marginY, 0, 0);
+            marginY += 35;
+            targetPlayerName.SetValue(Grid.RowProperty, 1);
+            if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
+            {
+                //display healthbar
+                for (int j = 0; j < targetRole.maxLife; j++)
+                {
+                    rect = new Rectangle();
+                    rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                    rect.Height = 30;
+                    rect.Width = 15;
+                    if (j < targetRole.infectionCount)
+                        rect.Fill = new SolidColorBrush(Colors.Red);
+                    else
+                        rect.Fill = new SolidColorBrush(Colors.Green);
+                    rect.Margin = new Thickness(0, marginY, marginX, 0);
+                    marginX -= 15;
+                    rect.SetValue(Grid.RowProperty, 1);
+                    targetHealthBar.Add(rect);
+                    LayoutRoot.Children.Add(rect);
+                }
+            }
+            if (roleList[i].roleType == Constants.ROLE_ZOMBIE)
+                targetAchievementCount.Text = "Survivors killed: " + roleList[i].killCount;
+            else
+            {
+                targetAchievementCount.Text = "Quests done: " + roleList[i].questCount;
+                marginY += 35;
+            }
+            targetAchievementCount.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            targetAchievementCount.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            targetAchievementCount.Height = 30;
+            targetAchievementCount.Width = 200;
+            targetAchievementCount.Margin = new Thickness(0, marginY, 0, 0);
+            marginY += 35;
+            targetAchievementCount.SetValue(Grid.RowProperty, 1);
+
+            targetButton.Content = "Hide";
+            targetButton.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+            targetButton.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+            targetButton.Height = 70;
+            targetButton.Width = 180;
+            targetButton.Margin = new Thickness(0, marginY, 0, 0);
+            targetButton.Click += new RoutedEventHandler(targetButton_Click);
+            marginY += 35;
+            targetButton.Visibility = System.Windows.Visibility.Visible;
+            targetButton.SetValue(Grid.RowProperty, 1);
+        }
+
+        private void reloadTargetInfo()
+        {
+            bool targetDied = true;
+            foreach (Roles r in roleList)
+            {
+                if (r.Id == targetRole.Id)
+                {
+                    targetRole = r;
+                    targetDied = false;
+                }
+            }
+            if (!targetDied)
+            {
+                foreach (Rectangle r in targetHealthBar)
+                {
+                    LayoutRoot.Children.Remove(r);
+                }
+                targetHealthBar.Clear();
+                int marginX = 180;
+                for (int j = 0; j < targetRole.maxLife; j++)
+                {
+                    rect = new Rectangle();
+                    rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
+                    rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                    rect.Height = 30;
+                    rect.Width = 15;
+                    if (j < targetRole.infectionCount)
+                        rect.Fill = new SolidColorBrush(Colors.Red);
+                    else
+                        rect.Fill = new SolidColorBrush(Colors.Green);
+                    rect.Margin = new Thickness(0, 35, marginX, 0);
+                    marginX -= 15;
+                    rect.SetValue(Grid.RowProperty, 1);
+                    targetHealthBar.Add(rect);
+                    LayoutRoot.Children.Add(rect);
+                }
+                if (targetRole.roleType == Constants.ROLE_ZOMBIE)
+                    targetAchievementCount.Text = "Survivors killed: " + targetRole.killCount;
+                else
+                    targetAchievementCount.Text = "Quests done: " + targetRole.questCount;
+            }
+            else
+            {
+                targetButton_Click(null, null);
+            }
+        }
+
+        void targetButton_Click(object sender, RoutedEventArgs e)
+        {
+            target = false;
+            TargetInfobox.Visibility = System.Windows.Visibility.Collapsed;
+            foreach (Rectangle r in targetHealthBar)
+            {
+                LayoutRoot.Children.Remove(r);
+            }
+            targetAchievementCount.Text = "";
+            targetPlayerName.Text = "";
+            targetButton.Visibility = System.Windows.Visibility.Collapsed;         
         }
 
         private void drawInfobox()
@@ -643,13 +794,13 @@ namespace mmuc_zombie.pages
                     rect.VerticalAlignment = System.Windows.VerticalAlignment.Top;
                     rect.HorizontalAlignment = System.Windows.HorizontalAlignment.Left;
                     rect.Height = 30;
-                    rect.Width = 25;
+                    rect.Width = 15;
                     if (i < role.infectionCount)
                         rect.Fill = new SolidColorBrush(Colors.Red);
                     else
                         rect.Fill = new SolidColorBrush(Colors.Green);
                     rect.Margin = new Thickness(marginX, 0, 0, 0);
-                    marginX += 25;
+                    marginX += 15;
                     rect.SetValue(Grid.RowProperty, 1);
                     LayoutRoot.Children.Add(rect);
                 }
@@ -725,9 +876,9 @@ namespace mmuc_zombie.pages
                 game = r.Data;
                 switch (game.size)
                 {
-                    case 0: range = Constants.SMALL_GAME_RANGE; zoom = Constants.SMALL_GAME_ZOOMFACTOR; break;
-                    case 1: range = Constants.MEDIUM_GAME_RANGE; zoom = Constants.MEDIUM_GAME_ZOOMFACTOR;break;
-                    case 2: range = Constants.BIG_GAME_RANGE; zoom = Constants.BIG_GAME_ZOOMFACTOR; break;
+                    case 0: range = Constants.SMALL_GAME_INFECTION_RANGE; increment = Constants.SMALL_GAME_INFECTION_RANGE_INC; zoom = Constants.SMALL_GAME_ZOOMFACTOR; break;
+                    case 1: range = Constants.MEDIUM_GAME_INFECTION_RANGE; increment = Constants.MEDIUM_GAME_INFECTION_RANGE_INC; zoom = Constants.MEDIUM_GAME_ZOOMFACTOR; break;
+                    case 2: range = Constants.BIG_GAME_INFECTION_RANGE; increment = Constants.BIG_GAME_INFECTION_RANGE_INC; zoom = Constants.BIG_GAME_ZOOMFACTOR; break;
                 }
             }
         }
