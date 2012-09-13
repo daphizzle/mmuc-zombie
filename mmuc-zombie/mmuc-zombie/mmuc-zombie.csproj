@@ -94,6 +94,7 @@
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
+    <Compile Include="app\model\LobbyUsers.cs" />
     <Compile Include="app\model\Quest.cs" />
     <Compile Include="app\model\Message.cs" />
     <Compile Include="app\model\MyLocation.cs" />
@@ -358,6 +359,16 @@
     <Resource Include="ext\img\del.jpg" />
     <Resource Include="ext\img\del3.jpg" />
     <Resource Include="ext\img\del2.jpg" />
+    <Resource Include="ext\img\s1.png" />
+    <Resource Include="ext\img\s2.png" />
+    <Resource Include="ext\img\s3.png" />
+    <Resource Include="ext\img\s4.png" />
+    <Resource Include="ext\img\z1.png" />
+    <Resource Include="ext\img\z2.png" />
+    <Resource Include="ext\img\z3.png" />
+    <Resource Include="ext\img\z4.png" />
+    <Resource Include="ext\img\z5.png" />
+    <Resource Include="ext\img\z6.png" />
     <Content Include="ext\img\_facebook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
