@@ -104,29 +104,8 @@ namespace mmuc_zombie.pages
         }
 
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            PhoneApplicationService service = PhoneApplicationService.Current;
-             user = (User)service.State["user"];
-             var parse = new Driver();
-            if (game.ownerId.Equals(user.Id))
-            {
-                
-                parse.Objects.Update<Game>(game.Id).Set(u=>u.state,3).Execute(ro=>{});
-            }
-            else
-            {
-                user.status = 0;
-                user.activeGame = "";
-                service.State["user"] = user;
-                parse.Objects.Update<User>(user.Id).Set(u => u.status, 0).Set(u => user.activeGame, "").Execute(ro =>
-                {
-                });
-            }
-            CoreTask.idleMode();
-            NavigationService.Navigate(new Uri("/pages/Menu.xaml", UriKind.Relative));
+        
 
-        }
         private void createRoles()
         {
             var parse = new Driver();

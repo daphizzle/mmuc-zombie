@@ -13,9 +13,8 @@ namespace mmuc_zombie.app.model
 {
     public class LobbyUsers
     {
-        public string userId { get; set; }
-        public string picture { get; set; }
-        public string name { get; set; }
-        
+        public String name { get; set; }
+        public String picture { get; set; }
+        public String userId { get; set; }
     }
 }
