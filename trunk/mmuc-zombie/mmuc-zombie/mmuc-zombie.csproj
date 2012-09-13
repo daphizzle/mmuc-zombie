@@ -377,6 +377,7 @@
     <Resource Include="ext\img\z4.png" />
     <Resource Include="ext\img\z5.png" />
     <Resource Include="ext\img\z6.png" />
+    <Resource Include="ext\img\bot.png" />
     <Content Include="ext\img\_facebook.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

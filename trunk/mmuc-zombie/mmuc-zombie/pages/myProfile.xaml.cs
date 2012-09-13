@@ -76,7 +76,7 @@ namespace mmuc_zombie.pages
                         }
                     }
                     tmpUI.nameTextBlock.Text = tmp.UserName;
-                    tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getPicture() : tmp.Facebook, UriKind.Absolute));
+                    tmpUI.userImage.Source = tmp.getPicture();
                     tmpUI.userId = user.Id;
                     tmpUI.newfriend = tmp.Id;
 

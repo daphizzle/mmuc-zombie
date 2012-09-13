@@ -91,7 +91,7 @@ namespace mmuc_zombie.pages
                 }
                 tmpUI.Rank.Text = "" + (i + 1);
                 tmpUI.Username.Text = zomb.UserName;
-                tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(zomb.Facebook) ? zomb.getPicture() : zomb.Facebook, UriKind.Absolute));
+                tmpUI.userImage.Source = zomb.getPicture();
                 tmpUI.Achivement.Text = "Survivors killed: " + zombies[i].killCount;
                 hofP.Add(tmpUI);
             }
@@ -121,7 +121,7 @@ namespace mmuc_zombie.pages
                 }
                 tmpUI.Rank.Text = "" + (i+1);
                 tmpUI.Username.Text = surv.UserName;
-                tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(surv.Facebook) ? surv.getPicture() : surv.Facebook, UriKind.Absolute));
+                tmpUI.userImage.Source = surv.getPicture();
                 tmpUI.Achivement.Text = "Quests done: " + survivors[i].questCount;
                 hofP.Add(tmpUI);
             }

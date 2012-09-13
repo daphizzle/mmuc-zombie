@@ -102,7 +102,7 @@ namespace mmuc_zombie.pages
                                  tmpUI.nameTextBlock.Text = u.UserName;
                                  tmpUI.createInvite(friend.friend);
                                  tmpUI.invites = invites;
-                                 tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(u.Facebook) ? u.getPicture() : u.Facebook, UriKind.Absolute));
+                                 tmpUI.userImage.Source = u.getPicture();
                                  userStackPanel.Children.Add(tmpUI);
                              });
                          }

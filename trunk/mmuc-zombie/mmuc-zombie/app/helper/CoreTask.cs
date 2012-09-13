@@ -93,7 +93,7 @@ namespace mmuc_zombie.app.helper
                         {
                             var lu=new LobbyUsers();
                             lu.userId=u.Id;
-                            lu.picture = String.IsNullOrWhiteSpace(u.Facebook) ? u.getPicture() : u.Facebook;
+                            lu.picture = u.getPictureString();
                             lu.name=u.UserName;
                             help.Add(lu);
                         }
