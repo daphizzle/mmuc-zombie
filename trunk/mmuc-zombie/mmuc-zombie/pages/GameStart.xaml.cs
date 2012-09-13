@@ -139,10 +139,12 @@ namespace mmuc_zombie.pages
                 if (userList[i].bot && ifZombie(i))
                 {
                     role.roleType = "Zombie";
+                    role.ingameIcon = Constants.random.Next(6) + 1;
 
                 }
                 else
                 {
+                    role.ingameIcon = Constants.random.Next(4) + 1;
                     role.roleType = "Survivor";
                     role.maxLife = 5;
                 }
@@ -282,6 +284,11 @@ namespace mmuc_zombie.pages
                 });
                 });
             }
+        }
+
+        private void add_Click(object sender, RoutedEventArgs e)
+        {
+
         }
   
       

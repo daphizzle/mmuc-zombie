@@ -30,8 +30,9 @@ public class User :  MyParseObject
     public string locationId { get; set; }    
     public string Facebook { get; set; }
     public string FacebookToken { get; set; }
-    public string DeviceID { get; set; }    
-    public bool bot { get; set; }    
+    public string DeviceID { get; set; }
+    public string picture { get; set; }
+    public bool bot { get; set; }
     //public ParseFile avatar { get; set; }
     //public byte[] avatarBytes { get; set; }    
     //public FBUser _facebook { get; set; }
@@ -128,6 +129,7 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.bot, bot).
+             Set(u => u.bot, bot).
             //Set(u => u.avatar, avatar).
             Execute(callback);
     }

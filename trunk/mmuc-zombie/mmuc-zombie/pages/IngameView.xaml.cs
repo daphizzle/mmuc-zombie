@@ -570,25 +570,34 @@ namespace mmuc_zombie.pages
                     {
                         playerPosition = i;
                         p.Template = this.Resources["playerzombiepin"] as ControlTemplate;
+                        var fg = this.Resources["playerzombiepin"] as ControlTemplate;
+
                     }
                     else
-                        p.Template = this.Resources["zombiepin"] as ControlTemplate;
-                   
+                    {
+                        
+                        String h = "zombiepin" + roleList[i].ingameIcon;
+                        p.Template = this.Resources[h] as ControlTemplate;
+                    }
                  
                 }
                 else if (roleList[i].roleType.Equals("Survivor"))
                 {
                  //   p.Style = (Style)(Application.Current.Resources["PushpinStyle"]);
                     Debug.WriteLine("Survivorstyle");
-                   
+
                     if (user.Id.Equals(userList[i].Id))
                     {
                         playerPosition = i;
                         p.Template = this.Resources["playersurvivorpin"] as ControlTemplate;
                     }
                     else
-                        p.Template = this.Resources["survivorpin"] as ControlTemplate;
-                }
+                    {
+                       
+                        String h = "survivorpin" + roleList[i].ingameIcon;
+                        p.Template = this.Resources[h] as ControlTemplate;
+                    }
+                    }
             
                 if (!roleList[i].roleType.Equals(Constants.ROLE_OBSERVER))
                     mapLayer.Children.Add(p);

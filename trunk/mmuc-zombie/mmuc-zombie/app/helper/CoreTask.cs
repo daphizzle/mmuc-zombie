@@ -86,14 +86,25 @@ namespace mmuc_zombie.app.helper
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                     {
+
                         lobbyUserList = (List<User>)r.Data.Results;
+                        var help= new List<LobbyUsers>();
+                        foreach (User u in lobbyUserList)
+                        {
+                            var lu=new LobbyUsers();
+                            lu.userId=u.Id;
+                            lu.picture = String.IsNullOrWhiteSpace(u.Facebook) ? u.getPicture() : u.Facebook;
+                            lu.name=u.UserName;
+                            help.Add(lu);
+                        }
+                            
                         var currentPage = ((PhoneApplicationFrame)Application.Current.RootVisual).Content;
                         if (currentPage is GameStart)
                         {
                             var mypage = (GameStart)currentPage;
                             if (mypage.playerList.ItemsSource == null)
                                 Progressbar.HideProgressBar();
-                            mypage.playerList.ItemsSource = lobbyUserList;
+                            mypage.playerList.ItemsSource = help;
                         }
                     });
             }

@@ -24,6 +24,7 @@ public class Roles : MyParseObject
         public int questCount { get; set; }
         public int killCount { get; set; }
         public int maxLife { get; set; }
+        public int ingameIcon { get; set; }
 
         public void update(Action<Response<DateTime>> callback)
         {
@@ -39,6 +40,7 @@ public class Roles : MyParseObject
                 Set(u => u.questCount,questCount).
                 Set(u => u.killCount,killCount).
                 Set(u => u.maxLife,maxLife).
+                Set(u => u.ingameIcon, ingameIcon).
                 Execute(callback);
 
         }

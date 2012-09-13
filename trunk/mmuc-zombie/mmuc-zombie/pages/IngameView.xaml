@@ -17,22 +17,94 @@
     BackKeyPress="PhoneApplicationPage_BackKeyPress"
     Loaded="PhoneApplicationPage_Loaded">
     <phone:PhoneApplicationPage.Resources>
-        <ControlTemplate x:Key="zombiepin"
+        <ControlTemplate x:Key="zombiepin1"
                                  TargetType="m:Pushpin">
             <Grid x:Name="ContentGrid"
                Width="36"
                Height="36"
                Margin="0">
-                <Image Source="/mmuc-zombie;component/ext/img/zombie1.jpg" Stretch="Fill"/>
+                <Image  Source="/mmuc-zombie;component/ext/img/z1.png" Stretch="Fill"/>
             </Grid>
         </ControlTemplate>
-        <ControlTemplate x:Key="survivorpin"
+        <ControlTemplate x:Key="zombiepin2"
                                  TargetType="m:Pushpin">
             <Grid x:Name="ContentGrid"
                Width="36"
                Height="36"
                Margin="0">
-                <Image Source="/mmuc-zombie;component/ext/img/survivor1.jpg" Stretch="Fill"/>
+                <Image  Source="/mmuc-zombie;component/ext/img/z2.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="zombiepin3"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image  Source="/mmuc-zombie;component/ext/img/z3.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="zombiepin4"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image  Source="/mmuc-zombie;component/ext/img/z4.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="zombiepin5"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image  Source="/mmuc-zombie;component/ext/img/z5.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="zombiepin6"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image  Source="/mmuc-zombie;component/ext/img/z6.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="survivorpin1"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/s1.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="survivorpin2"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/s2.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="survivorpin3"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/s3.png" Stretch="Fill"/>
+            </Grid>
+        </ControlTemplate>
+        <ControlTemplate x:Key="survivorpin4"
+                                 TargetType="m:Pushpin">
+            <Grid x:Name="ContentGrid"
+               Width="36"
+               Height="36"
+               Margin="0">
+                <Image Source="/mmuc-zombie;component/ext/img/s4.png" Stretch="Fill"/>
             </Grid>
         </ControlTemplate>
         <ControlTemplate x:Key="questpin"
