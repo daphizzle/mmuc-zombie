@@ -1,0 +1,21 @@
+﻿using System;
+using System.Net;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+
+namespace mmuc_zombie.app.model
+{
+    public class LobbyUsers
+    {
+        public string userId { get; set; }
+        public string picture { get; set; }
+        public string name { get; set; }
+        
+    }
+}

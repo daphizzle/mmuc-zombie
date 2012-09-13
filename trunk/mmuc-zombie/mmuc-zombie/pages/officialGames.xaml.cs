@@ -146,7 +146,7 @@ namespace mmuc_zombie.pages
                         p.Template = this.Resources["playerpin"] as ControlTemplate;
                         MapWithPolygon.Center = p.Location;
                         mapLayer.Children.Add(p);
-                        MapWithPolygon.ZoomLevel = 13;
+                        MapWithPolygon.ZoomLevel = 16;
                     });
                 }
             });
