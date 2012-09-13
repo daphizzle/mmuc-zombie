@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Phone.Shell;
 using System.Device.Location;
+using System.Diagnostics;
 
 namespace mmuc_zombie.app.helper
 {
@@ -195,6 +196,8 @@ namespace mmuc_zombie.app.helper
             myLocation.longitude = list[val].Longitude;
             while(!pointInPolygon(gameArea,myLocation))
             {
+
+                Debug.WriteLine("randomwalk");
                 val=Constants.random.Next(0,360);
                 myLocation.latitude = list[val].Latitude;
                 myLocation.longitude = list[val].Longitude;
@@ -206,12 +209,9 @@ namespace mmuc_zombie.app.helper
             var list = drawCircle(myLocation.toGeoCoordinate(), Constants.BOT_MOVEMENT);
             var distance = myLocation.toGeoCoordinate().GetDistanceTo(nextSurvivor.toGeoCoordinate());
             var val = Constants.random.Next(0, 360);
-            myLocation.latitude = list[val].Latitude;
-            myLocation.longitude = list[val].Longitude;
-            while (!pointInPolygon(gameArea, myLocation)||
-                (myLocation.toGeoCoordinate().GetDistanceTo(nextSurvivor.toGeoCoordinate())>distance))
+            if (pointInPolygon(gameArea, myLocation)&&
+                (new GeoCoordinate(list[val].Latitude,list[val].Longitude).GetDistanceTo(nextSurvivor.toGeoCoordinate())<=distance))
             {
-                val = Constants.random.Next(0, 360);
                 myLocation.latitude = list[val].Latitude;
                 myLocation.longitude = list[val].Longitude;
             }

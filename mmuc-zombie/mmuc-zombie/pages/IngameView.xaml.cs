@@ -327,10 +327,14 @@ namespace mmuc_zombie.pages
                 }
                 else
                 {
-                    Debug.WriteLine("Starting infection");
+                    Debug.WriteLine("Botwalk");
                     botsWalk();
+
+                    Debug.WriteLine("Queststuff");
                     doQuestStuff();
+                    Debug.WriteLine("Starting infection");
                     infectSurvivors();
+                    Debug.WriteLine("Update");
                     updateGame();
                 }
             }
@@ -341,6 +345,8 @@ namespace mmuc_zombie.pages
         private void botsWalk()
         {
             for (int i = 0; i < userList.Count; i++)
+            {
+                Debug.WriteLine("Outer for " + i);
                 if (userList[i].bot)
                 {
                     if (roleList[i].roleType == Constants.ROLE_SURVIVOR)
@@ -349,21 +355,24 @@ namespace mmuc_zombie.pages
                     {
                         MyLocation nextSurvivor = new MyLocation();
                         double distance = double.MaxValue;
-                        for(int j = 0; j<userList.Count;j++)
+                        for (int j = 0; j < userList.Count; j++)
                         {
-                            if(roleList[j].roleType==Constants.ROLE_SURVIVOR)
+
+                            Debug.WriteLine("Inner for " + i);
+                            if (roleList[j].roleType == Constants.ROLE_SURVIVOR)
                             {
                                 double newDistance = locationList[j].toGeoCoordinate().GetDistanceTo(locationList[i].toGeoCoordinate());
-                                if(newDistance<distance)
+                                if (newDistance < distance)
                                 {
                                     distance = newDistance;
                                     nextSurvivor = locationList[j];
                                 }
                             }
                         }
-                        StaticHelper.zombieWalk(gameArea, locationList[i],nextSurvivor);
+                        StaticHelper.zombieWalk(gameArea, locationList[i], nextSurvivor);
                     }
                 }
+            }
         }
         private void doQuestStuff()
         {
