@@ -19,8 +19,13 @@ namespace mmuc_zombie.app.helper
         private static string m_strLoginURL = "https://graph.facebook.com/oauth/authorize?client_id={0}&redirect_uri=https://www.facebook.com/connect/login_success.html&display=touch&scope=publish_stream,user_hometown";
 	    private static string m_strGetAccessTokenURL = "https://graph.facebook.com/oauth/access_token?client_id={0}&redirect_uri=https://www.facebook.com/connect/login_success.html&client_secret={1}&code={2}";	
         private static string m_strQueryUserURL = "https://graph.facebook.com/me?fields=id,name,gender,link,hometown,picture&locale=en_US&access_token={0}";
-        private static string m_strAppLogoutURL = "http://facebook.com/logout.php?confirm=1&app_key={0}&session_key={1}&next=http://facebook.com/logout.php";
+        
+        //private static string m_strAppLogoutURL = "https://www.facebook.com/logout.php?confirm=1&app_key={0}&session_key={1}&next=http://facebook.com/logout.php";
+        private static string m_strAppLogoutURL = "https://www.facebook.com/logout.php?next=http://facebook.com/home.php";
+
         private static string m_strLoadFriendsURL = "https://graph.facebook.com/me/friends?access_token={0}";        
+        private static string m_strPostMessageURL = "https://graph.facebook.com/{0}/feed";
+        private static string m_strWall = "https://graph.facebook.com/{0}/feed?access_token={1}&fields=id,from,to,caption,description,attribution,message";
 
         public static Uri GetQueryUserUri(string strAccressToken)
         {
@@ -44,6 +49,20 @@ namespace mmuc_zombie.app.helper
         public static Uri GetLoadFriendsUri(string strAccressToken)
         {
             return (new Uri(string.Format(m_strLoadFriendsURL, strAccressToken), UriKind.Absolute));
+        }
+
+        //public static Uri GetPostMessageUri()
+        //{
+        //    return (new Uri(m_strPostMessageURL, UriKind.Absolute));
+        //}
+
+        public static Uri GetPostMessageUri(string strUserID = "me")
+        {
+            return (new Uri(string.Format(m_strPostMessageURL, strUserID), UriKind.Absolute));
+        }
+        public static Uri GetWallUri(string strAccessToken, string strUserID = "me")
+        {
+            return (new Uri(string.Format(m_strWall, strUserID, strAccessToken), UriKind.Absolute));
         }
 
         //retrieves the session key from the accesstoken

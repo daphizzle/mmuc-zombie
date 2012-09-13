@@ -77,6 +77,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="app\facebook\FBWallPost.cs" />
     <Compile Include="app\helper\Constants.cs" />
     <Compile Include="app\helper\CoreTask.cs" />
     <Compile Include="app\facebook\FBFriends.cs" />
@@ -90,11 +91,11 @@
     <Compile Include="app\helper\StaticHelper.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
-    <Compile Include="app\modelTest\HallOfFame.cs" />
+    <Compile Include="app\model\LobbyUsers.cs" />
+    <Compile Include="app\model\Statistics.cs" />
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
     <Compile Include="app\modelTest\UserTmp.cs" />
-    <Compile Include="app\model\LobbyUsers.cs" />
     <Compile Include="app\model\Quest.cs" />
     <Compile Include="app\model\Message.cs" />
     <Compile Include="app\model\MyLocation.cs" />
@@ -126,7 +127,10 @@
     <Compile Include="components\friendsView.xaml.cs">
       <DependentUpon>friendsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ext\img\playerView.xaml.cs">
+    <Compile Include="pages\facebookWallPostView.xaml.cs">
+      <DependentUpon>facebookWallPostView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="components\playerView.xaml.cs">
       <DependentUpon>playerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="components\hallOfFamePlayer.xaml.cs">
@@ -142,8 +146,8 @@
     <Compile Include="pages\GameStart.xaml.cs">
       <DependentUpon>GameStart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="pages\HallFame.xaml.cs">
-      <DependentUpon>HallFame.xaml</DependentUpon>
+    <Compile Include="pages\StatisticsView.xaml.cs">
+      <DependentUpon>StatisticsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -234,7 +238,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ext\img\playerView.xaml">
+    <Page Include="pages\facebookWallPostView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="components\playerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -254,7 +262,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="pages\HallFame.xaml">
+    <Page Include="pages\StatisticsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -81,7 +81,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1" Margin="5">
                             <!--<TextBlock Text="Hall of Fame" Style="{StaticResource PhoneTextNormalStyle}"/>-->
-                            <ScottIsAFool_Controls:TileSlider Name="fame"  TextSlidesFrom="Right" Text="Hall of Fame" LongText="Get in touch with the best players" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op4.png" Click="fame_Click" />
+                            <ScottIsAFool_Controls:TileSlider Name="statistics"  TextSlidesFrom="Right" Text="Statistics" LongText="Get in touch with the best players" TextStyle="{StaticResource PhoneTextLargeStyle}" TileBackground="Transparent" Size="173" ImageSource="/mmuc-zombie;component/ext/img/menu_op4.png" Click="statistics_Click" />
                         </StackPanel>
 
                         <!-- ROW #3 -->

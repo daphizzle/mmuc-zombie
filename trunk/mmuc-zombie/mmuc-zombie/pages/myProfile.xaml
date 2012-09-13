@@ -90,45 +90,6 @@
 
             </controls:PivotItem>
             
-            <!--Pivot item three-->
-            <controls:PivotItem >
-            	<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="history" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
-            	</controls:PivotItem.Header>
-
-                <Grid x:Name="HistoryGrid" Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <ListBox Name="History" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                                 FlowDirection="LeftToRight" VerticalContentAlignment="Stretch" Margin="0,0,6,0">
-                        <StackPanel xmlns:src="clr-namespace:mmuc_zombie.components" Name="historyStack" 
-                                        Background="Transparent" Margin="0,0,0,0" VerticalAlignment="Stretch" 
-                                        Visibility="Visible" HorizontalAlignment="Center" Width="456" >
-                        </StackPanel>
-                    </ListBox>
-                    </Grid>
-                
-            </controls:PivotItem>
-
-            <!--Pivot item three-->
-            <controls:PivotItem >
-            	<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="achievements" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
-            	</controls:PivotItem.Header>
-                <Grid Height="557">
-                    <TextBlock Height="30" Margin="28,32,119,0" Name="nicknameAch" Text="NickName" VerticalAlignment="Top" FontSize="25" Width="309" />
-                    <TextBlock Height="30" Margin="29,62,120,0" Name="reputation" Text="Reputation" VerticalAlignment="Top" Width="307" />
-                    <Image Height="86" Margin="350,16,17,0" Name="reputationLogo" Stretch="Uniform" VerticalAlignment="Top" Source="file:///E:/-%20DEVELOP/DOT%20NET/mmuc-zombie/mmuc-zombie/ext/img/_star.png" />
-                    <ListBox Margin="32,111,17,0" Name="listBox1">
-                        <ListBoxItem Content="Played Games" />
-                        <ListBoxItem Content="Wins" />
-                    </ListBox>
-                    <Button Content="Clear Database" Height="73" HorizontalAlignment="Left" Margin="129,421,0,0" Name="button1" VerticalAlignment="Top" Width="266" Click="button1_Click" />
-                </Grid>
-            </controls:PivotItem>
             
         </controls:Pivot>
         <Grid.Background>

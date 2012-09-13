@@ -35,9 +35,11 @@ namespace mmuc_zombie.components
                 friend.user = userId;
                 friend.create(r =>
                 {
-                    Debug.WriteLine(friendId + " is now a friend of " + userId);
-                    isFriend = true;
-                    friendId = r.Data.Id;
+                    if(friendId != null){
+                        Debug.WriteLine(friendId + " is now a friend of " + userId);
+                        isFriend = true;
+                        friendId = r.Data.Id;
+                    }
                 });
 
                 tmpTextBlock.Text = "friend";

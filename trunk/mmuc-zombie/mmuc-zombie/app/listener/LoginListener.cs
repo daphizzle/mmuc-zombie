@@ -31,6 +31,7 @@ namespace mmuc_zombie
             //there is only one MyParseObject            
             //User.set((User)list[0]);
             service.State["user"] = (User)list[0];
+            App.AccessToken = ((User)list[0]).FacebookToken;
             PositionRetriever.startPositionRetrieving(100);
             
         }

@@ -25,12 +25,12 @@ namespace mmuc_zombie.pages
 
         private void profile_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/pages/MyProfile.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/MyProfile.xaml", UriKind.Relative));            
         }
 
-        private void fame_Click(object sender, RoutedEventArgs e)
+        private void statistics_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/pages/HallFame.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/pages/StatisticsView.xaml", UriKind.Relative));
         }
 
         private void runningGame_Click(object sender, RoutedEventArgs e)
@@ -56,7 +56,7 @@ namespace mmuc_zombie.pages
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
             PhoneApplicationService service = PhoneApplicationService.Current;       
-            if (service.State["user"]=="-1")
+            if (service.State["user"] == "-1")
                 Progressbar.ShowProgressBar();
         }
 
