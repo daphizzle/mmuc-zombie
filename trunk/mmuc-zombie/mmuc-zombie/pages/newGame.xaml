@@ -139,21 +139,9 @@
                  </Grid>
     </controls:PivotItem>
 
-            <!--Pivot item 4-->
-            <controls:PivotItem >
-            	<controls:PivotItem.Header>
-            		<TextBlock Text="quarentine" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
-            	</controls:PivotItem.Header>
-                <Grid/>
-            </controls:PivotItem>
-
-            <!--Pivot item 5-->
-            <controls:PivotItem >
-            	<controls:PivotItem.Header>
-            		<TextBlock Text="inmunity" FontSize="54"  FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey" />
-            	</controls:PivotItem.Header>
-                <Grid/>
-            </controls:PivotItem>
+        
+            
+         
 
         </controls:Pivot>
         
