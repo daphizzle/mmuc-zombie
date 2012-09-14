@@ -126,7 +126,44 @@ public class Game : MyParseObject
         parse.Objects.Query<Invite>().Where(c => c.userId == userId).Execute(callback);
     }
 
+    public static void findPlayedGames(Action<Response<ResultsResponse<Game>>> callback)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId = user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        parse.Objects.Query<Game>().Where(c => c.state != (int)Constants.GAMEMODES.FINISHED).Execute(callback);
+    }
 
+    internal static void findPlayedGamesByMe(Action<Response<Game>> callback)
+    {
+        var parse = new Driver();
+        PhoneApplicationService service = PhoneApplicationService.Current;
+        User user = (User)service.State["user"];
+        string userId = user.Id;
+        List<MyParseObject> list = new List<MyParseObject>();
+        string gameID;
+
+        parse.Objects.Query<Game>().Where(c => c.state != (int)Constants.GAMEMODES.FINISHED).Execute(r =>
+        {
+            if (r.Success)
+            {
+                List<Game> playedGames = (List<Game>)r.Data.Results;
+                foreach(Game g in playedGames)
+                {
+                    gameID = g.Id;
+                    parse.Objects.Query<Roles>().Where(c => c.gameId == gameID && c.userId == userId).Execute(r2 =>
+                    {
+                        if (r2.Success)
+                        {
+                            parse.Objects.Get<Game>(gameID, callback);
+                        }
+                    });
+                }
+            }
+        });
+    }
 
     static public void findMyGames(Action<Response<ResultsResponse<Game>>> callback)
     {
@@ -228,6 +265,5 @@ public class Game : MyParseObject
                 }
             });
     }
-
-
+    
 }

@@ -33,7 +33,7 @@ public class User :  MyParseObject
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }
-    public string picture { get; set; }
+    public string picture;
 
 
     public User()
@@ -47,47 +47,29 @@ public class User :  MyParseObject
         locationId = "";
         DeviceID = "";        
         FacebookToken = "";
-        //avatar = null;
-    }
+        picture = "";
+    }  
 
     public void saveToState()
     {
          PhoneApplicationService service = PhoneApplicationService.Current;
-         service.State["user"] = this;
-         //App.User = this;
-    }
-    public static void set(User user)
-    {
-        PhoneApplicationService service = PhoneApplicationService.Current;
-        service.State["user"] = user;
-        //App.User = user;
-    }
+         service.State["user"] = this;         
+    }    
     public static User getFromState()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
         return (User)service.State["user"];
     }
-    public static User get()
-    {
-        PhoneApplicationService service = PhoneApplicationService.Current;
-        if(service.State.ContainsKey("user"))
-        return (User)service.State["user"];
-        return new User();
-    }
 
     public void updateCurrentUser()
     {
         PhoneApplicationService service = PhoneApplicationService.Current;
-        service.State["user"] = this;
-        //set(this);
+        service.State["user"] = this;        
         update();
     }
 
     public new void update()
-    {
-        //ParseFile pic = updatePicture();
-        //this.avatar = pic;
-        
+    {        
         var parse = new Driver();
         parse.Objects.Update<User>(this.Id).
             Set(u => u.status, status).
@@ -101,7 +83,7 @@ public class User :  MyParseObject
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.FacebookToken, FacebookToken).
             Set(u => u.bot, bot).
-            //Set(u => u.avatar, avatar).
+            Set(u => u.picture, picture).
             Execute(r =>
             {
                 if (r.Success)
@@ -126,8 +108,8 @@ public class User :  MyParseObject
             Set(u => u.locationId, locationId).
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.bot, bot).
-             Set(u => u.bot, bot).
-            //Set(u => u.avatar, avatar).
+            Set(u => u.bot, bot).
+            Set(u => u.picture, picture).
             Execute(callback);
     }
 
@@ -156,20 +138,27 @@ public class User :  MyParseObject
 
     public  BitmapImage getPicture()
     {
-        if (bot)
-            return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/bot.png", UriKind.Relative));
-        if (String.IsNullOrWhiteSpace(Facebook))
-            return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/avatar.png",UriKind.Relative));
-        else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
+        //tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getDefaultPicture() : tmp.Facebook, UriKind.Absolute));
+        return new BitmapImage(new Uri(this.Picture, UriKind.Relative));
+
+        //if (bot)
+        //    return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/bot.png", UriKind.Relative));
+        //if (String.IsNullOrWhiteSpace(Facebook))
+        //    return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/avatar.png",UriKind.Relative));
+        //else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
     }
 
-
-    internal string getPictureString()
+    public string Picture
     {
-        if (bot)
-            return "/mmuc-zombie;component/ext/img/bot.png";
-        if (String.IsNullOrWhiteSpace(Facebook))
-            return "/mmuc-zombie;component/ext/img/avatar.png";
-        else return Facebook;
+        get
+        {
+            if (bot)
+                return Constants.BOT_PICTURE;
+            if (String.IsNullOrWhiteSpace(Facebook))
+                return Constants.DEFAULT_PICTURE;
+            else return Facebook;
+        }
+        set { picture = value; }
     }
+    
 }

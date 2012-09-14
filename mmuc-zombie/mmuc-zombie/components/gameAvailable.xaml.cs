@@ -36,7 +36,7 @@ namespace mmuc_zombie.components
             Roles role = new Roles();
             role.roleType = Constants.ROLE_OBSERVER;
             role.alive = true;
-            User user = User.get();
+            User user = User.getFromState();
             user.status = 2;
             user.activeGame = gameID;
 

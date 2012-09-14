@@ -33,10 +33,10 @@ namespace mmuc_zombie.components
         private void join_Click(object sender, RoutedEventArgs e)
         {
             var parse = new Driver();
-            User user = User.get();
+            User user = User.getFromState();
             user.status = 1;
             user.activeGame = gameID;
-            User.set(user); 
+            user.saveToState();
 
             parse.Objects.Update<User>(user.Id).Set(u=>u.status,1).Set(u=>user.activeGame,gameID).Execute(ro=>
             {

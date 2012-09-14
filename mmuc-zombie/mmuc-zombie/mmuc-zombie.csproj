@@ -92,6 +92,7 @@
     <Compile Include="app\listener\LocationListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
     <Compile Include="app\model\LobbyUsers.cs" />
+    <Compile Include="app\helper\Player.cs" />
     <Compile Include="app\model\Statistics.cs" />
     <Compile Include="app\modelTest\HistoryTmp.cs" />
     <Compile Include="app\modelTest\PlayerTmp.cs" />
@@ -102,6 +103,9 @@
     <Compile Include="app\model\MyPolygon.cs" />
     <Compile Include="app\model\Invite.cs" />
     <Compile Include="app\model\PendingGames.cs" />
+    <Compile Include="components\gamePlayedStatistics.xaml.cs">
+      <DependentUpon>gamePlayedStatistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="components\gameAvailable.xaml.cs">
       <DependentUpon>gameAvailable.xaml</DependentUpon>
     </Compile>
@@ -210,6 +214,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="components\gamePlayedStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="components\gameAvailable.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
