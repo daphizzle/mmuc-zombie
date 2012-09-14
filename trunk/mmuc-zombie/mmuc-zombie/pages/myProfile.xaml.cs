@@ -171,7 +171,7 @@ namespace mmuc_zombie.pages
                 offline.Visibility = Visibility.Collapsed;                
             }
 
-            if (!String.IsNullOrWhiteSpace(user.picture))
+            if (!String.IsNullOrWhiteSpace(user.picture) && user.picture.Contains("http"))
             {
                 this.avatar.Source = user.getPicture();
                 facebookLabel.Visibility = Visibility.Collapsed;

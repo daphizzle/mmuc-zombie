@@ -33,7 +33,7 @@ public class User :  MyParseObject
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }
-    public string _picture;
+    public string Picture;
 
     public User()
     {
@@ -46,7 +46,7 @@ public class User :  MyParseObject
         locationId = "";
         DeviceID = "";        
         FacebookToken = "";
-        picture = "";
+        Picture = "";
     }  
 
     public void saveToState()
@@ -82,7 +82,7 @@ public class User :  MyParseObject
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.FacebookToken, FacebookToken).
             Set(u => u.bot, bot).
-            Set(u => u.picture, picture).
+            Set(u => u.Picture, Picture).
             Execute(r =>
             {
                 if (r.Success)
@@ -108,7 +108,7 @@ public class User :  MyParseObject
             Set(u => u.DeviceID, DeviceID).            
             Set(u => u.bot, bot).
             Set(u => u.bot, bot).
-            Set(u => u.picture, picture).
+            Set(u => u.Picture, Picture).
             Execute(callback);
     }
 
@@ -137,8 +137,8 @@ public class User :  MyParseObject
 
     public BitmapImage getPicture()
     {
-        if (_picture == null) _picture = "";
-        if(bot || (String.IsNullOrWhiteSpace(Facebook) && !_picture.Trim().ToLower().Contains("http")))
+        if (Picture == null) Picture = "";
+        if(bot || (String.IsNullOrWhiteSpace(Facebook) && !Picture.Trim().ToLower().Contains("http")))
             return new BitmapImage(new Uri(getPictureString(), UriKind.Relative));
         else return new BitmapImage(new Uri(getPictureString(), UriKind.Absolute));
     }
@@ -151,7 +151,7 @@ public class User :  MyParseObject
         }
         set
         {
-            _picture = value;
+            Picture = value;
         }
     }
 
@@ -159,8 +159,8 @@ public class User :  MyParseObject
     {
         if (bot)
             return Constants.BOT_PICTURE;        
-        if (!String.IsNullOrWhiteSpace(_picture))
-            return _picture;
+        if (!String.IsNullOrWhiteSpace(Picture))
+            return Picture;
         else if (!String.IsNullOrWhiteSpace(Facebook))
             return Facebook;
         return Constants.DEFAULT_PICTURE;
