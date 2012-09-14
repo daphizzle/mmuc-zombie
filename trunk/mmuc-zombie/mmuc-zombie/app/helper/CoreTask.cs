@@ -93,7 +93,7 @@ namespace mmuc_zombie.app.helper
                         {
                             var lu=new LobbyUsers();
                             lu.userId=u.Id;
-                            lu.picture = u.Picture;
+                            lu.picture = u.picture;
                             lu.name=u.UserName;
                             help.Add(lu);
                         }
