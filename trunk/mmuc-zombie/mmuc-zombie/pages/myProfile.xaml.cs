@@ -62,7 +62,7 @@ namespace mmuc_zombie.pages
 
             foreach (User tmp in users)
             {
-                if (!tmp.Id.Equals(User.getFromState().Id))
+                if (!tmp.Id.Trim().Equals(User.getFromState().Id.Trim()))
                 {
                     tmpUI = new mmuc_zombie.components.friendsView();
                     foreach (Friend friend in friends)
