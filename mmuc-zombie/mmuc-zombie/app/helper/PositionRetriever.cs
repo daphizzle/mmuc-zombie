@@ -93,20 +93,20 @@ namespace mmuc_zombie.app.helper
             {
                 case GeoPositionStatus.Disabled:
                     Debug.WriteLine("Watcher disabled");
-                    MessageBox.Show("Location Service is not enabled on the device");
+                    MessageBox.Show("Location Service is now disabled on the device");
                     break;
                 case GeoPositionStatus.Initializing:
                     //Don´t do anything data aquisition should start soon
                     break;
                 case GeoPositionStatus.NoData:
                     Debug.WriteLine("Watcher got no Data");
-                    MessageBox.Show("Location Service is not enabled on the device");
+                    MessageBox.Show("Location Service is init on the device");
                     
                     //TODO: display error ? or just wait for new Data
                     break;
                 case GeoPositionStatus.Ready:
                     Debug.WriteLine("Watcher running!");
-                    MessageBox.Show("Location Service is not enabled on the device");
+                    MessageBox.Show("Location Service is now enabled on the device");
                     //This is the good case, don´t display errors
                     break;
 
