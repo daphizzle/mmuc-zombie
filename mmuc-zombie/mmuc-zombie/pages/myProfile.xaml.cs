@@ -160,8 +160,7 @@ namespace mmuc_zombie.pages
                 genderText.Visibility = Visibility.Collapsed;
                 hometownText.Visibility = Visibility.Collapsed;
                 facebookLabel.Visibility = Visibility.Collapsed;
-                offline.Visibility = Visibility.Visible;
-                //if (appbar_facebook != null) appbar_facebook.IsEnabled = true;
+                offline.Visibility = Visibility.Visible;                
             }
             else if (!((FBUser)fbUserGrid.DataContext).Picture.PictureUrl.Url.Equals(Constants.AVATARPATH))
             {                
@@ -169,8 +168,13 @@ namespace mmuc_zombie.pages
                 genderText.Visibility = Visibility.Visible;
                 hometownText.Visibility = Visibility.Visible;
                 facebookLabel.Visibility = Visibility.Visible;
-                offline.Visibility = Visibility.Collapsed;
-                //if (appbar_facebook != null) appbar_facebook.IsEnabled = false;
+                offline.Visibility = Visibility.Collapsed;                
+            }
+
+            if (!String.IsNullOrWhiteSpace(user.picture))
+            {
+                this.avatar.Source = user.getPicture();
+                facebookLabel.Visibility = Visibility.Collapsed;
             }
         }
 

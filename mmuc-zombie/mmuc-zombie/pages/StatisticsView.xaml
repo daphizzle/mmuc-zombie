@@ -40,7 +40,7 @@
         <!-- item template -->
         <DataTemplate x:Key="CustomItemTemplate" >
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Picture}" Width="80" Height="80" />
+                <Image Source="{Binding picture}" Width="80" Height="80" />
                 <TextBlock Text="{Binding UserName}" />
                 <TextBlock Text=", (" />
                 <TextBlock Text="{Binding game.name}" />

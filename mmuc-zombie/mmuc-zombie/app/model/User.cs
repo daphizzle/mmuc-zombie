@@ -33,8 +33,7 @@ public class User :  MyParseObject
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }
-    public string picture;
-
+    public string _picture;
 
     public User()
     {
@@ -136,26 +135,35 @@ public class User :  MyParseObject
         driver.Objects.Get<User>(userId,callback);
     }
 
-    public  BitmapImage getPicture()
-    {        
-        if (bot || String.IsNullOrWhiteSpace(Facebook))
-            return new BitmapImage(new Uri(Picture, UriKind.Relative));
-        else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
-    }   
-
-    public string Picture
+    public BitmapImage getPicture()
     {
-        get { return getPictureString(); }
-        set { picture = value; }
+        if (_picture == null) _picture = "";
+        if(bot || (String.IsNullOrWhiteSpace(Facebook) && !_picture.Trim().ToLower().Contains("http")))
+            return new BitmapImage(new Uri(getPictureString(), UriKind.Relative));
+        else return new BitmapImage(new Uri(getPictureString(), UriKind.Absolute));
     }
 
-    private string getPictureString()
+    public String picture
+    {
+        get
+        {
+            return getPictureString();
+        }
+        set
+        {
+            _picture = value;
+        }
+    }
+
+    public string getPictureString()
     {
         if (bot)
-            return Constants.BOT_PICTURE;
-        if (String.IsNullOrWhiteSpace(Facebook))
-            return Constants.DEFAULT_PICTURE;
-        else return Facebook;
+            return Constants.BOT_PICTURE;        
+        if (!String.IsNullOrWhiteSpace(_picture))
+            return _picture;
+        else if (!String.IsNullOrWhiteSpace(Facebook))
+            return Facebook;
+        return Constants.DEFAULT_PICTURE;
     }
     
 }
