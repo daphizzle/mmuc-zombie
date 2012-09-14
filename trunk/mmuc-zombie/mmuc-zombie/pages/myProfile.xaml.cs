@@ -36,7 +36,7 @@ namespace mmuc_zombie.pages
         public MyProfile()
         {
             InitializeComponent();
-            user = User.get();
+            user = User.getFromState();
             InitializeOtherComponents();
             
             //PhoneApplicationService service = PhoneApplicationService.Current;

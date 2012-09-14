@@ -54,8 +54,8 @@ namespace mmuc_zombie.pages
                 txtStatus.Text = "Logged out";
                 txtError.Text = "OK";
                 App.AccessToken = "";
-                User.get().Facebook = "";
-                User.get().FacebookToken = "";                
+                User.getFromState().Facebook = "";
+                User.getFromState().FacebookToken = "";                
                 return;
             }
         }

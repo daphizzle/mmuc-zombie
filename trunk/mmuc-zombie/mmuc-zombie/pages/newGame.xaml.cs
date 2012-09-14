@@ -262,7 +262,7 @@ namespace mmuc_zombie.pages
             {
                 _editable = true;
                 service = PhoneApplicationService.Current;
-                User user = User.get();
+                User user = User.getFromState();
                 //getGame(gameId, getGameCallback);
                 //populate fields
                 //save button -> update button (actions)

@@ -51,7 +51,7 @@ namespace mmuc_zombie.pages
                 nPos = strPart.IndexOf("&");
                 strPart = strPart.Substring(0, nPos);
                 App.AccessToken = strPart;
-                    User u = User.get();
+                    User u = User.getFromState();
                     u.FacebookToken = App.AccessToken;
                     u.updateCurrentUser();
                 NavigationService.GoBack();

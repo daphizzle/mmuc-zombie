@@ -16,6 +16,8 @@ namespace mmuc_zombie.app.helper
         public const string NONICKNAME = "nickname";
         public const string AVATARPATH = "/mmuc-zombie;component/ext/img/avatar.png";
         public const string FBCOMMENT = "Write your comment here...";
+        public const string DEFAULT_PICTURE = "/mmuc-zombie;component/ext/img/avatar.png"; //http://www.cwv.com.ve/wp-content/uploads/2011/12/1603-bill-gates-1.jpg";
+        public const string BOT_PICTURE = "/mmuc-zombie;component/ext/img/bot.png";
 
         public enum USERGAMEMODES : int { INIT = 0, IDLE, LOBBY, INGAME };
         public enum GAMEMODES : int { PENDING = 0, ACTIVE, FINISHED };
@@ -27,7 +29,6 @@ namespace mmuc_zombie.app.helper
 
         public const int TOPK = 6;
 
-
         public const int SMALL_GAME_SIZE = 500;
         public const int MEDIUM_GAME_SIZE = 2000;
         public const int BIG_GAME_SIZE = 4000;
@@ -35,8 +36,6 @@ namespace mmuc_zombie.app.helper
         public const int SMALL_GAME_INFECTION_RANGE = 25;
         public const int MEDIUM_GAME_INFECTION_RANGE = 100;
         public const int BIG_GAME_INFECTION_RANGE = 200;
-
-
 
         public const int SMALL_GAME_ZOOMFACTOR = 17;
         public const int MEDIUM_GAME_ZOOMFACTOR = 16;
@@ -49,8 +48,6 @@ namespace mmuc_zombie.app.helper
         public const int BIG_GAME_INFECTION_RANGE_INC = 20;
 
         public static Random random= new Random();
-        
-
         
     }
 }
