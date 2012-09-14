@@ -137,28 +137,25 @@ public class User :  MyParseObject
     }
 
     public  BitmapImage getPicture()
-    {
-        //tmpUI.userImage.Source = new BitmapImage(new Uri(String.IsNullOrWhiteSpace(tmp.Facebook) ? tmp.getDefaultPicture() : tmp.Facebook, UriKind.Absolute));
-        return new BitmapImage(new Uri(this.Picture, UriKind.Relative));
-
-        //if (bot)
-        //    return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/bot.png", UriKind.Relative));
-        //if (String.IsNullOrWhiteSpace(Facebook))
-        //    return new BitmapImage(new Uri("/mmuc-zombie;component/ext/img/avatar.png",UriKind.Relative));
-        //else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
-    }
+    {        
+        if (bot || String.IsNullOrWhiteSpace(Facebook))
+            return new BitmapImage(new Uri(Picture, UriKind.Relative));
+        else return new BitmapImage(new Uri(Facebook, UriKind.Absolute));
+    }   
 
     public string Picture
     {
-        get
-        {
-            if (bot)
-                return Constants.BOT_PICTURE;
-            if (String.IsNullOrWhiteSpace(Facebook))
-                return Constants.DEFAULT_PICTURE;
-            else return Facebook;
-        }
+        get { return getPictureString(); }
         set { picture = value; }
+    }
+
+    private string getPictureString()
+    {
+        if (bot)
+            return Constants.BOT_PICTURE;
+        if (String.IsNullOrWhiteSpace(Facebook))
+            return Constants.DEFAULT_PICTURE;
+        else return Facebook;
     }
     
 }
