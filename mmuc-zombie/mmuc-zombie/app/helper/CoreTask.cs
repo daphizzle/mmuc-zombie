@@ -37,7 +37,7 @@ namespace mmuc_zombie.app.helper
             timer.Start();
         }
 
-
+        //depending on the state of the user, the corresponding tasks are carried out 
         static public void timerTask (object Sender,EventArgs e){
             Debug.WriteLine("TimerTask");
             if (user.status==0)
@@ -48,6 +48,7 @@ namespace mmuc_zombie.app.helper
                 ingameMode();
         }
 
+        //user and chat in the lobby must be reloaded
         static private void lobbyMode()
         {
             Debug.WriteLine("LobbyMode");
@@ -72,6 +73,7 @@ namespace mmuc_zombie.app.helper
                 });
             }
         }
+
 
         private static void reload_ChatWindow(Action<Response<ResultsResponse<Message>>> callback)
         {
@@ -115,14 +117,18 @@ namespace mmuc_zombie.app.helper
             var parse = new Driver();
             parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
         }
+
+        //the ingame tasks are started in the check_IsAliveCallbakc
         static private void ingameMode()
         {
          
 
             Query.getRole(user.activeRole, check_IsAliveCallback);
             Debug.WriteLine("Ingame Mode");
-            
-               
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    PositionRetriever.startPositionRetrieving(1);
+                });
                 //{
                 //    Debug.WriteLine("switching to Gamestart");
                 //    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/pages/IngameView.xaml", UriKind.Relative));
@@ -133,6 +139,7 @@ namespace mmuc_zombie.app.helper
                       
         }
 
+        //switch the user to the ingame view if he is alive
         static private void check_IsAliveCallback(Response<Roles> r)
         {
             if (r.Success)
@@ -171,15 +178,16 @@ namespace mmuc_zombie.app.helper
                 }
             }
         }
+
+        //nothing to do here, stop the timer task
         static public void idleMode()
         {
             Debug.WriteLine("Idle Mode");
-            //bei einem join wird ein neuer timer gestartetund userstate auf 1 gesetzt
-           
-                           timer.Stop();
+            timer.Stop();
                    
         }
 
+        //check if my game has started (lobbymode)
          static private void check_GameStarted( Action<Response<Game>> callback)
         {   
                Query.getUser(user.Id, r =>

@@ -90,6 +90,8 @@ namespace mmuc_zombie.pages
             Progressbar.ShowProgressBar();
             PositionRetriever.startPositionRetrieving(1);
         }
+
+        //gets the game, area and quest
         public void drawGameBorder()
         {
             Query.getGame(user.activeGame,getGameCallback);
@@ -102,48 +104,10 @@ namespace mmuc_zombie.pages
                     }
                 });
         }
+        
 
 
-        public void loadData()
-        {
-             if (!painting){
-                 painting = true;
-                 //Debug.WriteLine("loadData");
-                 loadGame();
-             }
-        }
 
-        private void loadGame()
-        {
-            Query.getGame(user.activeGame, r =>
-                {
-                    if (r.Success)
-                    {
-                        game = r.Data;
-                        if (game.state == 2)
-                        {
-                            //our game is now finished
-                            gameFinished();
-                        }
-                        else
-                        {
-                            loadQuest();
-                        }
-                    }
-                });
-        }
-
-        private void loadQuest()
-        {
-            Query.getQuest(user.activeGame, r =>
-                {
-                    if (r.Success)
-                    {
-                        quest = r.Data.Results[0];
-                        loadUsers();
-                    }
-                });
-        }
 
         private void gameFinished()
         {
@@ -162,147 +126,8 @@ namespace mmuc_zombie.pages
                 });
         }
 
-        private void loadUsers()
-        {
-             Query.getUsersByGame(user.activeGame, r =>
-            {
-                if (r.Success)
-                {
-                     Deployment.Current.Dispatcher.BeginInvoke(() =>
-                     {
-                        userList = (List<User>)r.Data.Results;
-                        //Debug.WriteLine("got Users");
-                        fillLocationList=new List<MyLocation>();
-                        loadLocations();    
-                     });
-                }
-            });
-
-        }
-        private void loadLocations()
-        {   
-            if (i<userList.Count)
-                Query.getLocation(userList[i].locationId, r =>
-                {
-                    if (r.Success)
-                    {
-                        //Debug.WriteLine("got Location "+ r.Data.Id+" is equal userlocation "+userList[i].locationId+ "  "+r.Data.latitude+","+r.Data.longitude);
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                           fillLocationList.Add(r.Data);
-                           i++;
-                           loadLocations(); 
-                        });
-                    }
-                });
-             else
-             {
-                i=0;
-                locationList = fillLocationList;
-                fillRoleList = new List<Roles>();
-                loadRoles();
-             }
-        }
-        private void loadRoles()
-        {
-            if (i<userList.Count)
-                Query.getRole(userList[i].activeRole, r =>
-                {   
-                    if (r.Success)
-                    {
-                        //Debug.WriteLine("got Role " + r.Data.Id + " is equal userRole " + userList[i].activeRole);
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            fillRoleList.Add(r.Data);
-                            i++;
-                            loadRoles();
-                        });
-                    }
-                });
-            else
-            {
-                roleList = fillRoleList;
-                i=0;
-                doIngameStuff();
-            }
-        }
-
-        private void updateRoles()
-        {
-            if (i < roleList.Count)
-            {
-                roleList[i].update(r =>
-                    {
-                            Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                {
-                                    Debug.WriteLine("Updated role " + roleList[i].Id);
-                                    i++;
-                                    updateRoles();
-                                });
-                      
-                    });
-            }
-            else
-            {
-                i = 0;
-                updateLocations();
-            }
-        }
-
-        private void updateLocations()
-        {
-            if (i < locationList.Count)
-            {
-                if (userList[i].bot)
-                {
-                    locationList[i].update(r =>
-                    {
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            Debug.WriteLine("Updated location " + locationList[i].Id);
-                            i++;
-                            updateLocations();
-                        });
-
-                    });
-                }
-                else
-                {
-                    i++;
-                    updateLocations();
-                }
-
-            }
-            else
-            {
-                i = 0;
-                updateUser();
-            }
-        }
-
-        private void updateUser()
-        {
-            if (i < userList.Count)
-            {
-                userList[i].update(r =>
-                {
-             
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            Debug.WriteLine("Updated user " + userList[i].Id);
-                            i++;
-                            updateUser();
-                        });
-                    
-                });
-            }
-            else
-            {
-                i = 0;
-                drawPins();
-            }
-        }
-
+        
+        //if the user is the game host the ingame computaitions begin here
         private void doIngameStuff()
         {
             if (user==null){
@@ -343,6 +168,26 @@ namespace mmuc_zombie.pages
                 drawPins();
         }
 
+        private void updateGame()
+        {
+            game.update(r =>
+            {
+                Debug.WriteLine("Updated game: " + game.Id);
+                updateQuest();
+            });
+        }
+
+        private void updateQuest()
+        {
+            quest.update(r =>
+            {
+                Debug.WriteLine("Updated quest: " + game.Id);
+                updateRoles();
+            });
+        }
+
+
+        //movement of bots
         private void botsWalk()
         {
             for (int i = 0; i < userList.Count; i++)
@@ -375,6 +220,8 @@ namespace mmuc_zombie.pages
                 }
             }
         }
+
+        //check if player has done a quest
         private void doQuestStuff()
         {
             if (quest.active)
@@ -431,7 +278,7 @@ namespace mmuc_zombie.pages
             }
         }
 
-        
+        //infection mode
         private void infectSurvivors()
         {
             //if a survivor is killed, this list will be filled with the murderers
@@ -529,24 +376,7 @@ namespace mmuc_zombie.pages
             return survivors;
         }
 
-        private void updateGame()
-        {
-            game.update(r =>
-                {
-                    Debug.WriteLine("Updated game: " + game.Id);
-                    updateQuest();
-                });
-        }
-
-        private void updateQuest()
-        {
-            quest.update(r =>
-                {
-                    Debug.WriteLine("Updated quest: " + game.Id);
-                    updateRoles();
-                });
-        }
-
+        
         private int amountOfZombiesNearSurvivor(int i,List<Roles> killer)
         {
             int zombies = 0;
@@ -563,7 +393,9 @@ namespace mmuc_zombie.pages
             }
             return zombies;    
         } 
+
         
+        //draws the mapview with all icons etc.
         private void drawPins()
         {
 
@@ -649,7 +481,7 @@ namespace mmuc_zombie.pages
         }
 
 
-
+        //displays information of the player that has been clicked on the map
         private void playerClick(Object sender,MouseEventArgs e)
         {
             TargetInfobox.Visibility = System.Windows.Visibility.Visible;
@@ -723,6 +555,7 @@ namespace mmuc_zombie.pages
             targetButton.SetValue(Grid.RowProperty, 1);
         }
 
+        //realods the info box of the player clicked
         private void reloadTargetInfo()
         {
             bool targetDied = true;
@@ -770,6 +603,7 @@ namespace mmuc_zombie.pages
             }
         }
 
+        //removes the info of the clicked player from the screen
         void targetButton_Click(object sender, RoutedEventArgs e)
         {
             target = false;
@@ -783,6 +617,7 @@ namespace mmuc_zombie.pages
             targetButton.Visibility = System.Windows.Visibility.Collapsed;         
         }
 
+        //draws the information of the player in the upper left corner
         private void drawInfobox()
         {
             int playerCount = 0;
@@ -962,6 +797,193 @@ namespace mmuc_zombie.pages
             e.Handled = true;
         }
 
+
+        /**
+ *all load/update methods load the corresponding data recursively. this is done so that e.g. user userList[i] has location locationList[i] etc.
+ * 
+ **/
+        public void loadData()
+        {
+            if (!painting)
+            {
+                painting = true;
+                //Debug.WriteLine("loadData");
+                loadGame();
+            }
+        }
+
+        private void loadGame()
+        {
+            Query.getGame(user.activeGame, r =>
+            {
+                if (r.Success)
+                {
+                    game = r.Data;
+                    if (game.state == 2)
+                    {
+                        //our game is now finished
+                        gameFinished();
+                    }
+                    else
+                    {
+                        loadQuest();
+                    }
+                }
+            });
+        }
+
+        private void loadQuest()
+        {
+            Query.getQuest(user.activeGame, r =>
+            {
+                if (r.Success)
+                {
+                    quest = r.Data.Results[0];
+                    loadUsers();
+                }
+            });
+        }
+
+        private void loadUsers()
+        {
+            Query.getUsersByGame(user.activeGame, r =>
+            {
+                if (r.Success)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        userList = (List<User>)r.Data.Results;
+                        //Debug.WriteLine("got Users");
+                        fillLocationList = new List<MyLocation>();
+                        loadLocations();
+                    });
+                }
+            });
+
+        }
+        private void loadLocations()
+        {
+            if (i < userList.Count)
+                Query.getLocation(userList[i].locationId, r =>
+                {
+                    if (r.Success)
+                    {
+                        //Debug.WriteLine("got Location "+ r.Data.Id+" is equal userlocation "+userList[i].locationId+ "  "+r.Data.latitude+","+r.Data.longitude);
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            fillLocationList.Add(r.Data);
+                            i++;
+                            loadLocations();
+                        });
+                    }
+                });
+            else
+            {
+                i = 0;
+                locationList = fillLocationList;
+                fillRoleList = new List<Roles>();
+                loadRoles();
+            }
+        }
+        private void loadRoles()
+        {
+            if (i < userList.Count)
+                Query.getRole(userList[i].activeRole, r =>
+                {
+                    if (r.Success)
+                    {
+                        //Debug.WriteLine("got Role " + r.Data.Id + " is equal userRole " + userList[i].activeRole);
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            fillRoleList.Add(r.Data);
+                            i++;
+                            loadRoles();
+                        });
+                    }
+                });
+            else
+            {
+                roleList = fillRoleList;
+                i = 0;
+                doIngameStuff();
+            }
+        }
+
+        private void updateRoles()
+        {
+            if (i < roleList.Count)
+            {
+                roleList[i].update(r =>
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        Debug.WriteLine("Updated role " + roleList[i].Id);
+                        i++;
+                        updateRoles();
+                    });
+
+                });
+            }
+            else
+            {
+                i = 0;
+                updateLocations();
+            }
+        }
+
+        private void updateLocations()
+        {
+            if (i < locationList.Count)
+            {
+                if (userList[i].bot)
+                {
+                    locationList[i].update(r =>
+                    {
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            Debug.WriteLine("Updated location " + locationList[i].Id);
+                            i++;
+                            updateLocations();
+                        });
+
+                    });
+                }
+                else
+                {
+                    i++;
+                    updateLocations();
+                }
+
+            }
+            else
+            {
+                i = 0;
+                updateUser();
+            }
+        }
+
+        private void updateUser()
+        {
+            if (i < userList.Count)
+            {
+                userList[i].update(r =>
+                {
+
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        Debug.WriteLine("Updated user " + userList[i].Id);
+                        i++;
+                        updateUser();
+                    });
+
+                });
+            }
+            else
+            {
+                i = 0;
+                drawPins();
+            }
+        }
 
     }
 }
