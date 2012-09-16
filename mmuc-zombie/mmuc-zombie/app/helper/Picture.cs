@@ -37,7 +37,7 @@ namespace mmuc_zombie.app.helper
                     {
                         var url = r.Data.Url;
                         var name = r.Data.Name;
-                        user.picture = url;
+                        user.Picture = url;
                     }
                     else
                     {

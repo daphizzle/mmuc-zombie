@@ -6,14 +6,14 @@
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="145" d:DesignWidth="398">
-    <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="398" Height="80">
-        <TextBlock Height="30" Name="Rank" Margin="0,25,12,0"   VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <TextBlock Height="30" Name="Username" Margin="110,25,12,0"   VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
-        <TextBlock Height="30" Name="Achivement" Margin="220,25,12,0" VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold"/>
+    Foreground="{StaticResource PhoneForegroundBrush}" d:DesignHeight="101" d:DesignWidth="398">
+    <Grid x:Name="LayoutRoot" Background="{x:Null}" Width="398" Height="95">
+        <TextBlock Height="30" Name="Rank" Margin="88,50,184,0"   VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+        <TextBlock Height="30" Name="Username" Margin="88,12,12,0"   VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold" />
+        <TextBlock Height="30" Name="Achivement" Margin="220,50,12,0" VerticalAlignment="Top" TextTrimming="None" FontSize="22" FontWeight="Bold"/>
         <Image Source="http://www.cwv.com.ve/wp-content/uploads/2011/12/1603-bill-gates-1.jpg" Name="userImage"
-                                  HorizontalAlignment="Left" Margin="30,0,0,0"
-                Stretch="Fill" Height="70" Width="70"/>
+                                  HorizontalAlignment="Right" Margin="0,0,316,12"
+                Stretch="Fill" Width="70" Height="70" VerticalAlignment="Bottom" />
         <!--<TextBlock Height="18" HorizontalAlignment="Left" Margin="294,115,0,0" Name="textBlock1" Text="" VerticalAlignment="Top" Width="97" Foreground="#FF1ABA33" FontSize="14" />-->
     </Grid>
 </UserControl>

@@ -20,6 +20,7 @@ using mmuc_zombie.app.model;
 using Microsoft.Phone.Tasks;
 using Microsoft.Phone;
 using System.Diagnostics;
+using System.IO;
 
 namespace mmuc_zombie.pages
 {
@@ -171,7 +172,7 @@ namespace mmuc_zombie.pages
                 offline.Visibility = Visibility.Collapsed;                
             }
 
-            if (!String.IsNullOrWhiteSpace(user.picture) && user.picture.Contains("http"))
+            if (!String.IsNullOrWhiteSpace(user.Picture) && user.Picture.Contains("http"))
             {
                 this.avatar.Source = user.getPicture();
                 facebookLabel.Visibility = Visibility.Collapsed;
@@ -321,11 +322,18 @@ namespace mmuc_zombie.pages
                 {
                     imgLocal = new byte[(int)pr.ChosenPhoto.Length];
                     pic.avatarBytes = imgLocal;
+                    pic.savePicture();
                     pr.ChosenPhoto.Read(imgLocal, 0, imgLocal.Length);
-                    pr.ChosenPhoto.Seek(0, System.IO.SeekOrigin.Begin);
+                    pr.ChosenPhoto.Seek(0, System.IO.SeekOrigin.Begin);                    
                     var bitmapImage = PictureDecoder.DecodeJpeg(pr.ChosenPhoto);
                     this.avatar.Source = bitmapImage;
-                    pic.savePicture();
+
+                    //WriteableBitmap wBitmap = new WriteableBitmap(bitmapImage);
+                    //MemoryStream ms = new MemoryStream();
+                    //wBitmap.SaveJpeg(ms, 50, 50, 0, 100);
+                    //Extensions.LoadJpeg(wBitmap, pr.ChosenPhoto);
+                    //imgLocal = new byte[(int)pr.ChosenPhoto.Length];
+                    //pic.avatarBytes = imgLocal;                    
                 }
                
             }

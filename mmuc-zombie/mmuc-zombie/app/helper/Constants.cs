@@ -27,7 +27,7 @@ namespace mmuc_zombie.app.helper
         public const string ROLE_SURVIVOR = "Survivor";
         public const string ROLE_OBSERVER = "Observer";
 
-        public const int TOPK = 6;
+        public const int TOPK = 10;
 
         public const int SMALL_GAME_SIZE = 500;
         public const int MEDIUM_GAME_SIZE = 2000;
