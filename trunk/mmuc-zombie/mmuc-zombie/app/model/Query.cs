@@ -18,8 +18,7 @@ public class Query
     static public void getUsersByGame(string gameId, Action<Response<ResultsResponse<User>>> callback)
     {
         var parse = new Driver();
-        String role=Constants.ROLE_OBSERVER;
-        parse.Objects.Query<User>().Where(c => c.activeGame == gameId && c.activeRole != role).Execute(callback);
+        parse.Objects.Query<User>().Where(c => c.activeGame == gameId).Execute(callback);
 
     }
     static public void getBotsByGame(string gameId, Action<Response<ResultsResponse<User>>> callback)
@@ -69,14 +68,13 @@ public class Query
    {
        var parse = new Driver();
        string surv = Constants.ROLE_SURVIVOR;
-       parse.Objects.Query<Roles>().Where(c => c.roleType == surv).Execute(callback);
+       parse.Objects.Query<Roles>().Where(c => c.roleType == surv).SortDescending(c => c.questCount).Execute(callback);
    }
-
    static public void getAllZombies(Action<Response<ResultsResponse<Roles>>> callback)
    {
        var parse = new Driver();
        string zomb = Constants.ROLE_ZOMBIE;
-       parse.Objects.Query<Roles>().Where(c => c.roleType == zomb).Execute(callback);
+       parse.Objects.Query<Roles>().Where(c => c.roleType == zomb).SortDescending(c => c.questCount).Execute(callback);
    }
 
    static public void getAllGames(Action<Response<ResultsResponse<Game>>> callback)

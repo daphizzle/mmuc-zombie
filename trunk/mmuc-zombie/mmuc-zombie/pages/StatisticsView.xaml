@@ -91,9 +91,9 @@
             </controls:Pivot.Background>
             
             <!--Pivot item one-->
-			<controls:PivotItem Margin="0,41,24,-13">
+			<!--<controls:PivotItem Margin="0,41,24,-13">
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="players" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		<TextBlock FontSize="54" Text="best players" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
                 <Grid>
                     <ListBox Grid.Row="0" x:Name="listBox">
@@ -121,9 +121,73 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
+            </controls:PivotItem>-->
+            <!--Pivot item one-->
+            <controls:PivotItem Margin="0,41,24,-13">
+                <controls:PivotItem.Header>
+                    <TextBlock FontSize="54" Text="best survivors" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                </controls:PivotItem.Header>
+                <Grid>
+                    <ListBox Grid.Row="0" x:Name="survivorListBox">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <toolkit:ExpanderView Header="{Binding}"   Expander="{Binding}"
+                                    ItemsSource="{Binding Survivors}"
+                                    NonExpandableHeader="{Binding}"
+                                    IsNonExpandable="{Binding HasNoOptions}" 
+                                    IsExpanded="{Binding IsExpanded, Mode=TwoWay}"
+                                    HeaderTemplate="{StaticResource CustomHeaderTemplate}" ExpanderTemplate="{StaticResource CustomExpanderTemplate}"
+                                    ItemTemplate="{StaticResource CustomItemTemplate}"
+                                    NonExpandableHeaderTemplate="{StaticResource CustomNonExpandableHeaderTemplate}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
             </controls:PivotItem>
 
- 			<!--Pivot item two-->
+            <!--Pivot item two-->
+            <controls:PivotItem>
+                <controls:PivotItem.Header>
+                    <TextBlock FontSize="54" Text="best zombies" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+                </controls:PivotItem.Header>
+                <Grid>
+                    <ListBox Grid.Row="0" x:Name="zombieListBox">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <toolkit:ExpanderView Header="{Binding}"   Expander="{Binding}"
+                                    ItemsSource="{Binding Zombies}"
+                                    NonExpandableHeader="{Binding}"
+                                    IsNonExpandable="{Binding HasNoOptions}" 
+                                    IsExpanded="{Binding IsExpanded, Mode=TwoWay}"
+                                    HeaderTemplate="{StaticResource CustomHeaderTemplate}" ExpanderTemplate="{StaticResource CustomExpanderTemplate}"
+                                    ItemTemplate="{StaticResource CustomItemTemplate}"
+                                    NonExpandableHeaderTemplate="{StaticResource CustomNonExpandableHeaderTemplate}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+        <!--Pivot item two-->
             <!--Pivot item three-->
             <controls:PivotItem >
                 <controls:PivotItem.Header>
@@ -158,7 +222,6 @@
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="29,141,0,0" Name="textBlock1" Text="Played Games:" VerticalAlignment="Top" />
                     
                     
-                    <Button Content="Clear Database" Height="73" HorizontalAlignment="Left" Margin="96,472,0,0" Name="button1" VerticalAlignment="Top" Width="266" Click="button1_Click" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="30,202,0,0" Name="textBlock2" Text="Won Games:" VerticalAlignment="Top" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="31,257,0,0" Name="textBlock3" Text="Lost Games" VerticalAlignment="Top" />
                     <TextBlock Height="30" HorizontalAlignment="Left" Margin="28,343,0,0" Name="textBlock4" Text="# Plays as Survivor:" VerticalAlignment="Top" />
@@ -170,7 +233,6 @@
                     <TextBox FontSize="20" Height="65" HorizontalAlignment="Left" Margin="204,387,0,0" Name="nZombie" Text="0" VerticalAlignment="Top" Width="249" />
                 </Grid>
             </controls:PivotItem>
-
 
         </controls:Pivot>
 	</Grid>

@@ -86,7 +86,7 @@
             <!--Pivot item one-->
 			<controls:PivotItem Margin="0,41,24,-13">
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="survivors" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		<TextBlock FontSize="54" Text="best survivors" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
                 <Grid>
                     <ListBox Grid.Row="0" x:Name="survivorListBox">
@@ -119,7 +119,7 @@
  			<!--Pivot item two-->
 			<controls:PivotItem>
 				<controls:PivotItem.Header>
-            		<TextBlock FontSize="54" Text="zombies" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
+            		<TextBlock FontSize="54" Text="best zombies" FontFamily="/mmuc-zombie;component/ext/fonts/Fonts.zip#Lindsey"/>
             	</controls:PivotItem.Header>
                 <Grid>
                     <ListBox Grid.Row="0" x:Name="zombieListBox">

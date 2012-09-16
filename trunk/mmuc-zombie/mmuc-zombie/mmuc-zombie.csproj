@@ -89,7 +89,10 @@
     <Compile Include="app\helper\PositionRetriever.cs" />
     <Compile Include="app\helper\Progressbar.cs" />
     <Compile Include="app\helper\StaticHelper.cs" />
+    <Compile Include="app\listener\Listener.cs" />
     <Compile Include="app\listener\LocationListener.cs" />
+    <Compile Include="app\listener\LoginListener.cs" />
+    <Compile Include="app\listener\StartupListener.cs" />
     <Compile Include="app\modelTest\GameTmp.cs" />
     <Compile Include="app\model\LobbyUsers.cs" />
     <Compile Include="app\helper\Player.cs" />
@@ -121,10 +124,7 @@
     <Compile Include="components\myGameAvailable.xaml.cs">
       <DependentUpon>myGameAvailable.xaml</DependentUpon>
     </Compile>
-    <Compile Include="app\listener\Listener.cs" />
-    <Compile Include="app\listener\LoginListener.cs" />
     <Compile Include="app\listener\MyListener.cs" />
-    <Compile Include="app\listener\StartupListener.cs" />
     <Compile Include="components\officialGame.xaml.cs">
       <DependentUpon>officialGame.xaml</DependentUpon>
     </Compile>
@@ -141,6 +141,9 @@
       <DependentUpon>hallOfFamePlayer.xaml</DependentUpon>
     </Compile>
     <Compile Include="pages\ActiveGame.cs" />
+    <Compile Include="pages\HallFame.xaml.cs">
+      <DependentUpon>HallFame.xaml</DependentUpon>
+    </Compile>
     <Compile Include="pages\RunningGames.xaml.cs">
       <DependentUpon>RunningGames.xaml</DependentUpon>
     </Compile>
@@ -257,6 +260,10 @@
     <Page Include="components\hallOfFamePlayer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="pages\HallFame.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="pages\RunningGames.xaml">
       <Generator>MSBuild:Compile</Generator>

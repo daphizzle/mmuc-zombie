@@ -13,7 +13,6 @@ using Microsoft.Phone.Shell;
 using Parse;
 using mmuc_zombie.app.model;
 using System.Diagnostics;
-using mmuc_zombie.app.listener;
 
 namespace mmuc_zombie.app.helper
 {
@@ -25,7 +24,9 @@ namespace mmuc_zombie.app.helper
         public static void startPositionRetrieving(int threshold)
         {
             // Reinitialize the GeoCoordinateWatcher
-            watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.High);
+            //if (watcher != null)
+            //    watcher.Stop();
+            watcher = new GeoCoordinateWatcher(GeoPositionAccuracy.Default);
             watcher.MovementThreshold = threshold;//distance in metres
 
             // Add event handlers for StatusChanged and PositionChanged events
@@ -33,8 +34,10 @@ namespace mmuc_zombie.app.helper
             watcher.PositionChanged += new EventHandler<GeoPositionChangedEventArgs<GeoCoordinate>>(watcherPositionChanged);
 
             // Start data acquisition
+
             watcher.Start();
         }
+
 
         /// <summary>
         /// Custom method called from the PositionChanged event handler
@@ -42,7 +45,6 @@ namespace mmuc_zombie.app.helper
         /// <param name="e"></param>
         static void onPositionChanged(GeoPositionChangedEventArgs<GeoCoordinate> e)
         {
-            Debug.WriteLine("should update Location now!");
             PhoneApplicationService service = PhoneApplicationService.Current;
          
             User user = (User)service.State["user"];
@@ -53,9 +55,7 @@ namespace mmuc_zombie.app.helper
                 var parse = new Driver();
                 parse.Objects.Update<MyLocation>(user.locationId).Set(u => u.latitude, lat).Set(u => u.longitude, lon).Execute(r =>
                     {
-                      
-                            Debug.WriteLine("Location updated to Lat: " + lat + ", Long: " + lon);
-                            MyLocation loc=new  MyLocation();
+                        MyLocation loc = new MyLocation();
                             loc.latitude = lat;
                             loc.longitude = lon;
                             service.State["location"] =loc;
@@ -93,20 +93,17 @@ namespace mmuc_zombie.app.helper
             {
                 case GeoPositionStatus.Disabled:
                     Debug.WriteLine("Watcher disabled");
-                    MessageBox.Show("Location Service is now disabled on the device");
                     break;
                 case GeoPositionStatus.Initializing:
                     //Don´t do anything data aquisition should start soon
                     break;
                 case GeoPositionStatus.NoData:
                     Debug.WriteLine("Watcher got no Data");
-                    MessageBox.Show("Location Service is init on the device");
                     
                     //TODO: display error ? or just wait for new Data
                     break;
                 case GeoPositionStatus.Ready:
                     Debug.WriteLine("Watcher running!");
-                    MessageBox.Show("Location Service is now enabled on the device");
                     //This is the good case, don´t display errors
                     break;
 

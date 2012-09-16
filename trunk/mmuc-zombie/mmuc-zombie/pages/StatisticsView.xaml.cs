@@ -14,6 +14,7 @@ using mmuc_zombie.app.model;
 using mmuc_zombie.app.helper;
 using Parse;
 using System.Diagnostics;
+using mmuc_zombie.components;
 
 namespace mmuc_zombie.pages
 {
@@ -22,6 +23,10 @@ namespace mmuc_zombie.pages
         List<Statistics> statistics;
         Statistics history;
         Statistics achievements;
+        private List<Game> games = new List<Game>();
+        private List<Roles> zombies = new List<Roles>();
+        private List<Roles> survivors = new List<Roles>();
+        private List<User> users = new List<User>();
 
         public StatisticsView()
         {
@@ -30,77 +35,99 @@ namespace mmuc_zombie.pages
 
         private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
         {
+            //loadSurvivors();
+            Query.getAllGames(r =>
+            {
+                if (r.Success)
+                {
+                    games = (List<Game>)r.Data.Results;
+                    Query.getAllZombies(r2 =>
+                    {
+                        if (r2.Success)
+                        {
+                            zombies = (List<Roles>)r2.Data.Results;
+                            Query.getAllSurvivors(r3 =>
+                            {
+                                if (r3.Success)
+                                {
+                                    survivors = (List<Roles>)r3.Data.Results;
+                                    Query.getAllUser(r4 =>
+                                    {
+                                        if (r4.Success)
+                                        {
+                                            users = (List<User>)r4.Data.Results;
+                                            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                                            {
+                                                displayBestSurvivors();
+                                                displayBestZombies();
+                                            });
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                }
+            });
             loadTopKPlayers();
+        }
+
+        private void displayBestZombies()
+        {
+            hallOfFamePlayer tmpUI;
+            List<hallOfFamePlayer> hofP = new List<hallOfFamePlayer>();
+            for (int i = 0; i < 10 && i < survivors.Count; i++)
+            {
+                tmpUI = new hallOfFamePlayer();
+                User zomb = new User();
+                foreach (User u in users)
+                {
+                    if (zombies[i].userId == u.Id)
+                    {
+                        zomb = u;
+                    }
+                }
+                tmpUI.Rank.Text = "" + (i + 1);
+                tmpUI.Username.Text = zomb.UserName;
+                tmpUI.userImage.Source = zomb.getPicture();
+                tmpUI.Achivement.Text = "Survs killed: " + zombies[i].killCount;
+                hofP.Add(tmpUI);
+            }
+            zombieListBox.ItemsSource = hofP;
+
+        }
+
+        private void displayBestSurvivors()
+        {
+            hallOfFamePlayer tmpUI;
+            List<hallOfFamePlayer> hofP = new List<hallOfFamePlayer>();
+            for (int i = 0; i < 10 && i < survivors.Count; i++)
+            {
+                tmpUI = new hallOfFamePlayer();
+                User surv = new User();
+                foreach (User u in users)
+                {
+                    if (survivors[i].userId == u.Id)
+                    {
+                        surv = u;
+                    }
+                }
+                tmpUI.Rank.Text = "" + (i + 1);
+                tmpUI.Username.Text = surv.UserName;
+                tmpUI.userImage.Source = surv.getPicture();
+                tmpUI.Achivement.Text = "Quests done: " + survivors[i].questCount;
+                hofP.Add(tmpUI);
+            }
+            survivorListBox.ItemsSource = hofP;
         }
 
         private void loadTopKPlayers()
         {
-            statistics = new List<Statistics>(2);
-            statistics.Add(new Statistics("Survivors", DateTime.Now));
-            statistics.Add(new Statistics("Zombies", DateTime.Now));
-            
-            Game.findPlayedGames(loadPlayers);            
             Game.findPlayedGamesByMe(loadHistory);
         }
 
         
-        public void loadPlayers(Response<ResultsResponse<Game>> r)
-        {
-            string gameID;            
-            Roles role_tmp;
-            User user_tmp;            
 
-            var parse = new Driver();
-            if (r.Success)
-            {
-                //retrieving all played games
-                List<Game> playedGames = (List<Game>)r.Data.Results;
-                //Debug.WriteLine("StatisticsView - Played Games: " + playedGames.Count);
-
-                foreach (Game game in playedGames)
-                {                        
-                    gameID = game.Id;                    
-
-                    //retrieving all data per played game
-                    parse.Objects.Query<Roles>().Where(c => c.gameId == gameID).SortDescending(c => c.questCount).Execute(r2 =>
-                    {
-                        if (r2.Success)
-                        {
-                            List<Roles> rtmp = (List<Roles>)r2.Data.Results;
-                            //Debug.WriteLine("StatisticsView - Roles("+gameID+"): " + rtmp.Count);
-
-                            if (rtmp.Count > 0)
-                            {
-                                role_tmp = rtmp[0];
-
-                                //retrieving the first ranked player
-                                parse.Objects.Get<User>(role_tmp.userId, r3 =>
-                                {
-                                    if (r3.Success)
-                                    {                                        
-                                        user_tmp = r3.Data;
-                                        
-                                        if(role_tmp.roleType == Constants.ROLE_SURVIVOR)
-                                            statistics[0].Players.Add(new Player(game, role_tmp, user_tmp));
-                                        else if (role_tmp.roleType == Constants.ROLE_SURVIVOR)
-                                            statistics[1].Players.Add(new Player(game, role_tmp, user_tmp));
-
-                                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                                        {
-                                            this.listBox.ItemsSource = statistics;
-                                        });
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-                
-            }
-
-            //Debug.WriteLine("StatisticsView - Players: " + cont);
-        }
 
         private void loadHistory(Response<Game> r)
         {
@@ -184,92 +211,6 @@ namespace mmuc_zombie.pages
             nZombie.Text = achievements.gamesZombie.ToString();
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            var user = User.getFromState();
-            string userId = user.Id;
-            string locId = user.locationId;
-            var parse = new Driver();
-            //delete all User except me
-            parse.Objects.Query<User>().Where(c => c.Id != userId).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<User> users = (List<User>)r.Data.Results;
-                    foreach (User u in users)
-                        parse.Objects.Delete<User>(u);
-                }
-            });
-
-            //delete all Games
-            parse.Objects.Query<Game>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Game> games = (List<Game>)r.Data.Results;
-                    foreach (Game u in games)
-                        parse.Objects.Delete<Game>(u);
-                }
-            });
-
-            //delete all Locations except my Location
-            parse.Objects.Query<MyLocation>().Where(c => c.Id != locId).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<MyLocation> users = (List<MyLocation>)r.Data.Results;
-                    foreach (MyLocation u in users)
-                        parse.Objects.Delete<MyLocation>(u);
-                }
-            });
-
-
-            //delete all Roles
-            parse.Objects.Query<Roles>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Roles> users = (List<Roles>)r.Data.Results;
-                    foreach (Roles u in users)
-                        parse.Objects.Delete<Roles>(u);
-                }
-            });
-
-
-            //delete all Invites
-            parse.Objects.Query<Invite>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Invite> users = (List<Invite>)r.Data.Results;
-                    foreach (Invite u in users)
-                        parse.Objects.Delete<Invite>(u);
-                }
-            });
-
-
-            //delete all Message
-            parse.Objects.Query<Message>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Message> users = (List<Message>)r.Data.Results;
-                    foreach (Message u in users)
-                        parse.Objects.Delete<Message>(u);
-                }
-            });
-
-            //delete all Friends
-            parse.Objects.Query<Friend>().Where(c => c.Id == c.Id).Execute(r =>
-            {
-                if (r.Success)
-                {
-                    List<Friend> users = (List<Friend>)r.Data.Results;
-                    foreach (Friend u in users)
-                        parse.Objects.Delete<Friend>(u);
-                }
-            });
-
-        }
+        
     }
 }
