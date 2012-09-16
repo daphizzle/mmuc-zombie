@@ -33,7 +33,7 @@ public class User :  MyParseObject
     public string FacebookToken { get; set; }
     public string DeviceID { get; set; }    
     public bool bot { get; set; }
-    public string Picture;
+    public string Picture { get; set; }
 
     public User()
     {
@@ -137,31 +137,24 @@ public class User :  MyParseObject
 
     public BitmapImage getPicture()
     {
-        if (Picture == null) Picture = "";
-        if(bot || (String.IsNullOrWhiteSpace(Facebook) && !Picture.Trim().ToLower().Contains("http")))
-            return new BitmapImage(new Uri(getPictureString(), UriKind.Relative));
-        else return new BitmapImage(new Uri(getPictureString(), UriKind.Absolute));
+        if (bot)
+            return new BitmapImage(new Uri(getPathPicture(), UriKind.Relative));
+        if (!String.IsNullOrWhiteSpace(Picture) && !Picture.Trim().ToLower().Contains("http"))
+            return new BitmapImage(new Uri(getPathPicture(), UriKind.Relative));
+        if (!String.IsNullOrWhiteSpace(Picture) && Picture.Trim().ToLower().Contains("http"))
+            return new BitmapImage(new Uri(getPathPicture(), UriKind.Absolute));
+        if (!String.IsNullOrWhiteSpace(Facebook))
+            return new BitmapImage(new Uri(getPathPicture(), UriKind.Absolute));
+        return new BitmapImage(new Uri(getPathPicture(), UriKind.Relative));
     }
 
-    public String picture
-    {
-        get
-        {
-            return getPictureString();
-        }
-        set
-        {
-            Picture = value;
-        }
-    }
-
-    public string getPictureString()
+    public string getPathPicture()
     {
         if (bot)
             return Constants.BOT_PICTURE;        
         if (!String.IsNullOrWhiteSpace(Picture))
             return Picture;
-        else if (!String.IsNullOrWhiteSpace(Facebook))
+        if (!String.IsNullOrWhiteSpace(Facebook))
             return Facebook;
         return Constants.DEFAULT_PICTURE;
     }

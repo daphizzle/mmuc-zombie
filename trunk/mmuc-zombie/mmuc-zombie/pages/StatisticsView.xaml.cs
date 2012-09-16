@@ -20,7 +20,7 @@ namespace mmuc_zombie.pages
 {
     public partial class StatisticsView : PhoneApplicationPage
     {        
-        List<Statistics> statistics;
+        //List<Statistics> statistics;
         Statistics history;
         Statistics achievements;
         private List<Game> games = new List<Game>();
@@ -76,7 +76,7 @@ namespace mmuc_zombie.pages
         {
             hallOfFamePlayer tmpUI;
             List<hallOfFamePlayer> hofP = new List<hallOfFamePlayer>();
-            for (int i = 0; i < 10 && i < survivors.Count; i++)
+            for (int i = 0; i < Constants.TOPK && i < zombies.Count; i++)
             {
                 tmpUI = new hallOfFamePlayer();
                 User zomb = new User();
@@ -101,7 +101,7 @@ namespace mmuc_zombie.pages
         {
             hallOfFamePlayer tmpUI;
             List<hallOfFamePlayer> hofP = new List<hallOfFamePlayer>();
-            for (int i = 0; i < 10 && i < survivors.Count; i++)
+            for (int i = 0; i < Constants.TOPK && i < survivors.Count; i++)
             {
                 tmpUI = new hallOfFamePlayer();
                 User surv = new User();

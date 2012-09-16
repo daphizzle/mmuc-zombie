@@ -24,7 +24,7 @@ namespace mmuc_zombie.pages
         private List<Roles> zombies = new List<Roles>();
         private List<Roles> survivors = new List<Roles>();
         private List<User> users = new List<User>();
-        bool step1 = false, step2 = false, step3 = false, step4 = false;
+        //bool step1 = false, step2 = false, step3 = false, step4 = false;
 
         public HallFame()
         {

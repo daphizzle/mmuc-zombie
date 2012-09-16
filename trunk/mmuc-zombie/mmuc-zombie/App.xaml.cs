@@ -160,7 +160,7 @@ namespace mmuc_zombie
             {
                 using (var reader = new StreamReader(store.OpenFile("userId.txt",FileMode.Open)))
                 {
-                    string userId = reader.ReadToEnd();
+                    string userId = reader.ReadToEnd();                   
                     Debug.WriteLine("Reading userId" + userId);
                     User.find(userId,new LoginListener());
                 }

@@ -35,7 +35,7 @@ namespace mmuc_zombie.app.helper
             this.Id = user.Id;
             this.locationId = user.locationId;
             this.Password = user.Password;
-            this.picture = user.picture;
+            this.Picture = user.Picture;
             this.status = user.status;
             this.UserName = user.UserName;            
         }
